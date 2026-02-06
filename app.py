@@ -1008,78 +1008,38 @@ elif page == "Meta 수정 제안":
 
     st.markdown("""
     <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
-        이사가격 소재가 <strong>CPL ₩3,850으로 전 소재 중 가장 효율적</strong>이지만,
-        Meta의 예산 자동 배분 기능에 의해 <strong>전체 예산의 2.4%만</strong> 투입되고 있습니다.
-        반면 에브리타임 소재는 CPL이 34% 더 높은데도(₩5,154) 예산은 5배 이상(12.8%) 받고 있습니다.
+        <strong style="font-size:16px;">1. 효율 최고 소재에 예산을 쓰지 않고 있습니다</strong><br>
+        이사가격 소재는 <strong>CPL ₩3,850으로 전 소재 중 가장 효율적</strong>입니다.
+        "이사 견적비교 해서 평균 30만원 절약해요"라는 메시지가 이사대학 서비스와 가장 직접적으로 매칭되고,
+        전환율(CVR)도 27.1%로 가장 높습니다.<br><br>
+        그런데 Meta의 예산 자동 배분이 이 소재에 <strong>전체 예산의 2.4%만</strong> 배분하고 있습니다.
+        반면 에브리타임 소재(CPL ₩5,154)는 대학생 커뮤니티 바이럴 형태로
+        전환 효율이 훨씬 낮은데도(CVR 11.0%) <strong>5배 이상의 예산(12.8%)</strong>을 받고 있습니다.<br><br>
+        <strong>효율이 가장 좋은 소재를 놔두고, 효율이 떨어지는 소재에 돈을 더 쓰고 있는 상황</strong>입니다.
+        에브리타임 예산 ₩191만을 이사가격으로 이동하면,
+        같은 돈으로 370건 대신 495건을 확보할 수 있어
+        <strong>순 +125건의 추가 전환</strong>(13주 기준)이 가능합니다.
     </div>
     """, unsafe_allow_html=True)
 
-    # Show 3 ad images side by side
-    import os
-    _img_dir = os.path.join(os.path.dirname(__file__), "images")
-
-    img_col1, img_col2, img_col3 = st.columns(3)
-    with img_col1:
-        _p = os.path.join(_img_dir, "meta_price_ad.png")
-        if os.path.exists(_p):
-            st.image(_p)
-        st.markdown("""
-        <div style="text-align:center; font-size:13px; line-height:1.6; margin-top:8px;">
-            <strong style="color:#E74C3C; font-size:14px;">① 가격소재</strong><br>
-            CPL ₩5,171 · <strong>전체 예산의 70%</strong> · 전환 3,355건<br>
-            노출의 95% 이상이 이 이미지<br>
-            <strong style="color:#E74C3C;">의존도 매우 높음 — 대안 소재 개발 시급</strong>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with img_col2:
-        _p = os.path.join(_img_dir, "meta_isagagyeok_ad.png")
-        if os.path.exists(_p):
-            st.image(_p)
-        st.markdown("""
-        <div style="text-align:center; font-size:13px; line-height:1.6; margin-top:8px;">
-            <strong style="color:#2ECC71; font-size:14px;">② 이사가격</strong><br>
-            <strong>CPL ₩3,850 (최저)</strong> · 전체 예산의 2.4% · 전환 156건<br>
-            노출의 95% 이상이 이 이미지<br>
-            <span style="color:#888;">CPL이 가장 낮은데 노출 최소</span>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with img_col3:
-        _p = os.path.join(_img_dir, "meta_everytime_ad.png")
-        if os.path.exists(_p):
-            st.image(_p)
-        st.markdown("""
-        <div style="text-align:center; font-size:13px; line-height:1.6; margin-top:8px;">
-            <strong style="color:#F39C12; font-size:14px;">③ 에브리타임</strong><br>
-            CPL ₩5,154 · 전체 예산의 12.8% · 전환 617건<br>
-            노출의 약 70%가 이 이미지<br>
-            <span style="color:#888;">대학생 타겟이나 전환 효율 낮음</span>
-        </div>
-        """, unsafe_allow_html=True)
-
     st.markdown("""
-    <div style="font-size:15px; line-height:1.9; color:#333; padding:16px 0;">
-        <strong style="font-size:16px;">시뮬레이션: 에타 예산 → 이사가격으로 재배분</strong><br>
-        에브리타임에서 ₩191만(7.8%p)을 이사가격으로 이동하면, 같은 예산으로 더 많은 전환을 확보할 수 있습니다.
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
+        <strong style="font-size:16px;">2. 가격소재 이미지 하나에 전체 예산의 약 70%가 집중</strong><br>
+        현재로선 성과가 좋지만, 만약 이 이미지의 성과가 떨어질 경우 Meta 전체 성과가 급락할 수 있습니다.
+        다른 좋은 대안 소재를 찾아야 합니다.
     </div>
     """, unsafe_allow_html=True)
 
-    sim_table = pd.DataFrame({
-        '항목': ['에타에서 잃는 전환', '이사가격에서 얻는 전환', '순 추가 전환'],
-        '계산': ['₩191만 ÷ CPL ₩5,154', '₩191만 ÷ CPL ₩3,850', '495 − 370'],
-        '결과': ['−370건', '+495건', '+125건'],
-    })
-    st.dataframe(sim_table, use_container_width=True, hide_index=True)
+    st.markdown("""
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
+        <strong style="font-size:16px;">3. Threads가 가장 효율적인 플랫폼이지만 예산의 4.5%만 투입 중</strong><br>
+        13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있으나,
+        Instagram(93%)에 예산이 편중되어 있어 Threads 확대 여지가 큽니다.
+    </div>
+    """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
-        <strong>같은 ₩191만으로 370건 대신 495건을 확보</strong>할 수 있습니다.
-        예산 총액은 변하지 않지만, 더 효율적인 소재에 배분하는 것만으로
-        <strong>13주 기준 순 +125건의 추가 전환</strong>이 가능합니다.<br><br>
-        또한 <strong>Threads는 13주 연속 CPL 최저</strong>(₩2,700~₩5,000)를 기록하고 있으나,
-        예산 자동 배분이 4.5%만 배분하고 있습니다.
-        가장 확실한 효율 개선 기회를 놓치고 있는 상황입니다.<br><br>
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:16px;">
         <strong style="color:#E74C3C;">결론: 예산 자동 배분에 맡기지 말고, 수동으로 예산 비중을 조정해야 합니다.</strong>
     </div>
     """, unsafe_allow_html=True)
@@ -1091,30 +1051,28 @@ elif page == "Meta 수정 제안":
 
     st.markdown("""
     <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
-        <strong style="font-size:16px;">1. 예산 자동 배분 → 수동 배분으로 전환</strong><br>
+        <strong style="font-size:16px;">1. 소재 예산 재배분 — 자동 배분 → 수동 조정</strong><br>
         현재 Meta가 자동으로 예산을 배분하고 있습니다.
-        그런데 자동 배분이 가격소재 이미지 하나에 70%를 몰아주면서, CPL이 26% 더 낮은 이사가격 소재에는 2.4%만 배분하고 있습니다.
-        더 효율적인 소재가 노출을 덜 받는 것은 자동 최적화의 한계입니다.
-        수동으로 각 소재의 예산 비중을 직접 조정해야 전체 효율을 개선할 수 있습니다.
+        그런데 자동 배분이 가격소재 이미지 하나에 70%를 몰아주면서,
+        CPL이 26% 더 낮은 이사가격 소재에는 2.4%만 배분하고 있습니다.
+        효율이 좋은 소재를 놔두고 효율이 떨어지는 곳에 돈을 쓰는 구조입니다.<br><br>
+        수동으로 전환해서 <strong>이사가격 소재를 2.4% → 15%로 확대</strong>합니다.
+        이사가격 소재는 CPL ₩3,850으로 전 소재 중 가장 효율적이고,
+        "이사 견적비교 해서 평균 30만원 절약해요"라는 메시지가 이사대학 서비스와 가장 직접적으로 매칭됩니다.<br><br>
+        동시에 <strong>에브리타임 소재를 12.8% → 5%로 축소</strong>하고 절감분을 이사가격으로 이동합니다.
+        에브리타임은 대학생 커뮤니티 바이럴 형태로 흥미는 끌지만,
+        "원룸, 투룸 이사"를 직접 보여주는 소재에 비해 전환 효율이 절반 수준입니다(CVR 11.0% vs 27.1%).
+        같은 ₩191만을 이사가격에 쓰면 370건 대신 495건을 확보할 수 있어,
+        <strong>순 +125건의 추가 전환</strong>이 가능합니다.
     </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
     <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
-        <strong style="font-size:16px;">2. 이사가격 소재 확대 (2.4% → 15%)</strong><br>
-        이사가격 소재는 CPL ₩3,850으로 전 소재 중 가장 효율적입니다.
-        "이사 견적비교 해서 평균 30만원 절약해요"라는 메시지가 이사대학 서비스의 핵심 가치와 가장 직접적으로 매칭됩니다.
-        현재 예산 자동 배분으로 2.4%만 투입되고 있어, 수동으로 15%까지 늘리면 추가 전환을 확보할 수 있습니다.
-    </div>
-    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
-        <strong style="font-size:16px;">3. 에브리타임 축소 → 이사가격으로 재배분 (12.8% → 5%)</strong><br>
-        에브리타임 소재는 대학생 타겟으로 커뮤니티 바이럴 형태의 광고입니다.
-        "원룸, 투룸" 등을 명시적으로 보여주는 다른 소재에 비해 전환 효율이 낮습니다(CVR 11.0% vs 이사가격 27.1%).
-        대학생들에게 흥미는 유발하지만 실제 전환으로 잘 이어지지 않고 있어,
-        예산을 12.8%에서 5%로 축소하고 절감분을 이사가격 소재로 이동하는 것이 더 효율적입니다.
-    </div>
-    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
-        <strong style="font-size:16px;">4. Threads 플랫폼 확대 (4.5% → 15%)</strong><br>
+        <strong style="font-size:16px;">2. Threads 플랫폼 확대 (4.5% → 15%)</strong><br>
         Threads는 13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있습니다.
-        현재 예산 자동 배분으로 4.5%만 투입 중인데,
-        별도 캠페인으로 분리하거나 비중을 수동 조정해서 15%까지 확대하면
+        그런데 현재 예산의 93%가 Instagram에 편중되어 있어, Threads에는 4.5%만 투입 중입니다.
+        별도 캠페인으로 분리하거나 비중을 수동 조정해서 15%까지 확대하면,
         주간 전환이 21건에서 74건으로 약 253% 증가할 수 있습니다.
     </div>
     """, unsafe_allow_html=True)
