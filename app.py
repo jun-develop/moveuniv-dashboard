@@ -1008,10 +1008,9 @@ elif page == "Meta 수정 제안":
     st.markdown("""
     <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
         <strong style="font-size:16px;">1. 효율 최고 소재에 예산을 쓰지 않고 있습니다</strong><br>
-        이사가격 소재는 <strong>CPL ₩3,850으로 전 소재 중 가장 효율적</strong>입니다.
-        "이사 견적비교 해서 평균 30만원 절약해요"라는 메시지가 이사대학 서비스와 가장 직접적으로 매칭되고,
+        이사가격 소재는 <strong>CPL ₩3,850으로 전 소재 중 가장 효율적</strong>이고,
         전환율(CVR)도 27.1%로 가장 높습니다.<br><br>
-        그런데 Meta의 예산 자동 배분이 이 소재에 <strong>전체 예산의 2.4%만</strong> 배분하고 있습니다.
+        하지만 지금 이 소재에 <strong>전체 예산의 2.4%만</strong> 배분하고 있습니다.
         반면 에브리타임 소재(CPL ₩5,154)는 대학생 커뮤니티 바이럴 형태로
         전환 효율이 훨씬 낮은데도(CVR 11.0%) <strong>5배 이상의 예산(12.8%)</strong>을 받고 있습니다.<br><br>
         <strong>효율이 가장 좋은 소재를 놔두고, 효율이 떨어지는 소재에 돈을 더 쓰고 있는 상황</strong>입니다.
@@ -1023,15 +1022,7 @@ elif page == "Meta 수정 제안":
 
     st.markdown("""
     <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
-        <strong style="font-size:16px;">2. 가격소재 이미지 하나에 전체 예산의 약 70%가 집중</strong><br>
-        현재로선 성과가 좋지만, 만약 이 이미지의 성과가 떨어질 경우 Meta 전체 성과가 급락할 수 있습니다.
-        다른 좋은 대안 소재를 찾아야 합니다.
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("""
-    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
-        <strong style="font-size:16px;">3. Threads가 가장 효율적인 플랫폼이지만 예산의 4.5%만 투입 중</strong><br>
+        <strong style="font-size:16px;">2. Threads가 가장 효율적인 플랫폼이지만 예산의 4.5%만 투입 중</strong><br>
         13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있으나,
         Instagram(93%)에 예산이 편중되어 있어 Threads 확대 여지가 큽니다.
     </div>
@@ -1057,7 +1048,7 @@ elif page == "Meta 수정 제안":
         효율이 좋은 소재를 놔두고 효율이 떨어지는 곳에 돈을 쓰는 구조입니다.<br><br>
         수동으로 전환해서 <strong>이사가격 소재를 2.4% → 15%로 확대</strong>합니다.
         이사가격 소재는 CPL ₩3,850으로 전 소재 중 가장 효율적이고,
-        "이사 견적비교 해서 평균 30만원 절약해요"라는 메시지가 이사대학 서비스와 가장 직접적으로 매칭됩니다.<br><br>
+        전환율(CVR)도 27.1%로 가장 높습니다.<br><br>
         동시에 <strong>에브리타임 소재를 12.8% → 5%로 축소</strong>하고 절감분을 이사가격으로 이동합니다.
         에브리타임은 대학생 커뮤니티 바이럴 형태로 흥미는 끌지만,
         "원룸, 투룸 이사"를 직접 보여주는 소재에 비해 전환 효율이 절반 수준입니다(CVR 11.0% vs 27.1%).
