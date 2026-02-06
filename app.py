@@ -139,7 +139,7 @@ SEARCH_CPL = 13363
 
 # Google 캠페인
 google_campaign = pd.DataFrame({
-    '캠페인': ['실적최대화 (PMax)', '검색광고(내국인)', '검색광고(외국인)'],
+    '캠페인': ['PMax', '검색광고(내국인)', '검색광고(외국인)'],
     '비용': [7631334, 6748916, 1919872],
     '전환': [1109.14, 471.19, 177.50],
     'CPL': [6880, 14323, 10816],
@@ -216,35 +216,35 @@ google_campaign_weekly = pd.DataFrame([
     {"campaign": "PMax", "week": "W04", "cost": 552450, "conv": 106.0, "cpl": 5212},
     {"campaign": "PMax", "week": "W05", "cost": 432733, "conv": 83.17, "cpl": 5203},
     # Search-내국인
-    {"campaign": "검색(내국인)", "week": "W44", "cost": 84366, "conv": 4.0, "cpl": 21092},
-    {"campaign": "검색(내국인)", "week": "W45", "cost": 594959, "conv": 35.0, "cpl": 16999},
-    {"campaign": "검색(내국인)", "week": "W46", "cost": 573287, "conv": 26.0, "cpl": 22050},
-    {"campaign": "검색(내국인)", "week": "W47", "cost": 550335, "conv": 39.67, "cpl": 13873},
-    {"campaign": "검색(내국인)", "week": "W48", "cost": 543278, "conv": 24.0, "cpl": 22637},
-    {"campaign": "검색(내국인)", "week": "W49", "cost": 578517, "conv": 19.0, "cpl": 30448},
-    {"campaign": "검색(내국인)", "week": "W50", "cost": 548974, "conv": 45.01, "cpl": 12197},
-    {"campaign": "검색(내국인)", "week": "W51", "cost": 573491, "conv": 47.0, "cpl": 12202},
-    {"campaign": "검색(내국인)", "week": "W52", "cost": 385455, "conv": 31.0, "cpl": 12434},
-    {"campaign": "검색(내국인)", "week": "W01", "cost": 393393, "conv": 32.5, "cpl": 12104},
-    {"campaign": "검색(내국인)", "week": "W02", "cost": 400808, "conv": 27.0, "cpl": 14845},
-    {"campaign": "검색(내국인)", "week": "W03", "cost": 403922, "conv": 39.0, "cpl": 10357},
-    {"campaign": "검색(내국인)", "week": "W04", "cost": 400210, "conv": 30.0, "cpl": 13340},
-    {"campaign": "검색(내국인)", "week": "W05", "cost": 394461, "conv": 37.5, "cpl": 10519},
+    {"campaign": "검색광고(내국인)", "week": "W44", "cost": 84366, "conv": 4.0, "cpl": 21092},
+    {"campaign": "검색광고(내국인)", "week": "W45", "cost": 594959, "conv": 35.0, "cpl": 16999},
+    {"campaign": "검색광고(내국인)", "week": "W46", "cost": 573287, "conv": 26.0, "cpl": 22050},
+    {"campaign": "검색광고(내국인)", "week": "W47", "cost": 550335, "conv": 39.67, "cpl": 13873},
+    {"campaign": "검색광고(내국인)", "week": "W48", "cost": 543278, "conv": 24.0, "cpl": 22637},
+    {"campaign": "검색광고(내국인)", "week": "W49", "cost": 578517, "conv": 19.0, "cpl": 30448},
+    {"campaign": "검색광고(내국인)", "week": "W50", "cost": 548974, "conv": 45.01, "cpl": 12197},
+    {"campaign": "검색광고(내국인)", "week": "W51", "cost": 573491, "conv": 47.0, "cpl": 12202},
+    {"campaign": "검색광고(내국인)", "week": "W52", "cost": 385455, "conv": 31.0, "cpl": 12434},
+    {"campaign": "검색광고(내국인)", "week": "W01", "cost": 393393, "conv": 32.5, "cpl": 12104},
+    {"campaign": "검색광고(내국인)", "week": "W02", "cost": 400808, "conv": 27.0, "cpl": 14845},
+    {"campaign": "검색광고(내국인)", "week": "W03", "cost": 403922, "conv": 39.0, "cpl": 10357},
+    {"campaign": "검색광고(내국인)", "week": "W04", "cost": 400210, "conv": 30.0, "cpl": 13340},
+    {"campaign": "검색광고(내국인)", "week": "W05", "cost": 394461, "conv": 37.5, "cpl": 10519},
     # Search-외국인
-    {"campaign": "검색(외국인)", "week": "W44", "cost": 11739, "conv": 0.0, "cpl": 0},
-    {"campaign": "검색(외국인)", "week": "W45", "cost": 169414, "conv": 9.0, "cpl": 18824},
-    {"campaign": "검색(외국인)", "week": "W46", "cost": 141673, "conv": 14.0, "cpl": 10120},
-    {"campaign": "검색(외국인)", "week": "W47", "cost": 148676, "conv": 12.0, "cpl": 12390},
-    {"campaign": "검색(외국인)", "week": "W48", "cost": 125757, "conv": 8.5, "cpl": 14795},
-    {"campaign": "검색(외국인)", "week": "W49", "cost": 138400, "conv": 14.5, "cpl": 9545},
-    {"campaign": "검색(외국인)", "week": "W50", "cost": 135853, "conv": 5.0, "cpl": 27171},
-    {"campaign": "검색(외국인)", "week": "W51", "cost": 140044, "conv": 17.5, "cpl": 8003},
-    {"campaign": "검색(외국인)", "week": "W52", "cost": 141297, "conv": 11.0, "cpl": 12845},
-    {"campaign": "검색(외국인)", "week": "W01", "cost": 115763, "conv": 9.0, "cpl": 12863},
-    {"campaign": "검색(외국인)", "week": "W02", "cost": 164034, "conv": 22.0, "cpl": 7456},
-    {"campaign": "검색(외국인)", "week": "W03", "cost": 140223, "conv": 19.0, "cpl": 7380},
-    {"campaign": "검색(외국인)", "week": "W04", "cost": 129534, "conv": 15.0, "cpl": 8636},
-    {"campaign": "검색(외국인)", "week": "W05", "cost": 110838, "conv": 11.0, "cpl": 10076},
+    {"campaign": "검색광고(외국인)", "week": "W44", "cost": 11739, "conv": 0.0, "cpl": 0},
+    {"campaign": "검색광고(외국인)", "week": "W45", "cost": 169414, "conv": 9.0, "cpl": 18824},
+    {"campaign": "검색광고(외국인)", "week": "W46", "cost": 141673, "conv": 14.0, "cpl": 10120},
+    {"campaign": "검색광고(외국인)", "week": "W47", "cost": 148676, "conv": 12.0, "cpl": 12390},
+    {"campaign": "검색광고(외국인)", "week": "W48", "cost": 125757, "conv": 8.5, "cpl": 14795},
+    {"campaign": "검색광고(외국인)", "week": "W49", "cost": 138400, "conv": 14.5, "cpl": 9545},
+    {"campaign": "검색광고(외국인)", "week": "W50", "cost": 135853, "conv": 5.0, "cpl": 27171},
+    {"campaign": "검색광고(외국인)", "week": "W51", "cost": 140044, "conv": 17.5, "cpl": 8003},
+    {"campaign": "검색광고(외국인)", "week": "W52", "cost": 141297, "conv": 11.0, "cpl": 12845},
+    {"campaign": "검색광고(외국인)", "week": "W01", "cost": 115763, "conv": 9.0, "cpl": 12863},
+    {"campaign": "검색광고(외국인)", "week": "W02", "cost": 164034, "conv": 22.0, "cpl": 7456},
+    {"campaign": "검색광고(외국인)", "week": "W03", "cost": 140223, "conv": 19.0, "cpl": 7380},
+    {"campaign": "검색광고(외국인)", "week": "W04", "cost": 129534, "conv": 15.0, "cpl": 8636},
+    {"campaign": "검색광고(외국인)", "week": "W05", "cost": 110838, "conv": 11.0, "cpl": 10076},
 ])
 
 # Weekly intent segment data (for top segments only)
@@ -563,8 +563,8 @@ elif page == "Google Deep-Dive":
     section("구글 검색광고(수동) vs PMax(자동)")
 
     insight("""
-    <strong>핵심: 수동(검색)이 자동(PMax)보다 나은가?</strong><br>
-    PMax(자동)의 CPL이 벤치마크. 검색 캠페인이 이보다 높으면 <strong>개선 여지가 있다</strong>는 뜻입니다.
+    <strong>핵심: 검색광고가 PMax보다 나은가?</strong><br>
+    PMax의 CPL이 벤치마크. 검색광고가 이보다 높으면 <strong>개선 여지가 있다</strong>는 뜻입니다.
     """)
 
     # Filter to weeks W45-W05 only (exclude partial W44)
@@ -574,7 +574,7 @@ elif page == "Google Deep-Dive":
 
     with chart_col1:
         fig = px.line(gcw, x='week', y='cpl', color='campaign', markers=True,
-                      color_discrete_map={'PMax': COLORS['best'], '검색(내국인)': COLORS['worst'], '검색(외국인)': COLORS['mid']})
+                      color_discrete_map={'PMax': COLORS['best'], '검색광고(내국인)': COLORS['worst'], '검색광고(외국인)': COLORS['mid']})
         fig.update_layout(height=420, plot_bgcolor='rgba(0,0,0,0)',
                           xaxis=dict(title='주차', showgrid=True, gridcolor='#f0f0f0'),
                           yaxis=dict(title='CPL (₩)', showgrid=True, gridcolor='#f0f0f0'),
@@ -610,14 +610,14 @@ elif page == "Google Deep-Dive":
         """, "success")
     with col2:
         insight("""
-        <strong style="color:#E74C3C;">검색(내국인)</strong>: ₩17,000~₩30,000 → ₩10,000~₩13,000<br>
+        <strong style="color:#E74C3C;">검색광고(내국인)</strong>: ₩17,000~₩30,000 → ₩10,000~₩13,000<br>
         변동폭이 크고, PMax 대비 <strong>항상 2배 이상</strong> = 메시지 문제
         """, "danger")
 
     insight("""
-    <strong style="font-size:15px; color:#1B3A5C;">결론: 검색 캠페인에 개선 여지가 크다</strong><br><br>
-    검색(내국인) CPL ₩14,323은 PMax ₩6,976의 <strong>2.1배</strong>.<br>
-    동일한 상품을 광고하는데 수동(검색)이 자동(PMax)보다 2배 비싸다는 것은,<br>
+    <strong style="font-size:15px; color:#1B3A5C;">결론: 검색광고에 개선 여지가 크다</strong><br><br>
+    검색광고(내국인) CPL ₩14,323은 PMax ₩6,976의 <strong>2.1배</strong>.<br>
+    동일한 상품을 광고하는데 검색광고가 PMax보다 2배 비싸다는 것은,<br>
     <strong>키워드-메시지 매칭을 최적화하면 CPL을 크게 낮출 수 있다</strong>는 뜻입니다.<br><br>
     → 어디서 비효율이 발생하는지 확인하기 위해, <strong>유저 검색 의도별로 세그먼트를 나눠서 분석</strong>합니다.
     """)
