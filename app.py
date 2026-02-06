@@ -856,7 +856,7 @@ elif page == "Meta Deep-Dive":
         {kpi_card("총 광고비", f"₩{META_SPEND:,}", "전체의 62.2%")}
         {kpi_card("총 전환", f"{META_CONV:,}건", f"CPL ₩{META_CPL:,}")}
         {kpi_card("Threads CPL", "₩3,800", "전 플랫폼 최저", "green")}
-        {kpi_card("가격소재 비중", "70%", "1개 소재 의존 리스크", "orange")}
+        {kpi_card("비효율 소재 예산", "70%", "예산 재배분 필요", "red")}
     </div>
     """, unsafe_allow_html=True)
 
