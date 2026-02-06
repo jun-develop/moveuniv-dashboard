@@ -467,24 +467,31 @@ if page == "Executive Summary":
     # ── C. TOP FINDINGS ──
     section("Top Findings")
 
-    st.markdown("""
-    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
-        <strong style="font-size:16px;">1. 전체 예산의 16%가 서비스와 맞지 않는 유저에게 사용되고 있습니다.</strong><br>
-        Google 용달/화물 키워드에 약 177만원이 투입 중이나, 이 유저들은 "물건 운송"이 목적이지 이사 비교가 아닙니다.
-        여기에 전환 0건인 키워드 226개(약 118만원)와 Meta 비효율 소재(약 364만원)를 합치면
-        <strong>3개월간 총 약 660만원, 월 약 220만원</strong>이 낭비되고 있습니다.
-    </div>
-    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:8px;">
-        <strong style="font-size:16px;">2. Meta 가격 소재 이미지 하나가 전체 예산의 약 70%를 담당하고 있습니다.</strong><br>
-        현재로선 성과가 좋지만, 만약 이 이미지의 성과가 떨어질 경우 Meta 전체 성과가 급락할 수 있습니다.
-        다른 좋은 대안 소재를 찾아야 합니다.
-    </div>
-    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:8px;">
-        <strong style="font-size:16px;">3. Threads가 가장 효율적인 플랫폼이지만 예산의 4.5%만 투입 중입니다.</strong><br>
-        13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있으나,
-        Instagram(93%)에 예산이 편중되어 있어 Threads 확대 여지가 큽니다.
-    </div>
-    """, unsafe_allow_html=True)
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("""
+        <div style="background:#f8faff; border-radius:12px; padding:20px; border:1px solid #d0e0f0;">
+            <div style="font-size:16px; font-weight:700; color:#4285F4; margin-bottom:12px;">Google Ads</div>
+            <div style="font-size:15px; line-height:1.9; color:#333;">
+                <strong>용달/화물 키워드에 예산이 낭비되고 있습니다</strong><br>
+                약 177만원이 투입 중이나, 이 유저들은 "물건 운송"이 목적이지 이사 비교가 아닙니다.<br><br>
+                <strong>전환 0건 키워드 226개에 약 118만원 지출</strong><br>
+                3개월간 전환이 한 건도 없는 키워드에 예산이 계속 소진되고 있습니다.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    with col2:
+        st.markdown("""
+        <div style="background:#fff8f5; border-radius:12px; padding:20px; border:1px solid #f0d0c0;">
+            <div style="font-size:16px; font-weight:700; color:#FF6B35; margin-bottom:12px;">Meta Ads</div>
+            <div style="font-size:15px; line-height:1.9; color:#333;">
+                <strong>효율 최고 소재에 예산을 쓰지 않고 있습니다</strong><br>
+                이사가격 소재(CPL ₩3,850)가 가장 효율적이지만 예산의 2.4%만 배분 중입니다.<br><br>
+                <strong>Threads가 가장 효율적이지만 예산의 4.5%만 투입 중</strong><br>
+                13주 연속 CPL 최저(₩2,700~₩5,000)를 기록 중이나, Instagram(93%)에 예산이 편중되어 있습니다.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
     divider()
 
