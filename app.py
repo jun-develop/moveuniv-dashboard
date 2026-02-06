@@ -942,7 +942,27 @@ elif page == "Meta 수정 제안":
     st.caption("소재 다변화 + 플랫폼 확대를 통한 안정적 성장")
     divider()
 
-    # ── Section 1: 핵심 이슈 ──
+    # ── Section 1: 예상 효과 ──
+    section("예상 효과")
+
+    st.markdown("""
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
+        아래 수정안을 모두 적용하면, <strong>총 예산 규모는 동일</strong>하면서도
+        Threads 확대 + 소재 다변화를 통해 다음과 같은 효과가 예상됩니다.
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown(f"""
+    <div class="kpi-container">
+        {kpi_card("Meta CPL", "₩5,267 → ₩4,800", "−9%", "green")}
+        {kpi_card("추가 전환 (13주)", "+150건", "4,835 → 4,985건", "green")}
+        {kpi_card("Threads 주간 전환", "21건 → 74건/주", "+253%", "green")}
+    </div>
+    """, unsafe_allow_html=True)
+
+    divider()
+
+    # ── Section 2: 핵심 이슈 ──
     section("핵심 이슈")
 
     st.markdown(f"""
@@ -955,15 +975,25 @@ elif page == "Meta 수정 제안":
     st.markdown("""
     <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0;">
         <strong style="font-size:16px; color:#E74C3C;">1. 이미지 의존 리스크</strong><br>
-        <span style="padding-left:20px; color:#555;">
+        <span style="color:#555;">
             '가격 소재' 광고세트가 Meta 전체 예산의 70%, 전환의 72%를 담당합니다.
             이 소재의 성과가 떨어지면 (이미지 피로도, 시즌 변화 등) 전체 Meta 성과가 즉시 급락하는 구조입니다.
             현재 이를 대체할 수 있는 검증된 대안 이미지가 부족합니다.
         </span>
     </div>
+    """, unsafe_allow_html=True)
+
+    import os
+    _img_path = os.path.join(os.path.dirname(__file__), "images", "meta_price_ad.png")
+    if os.path.exists(_img_path):
+        col_img, col_space = st.columns([2, 3])
+        with col_img:
+            st.image(_img_path, caption="'가격 소재' 광고 — Meta 전체 예산의 70%를 담당하는 이미지")
+
+    st.markdown("""
     <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0; margin-top:4px;">
         <strong style="font-size:16px; color:#F39C12;">2. Threads — 가장 효율적인 플랫폼에 최소 투자</strong><br>
-        <span style="padding-left:20px; color:#555;">
+        <span style="color:#555;">
             Threads는 13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있습니다.
             그런데 예산의 4.5%만 배분되어 있어, <strong>가장 확실한 효율 개선 기회를 놓치고 있습니다.</strong>
             Threads는 Meta의 CBO(캠페인 예산 최적화)가 자동 배분하는 구조이나,
@@ -1042,18 +1072,6 @@ elif page == "Meta 수정 제안":
         </div>
         """, unsafe_allow_html=True)
 
-    divider()
-
-    # ── Section 4: 예상 효과 ──
-    section("예상 효과")
-
-    st.markdown(f"""
-    <div class="kpi-container">
-        {kpi_card("Meta CPL", "₩5,267 → ₩4,800", "−9%", "green")}
-        {kpi_card("Threads 전환 증가", "+150건/13주", "예산 비중 15% 시", "green")}
-        {kpi_card("소재 피로 리스크", "고→중", "1개 의존도 해소", "green")}
-    </div>
-    """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════════
