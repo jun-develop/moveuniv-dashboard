@@ -1042,11 +1042,7 @@ elif page == "Meta 수정 제안":
     </div>
     """, unsafe_allow_html=True)
 
-    divider()
-
-    # ── Section 3: Active 소재 현황 ──
-    section("Active 소재 현황")
-
+    st.markdown("**소재별 성과 요약**")
     active_status_table = pd.DataFrame({
         '소재': ['이사가격', '가격소재', '에브리타임'],
         'CPL': ['₩3,850', '₩5,171', '₩5,154'],
@@ -1054,63 +1050,44 @@ elif page == "Meta 수정 제안":
         '전환': [156, 3355, 617],
         'CTR': ['0.99%', '0.81%', '1.20%'],
         'CVR': ['27.1%', '18.1%', '11.0%'],
-        'CTR×CVR': ['0.268%', '0.147%', '0.132%'],
         '예산비중': ['2.4%', '69.6%', '12.8%'],
     })
     st.dataframe(active_status_table, use_container_width=True, hide_index=True)
 
     divider()
 
-    # ── Section 4: 제안 ──
-    section("제안")
+    # ── Section 3: 수정 제안 ──
+    section("수정 제안")
 
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.markdown("""
-        <div class="kpi-card green" style="text-align:left; padding:20px;">
-            <div style="font-size:16px; font-weight:900;">이사가격 소재 확대</div>
-            <div style="font-size:22px; font-weight:900; margin:10px 0;">2.4% → 15%</div>
-            <div style="font-size:13px; line-height:1.6;">
-                CPL ₩3,850 — 전 소재 최저<br>
-                CBO가 과소배분 중 → 수동 증액
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class="kpi-card green" style="text-align:left; padding:20px; margin-top:16px;">
-            <div style="font-size:16px; font-weight:900;">Threads 확대</div>
-            <div style="font-size:22px; font-weight:900; margin:10px 0;">4.5% → 15%</div>
-            <div style="font-size:13px; line-height:1.6;">
-                CPL ₩3,800~4,700<br>
-                13주 연속 플랫폼 최저
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col2:
-        st.markdown("""
-        <div class="kpi-card orange" style="text-align:left; padding:20px;">
-            <div style="font-size:16px; font-weight:900;">에브리타임 축소 → 재배분</div>
-            <div style="font-size:22px; font-weight:900; margin:10px 0;">12.8% → 5%</div>
-            <div style="font-size:13px; line-height:1.6;">
-                대학생 타겟 효율 낮음<br>
-                절감분을 이사가격으로 이동
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class="kpi-card" style="text-align:left; padding:20px; margin-top:16px;">
-            <div style="font-size:16px; font-weight:900;">CBO → 수동 예산 배분</div>
-            <div style="font-size:22px; font-weight:900; margin:10px 0;">자동 → 수동 전환</div>
-            <div style="font-size:13px; line-height:1.6;">
-                가격소재 70% → 55%<br>
-                효율 소재에 수동 예산 집중
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+    st.markdown("""
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
+        <strong style="font-size:16px;">1. CBO 자동 배분 → 수동 예산 배분으로 전환</strong><br>
+        현재 Meta CBO(캠페인 예산 최적화)가 자동으로 예산을 배분하고 있습니다.
+        그런데 CBO가 가격소재 이미지 하나에 70%를 몰아주면서, CPL이 26% 더 낮은 이사가격 소재에는 2.4%만 배분하고 있습니다.
+        더 효율적인 소재가 노출을 덜 받는 것은 자동 최적화의 한계입니다.
+        수동으로 각 소재의 예산 비중을 직접 조정해야 전체 효율을 개선할 수 있습니다.
+    </div>
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
+        <strong style="font-size:16px;">2. 이사가격 소재 확대 (2.4% → 15%)</strong><br>
+        이사가격 소재는 CPL ₩3,850으로 전 소재 중 가장 효율적입니다.
+        "이사 견적비교 해서 평균 30만원 절약해요"라는 메시지가 이사대학 서비스의 핵심 가치와 가장 직접적으로 매칭됩니다.
+        현재 CBO 자동 배분으로 예산의 2.4%만 투입되고 있어, 수동으로 15%까지 늘리면 추가 전환을 확보할 수 있습니다.
+    </div>
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
+        <strong style="font-size:16px;">3. 에브리타임 축소 → 이사가격으로 재배분 (12.8% → 5%)</strong><br>
+        에브리타임 소재는 대학생 타겟으로 커뮤니티 바이럴 형태의 광고입니다.
+        "원룸, 투룸" 등을 명시적으로 보여주는 다른 소재에 비해 전환 효율이 낮습니다(CVR 11.0% vs 이사가격 27.1%).
+        대학생들에게 흥미는 유발하지만 실제 전환으로 잘 이어지지 않고 있어,
+        예산을 12.8%에서 5%로 축소하고 절감분을 이사가격 소재로 이동하는 것이 더 효율적입니다.
+    </div>
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
+        <strong style="font-size:16px;">4. Threads 플랫폼 확대 (4.5% → 15%)</strong><br>
+        Threads는 13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있습니다.
+        현재 CBO 자동 배분으로 예산의 4.5%만 투입 중인데,
+        별도 캠페인으로 분리하거나 비중을 수동 조정해서 15%까지 확대하면
+        주간 전환이 21건에서 74건으로 약 253% 증가할 수 있습니다.
+    </div>
+    """, unsafe_allow_html=True)
 
 
 
