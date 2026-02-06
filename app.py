@@ -700,57 +700,7 @@ elif page == "Google Deep-Dive":
 
     divider()
 
-    # ── C. 기회 매트릭스 ──
-    section("기회 매트릭스: CPL vs CVR")
-
-    # Calculate CTR and CVR
-    df_matrix = google_intent.copy()
-    df_matrix['CTR'] = (df_matrix['clicks'] / df_matrix['impressions'] * 100).round(2)
-    df_matrix['CVR'] = (df_matrix['conversions'] / df_matrix['clicks'] * 100).round(2)
-
-    # Exclude 외국인 (only 2 conversions)
-    df_matrix_plot = df_matrix[df_matrix['segment'] != '외국인'].copy()
-
-    # Service matching
-    service_match_map = {
-        '브랜드': '완벽',
-        '기타(영어+이삿짐센터)': '좋음',
-        '원룸/소형': '완벽',
-        '포장이사': '좋음',
-        '일반이사': '보통',
-        '가격/견적': '완벽',
-        '용달/화물': '미스매치',
-        '지역+이사': '보통',
-    }
-    df_matrix_plot['서비스매칭'] = df_matrix_plot['segment'].map(service_match_map)
-
-    fig2 = px.scatter(
-        df_matrix_plot, x='cpl', y='CVR', size='cost', color='서비스매칭',
-        text='segment', size_max=60,
-        color_discrete_map={'완벽':'#2ECC71', '좋음':'#3498DB', '보통':'#F39C12', '미스매치':'#E74C3C'},
-    )
-    fig2.update_traces(textposition='top center', textfont_size=11)
-    fig2.update_layout(
-        height=450, plot_bgcolor='rgba(0,0,0,0)',
-        xaxis=dict(title='CPL (₩) — 낮을수록 효율적', showgrid=True, gridcolor='#f0f0f0'),
-        yaxis=dict(title='전환율 (CVR %) — 높을수록 전환 잘됨', showgrid=True, gridcolor='#f0f0f0'),
-    )
-    # 사분면 표시
-    fig2.add_hline(y=17, line_dash="dash", line_color="#ddd")
-    fig2.add_vline(x=12000, line_dash="dash", line_color="#ddd")
-    fig2.add_annotation(x=6000, y=26, text="SWEET SPOT", showarrow=False, font=dict(size=12, color='#2ECC71'))
-    fig2.add_annotation(x=17000, y=13, text="DANGER ZONE", showarrow=False, font=dict(size=12, color='#E74C3C'))
-    st.plotly_chart(fig2, use_container_width=True)
-
-    insight("""
-    <strong>왼쪽 위 = Sweet Spot</strong> (CPL 낮고 CVR 높음): 브랜드, 원룸/소형, 가격/견적<br>
-    <strong>오른쪽 아래 = Danger Zone</strong> (CPL 높고 CVR 낮음): 용달/화물, 지역+이사<br><br>
-    버블 크기 = 예산 규모. <strong style="color:#E74C3C;">가장 큰 버블(용달/화물)이 Danger Zone에 있다</strong>는 것이 핵심 문제.
-    """, "danger")
-
-    divider()
-
-    # ── D. CPL 비효율 원인 분석 ──
+    # ── C. CPL 비효율 원인 분석 ──
     section("CPL 비효율 원인 분석: 유저 검색 의도 — 광고 메시지 불일치")
 
     st.markdown("""
