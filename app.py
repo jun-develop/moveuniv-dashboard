@@ -866,7 +866,7 @@ elif page == "Meta Deep-Dive":
     # Active creatives only (filter)
     active_adsets = meta_adset[
         (meta_adset['예산비중'] >= 0.5) &
-        (~meta_adset['소재_short'].isin(['소재ALL', '신규(12)', '신규(11)', '공통']))
+        (~meta_adset['소재_short'].isin(['소재ALL', '신규(12)', '신규(11)', '공통', '여자모델']))
     ]
 
     # 메인 차트
@@ -966,61 +966,102 @@ elif page == "Meta 수정 제안":
 
     st.markdown(f"""
     <div class="kpi-container">
-        {kpi_card("이미지 의존도", "70%", "1개 이미지가 예산·전환 지배", "red")}
+        {kpi_card("1개 이미지 의존", "예산의 70%", "하나의 이미지가 예산·전환 지배", "red")}
         {kpi_card("Threads 과소투자", "4.5%", "CPL 최저인데 예산 최소", "orange")}
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0;">
-        <strong style="font-size:16px; color:#E74C3C;">1. 이미지 의존 리스크</strong><br>
-        <span style="color:#555;">
-            '가격 소재' 광고세트가 Meta 전체 예산의 70%, 전환의 72%를 담당합니다.
-            이 소재의 성과가 떨어지면 (이미지 피로도, 시즌 변화 등) 전체 Meta 성과가 즉시 급락하는 구조입니다.
-            현재 이를 대체할 수 있는 검증된 대안 이미지가 부족합니다.
-        </span>
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
+        <strong style="font-size:16px; color:#E74C3C;">1. 단 하나의 이미지에 예산의 70%가 집중</strong><br>
+        Meta 광고의 핵심 메시지는 <strong>"원룸, 투룸 등 자취생 이사에 특화된 가격 비교 서비스"</strong>입니다.
+        그런데 이 메시지를 전달하는 이미지가 사실상 아래 첫 번째 이미지 하나에 집중되어 있습니다.
+        이 이미지의 성과가 떨어지면 (피로도, 시즌 변화 등) Meta 전체 성과가 즉시 급락하는 구조입니다.
     </div>
     """, unsafe_allow_html=True)
 
+    # Show 3 ad images side by side
     import os
-    _img_path = os.path.join(os.path.dirname(__file__), "images", "meta_price_ad.png")
-    if os.path.exists(_img_path):
-        col_img, col_space = st.columns([2, 3])
-        with col_img:
-            st.image(_img_path, caption="'가격 소재' 광고 — Meta 전체 예산의 70%를 담당하는 이미지")
+    _img_dir = os.path.join(os.path.dirname(__file__), "images")
+
+    img_col1, img_col2, img_col3 = st.columns(3)
+    with img_col1:
+        _p = os.path.join(_img_dir, "meta_price_ad.png")
+        if os.path.exists(_p):
+            st.image(_p)
+        st.markdown("""
+        <div style="text-align:center; font-size:13px; line-height:1.6; margin-top:8px;">
+            <strong style="color:#E74C3C; font-size:14px;">① 가격소재</strong><br>
+            CPL ₩5,171 · <strong>예산 70%</strong> · 전환 3,355건<br>
+            <span style="color:#888;">예산 대부분이 이 이미지에 집중</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with img_col2:
+        _p = os.path.join(_img_dir, "meta_isagagyeok_ad.png")
+        if os.path.exists(_p):
+            st.image(_p)
+        st.markdown("""
+        <div style="text-align:center; font-size:13px; line-height:1.6; margin-top:8px;">
+            <strong style="color:#2ECC71; font-size:14px;">② 이사가격</strong><br>
+            <strong>CPL ₩3,850 (최저)</strong> · 예산 2.4% · 전환 156건<br>
+            <span style="color:#888;">CPL이 가장 낮은데 노출 최소</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with img_col3:
+        _p = os.path.join(_img_dir, "meta_everytime_ad.png")
+        if os.path.exists(_p):
+            st.image(_p)
+        st.markdown("""
+        <div style="text-align:center; font-size:13px; line-height:1.6; margin-top:8px;">
+            <strong style="color:#F39C12; font-size:14px;">③ 에브리타임</strong><br>
+            CPL ₩5,154 · 예산 12.8% · 전환 617건<br>
+            <span style="color:#888;">대학생 타겟이나 전환 효율 낮음</span>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0; margin-top:4px;">
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:16px 0;">
+        <strong>②번 이사가격 소재가 CPL ₩3,850으로 가장 효율적</strong>이지만,
+        Meta CBO(캠페인 예산 최적화)의 자동 배분 때문에 예산의 2.4%만 투입되고 있습니다.
+        ①번 가격소재보다 CPL이 26% 낮은데도 노출이 훨씬 적은 상황입니다.<br><br>
+        <strong>③번 에브리타임은 대학생 타겟으로 커뮤니티 바이럴 형태</strong>의 광고입니다.
+        "원룸, 투룸" 등을 명시적으로 보여주는 ①·② 소재에 비해 전환 효율이 낮습니다.
+        차라리 CPL이 낮은 이사가격 소재의 예산을 늘리는 것이 더 효율적입니다.<br><br>
+        <strong style="color:#E74C3C;">결론: CBO 자동 배분에 맡기지 말고, 수동으로 예산 비중을 조정해야 합니다.</strong>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
         <strong style="font-size:16px; color:#F39C12;">2. Threads — 가장 효율적인 플랫폼에 최소 투자</strong><br>
-        <span style="color:#555;">
-            Threads는 13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있습니다.
-            그런데 예산의 4.5%만 배분되어 있어, <strong>가장 확실한 효율 개선 기회를 놓치고 있습니다.</strong>
-            Threads는 Meta의 CBO(캠페인 예산 최적화)가 자동 배분하는 구조이나,
-            별도 캠페인으로 분리하거나 비중을 수동 조정하면 더 많은 예산을 투입할 수 있습니다.
-        </span>
+        Threads는 13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있습니다.
+        그런데 예산의 4.5%만 배분되어 있어, <strong>가장 확실한 효율 개선 기회를 놓치고 있습니다.</strong>
+        이 역시 CBO 자동 배분의 결과로, 수동 조정이 필요합니다.
     </div>
     """, unsafe_allow_html=True)
 
     divider()
 
-    # ── Section 2: Active 소재 현황 ──
+    # ── Section 3: Active 소재 현황 ──
     section("Active 소재 현황")
 
     active_status_table = pd.DataFrame({
-        '소재': ['이사가격', '가격소재', '에브리타임', '여자모델'],
-        'CPL': ['₩3,850', '₩5,171', '₩5,154', '₩5,777'],
-        '비용': ['60만', '1,735만', '318만', '15만'],
-        '전환': [156, 3355, 617, 26],
-        'CTR': ['0.99%', '0.81%', '1.20%', '0.93%'],
-        'CVR': ['27.1%', '18.1%', '11.0%', '23.6%'],
-        'CTR×CVR': ['0.268%', '0.147%', '0.132%', '0.220%'],
-        '예산비중': ['2.4%', '69.6%', '12.8%', '0.6%'],
+        '소재': ['이사가격', '가격소재', '에브리타임'],
+        'CPL': ['₩3,850', '₩5,171', '₩5,154'],
+        '비용': ['60만', '1,735만', '318만'],
+        '전환': [156, 3355, 617],
+        'CTR': ['0.99%', '0.81%', '1.20%'],
+        'CVR': ['27.1%', '18.1%', '11.0%'],
+        'CTR×CVR': ['0.268%', '0.147%', '0.132%'],
+        '예산비중': ['2.4%', '69.6%', '12.8%'],
     })
     st.dataframe(active_status_table, use_container_width=True, hide_index=True)
 
     divider()
 
-    # ── Section 3: 제안 ──
+    # ── Section 4: 제안 ──
     section("제안")
 
     col1, col2 = st.columns(2)
@@ -1028,22 +1069,22 @@ elif page == "Meta 수정 제안":
     with col1:
         st.markdown("""
         <div class="kpi-card green" style="text-align:left; padding:20px;">
-            <div style="font-size:16px; font-weight:900;">Threads 확대</div>
-            <div style="font-size:22px; font-weight:900; margin:10px 0;">4.5% → 15%</div>
+            <div style="font-size:16px; font-weight:900;">이사가격 소재 확대</div>
+            <div style="font-size:22px; font-weight:900; margin:10px 0;">2.4% → 15%</div>
             <div style="font-size:13px; line-height:1.6;">
-                CPL ₩3,800~4,700<br>
-                13주 연속 최저
+                CPL ₩3,850 — 전 소재 최저<br>
+                CBO가 과소배분 중 → 수동 증액
             </div>
         </div>
         """, unsafe_allow_html=True)
 
         st.markdown("""
         <div class="kpi-card green" style="text-align:left; padding:20px; margin-top:16px;">
-            <div style="font-size:16px; font-weight:900;">이사가격 확대</div>
-            <div style="font-size:22px; font-weight:900; margin:10px 0;">2.4% → 10%</div>
+            <div style="font-size:16px; font-weight:900;">Threads 확대</div>
+            <div style="font-size:22px; font-weight:900; margin:10px 0;">4.5% → 15%</div>
             <div style="font-size:13px; line-height:1.6;">
-                CPL ₩3,850 최저<br>
-                CTR×CVR 최고
+                CPL ₩3,800~4,700<br>
+                13주 연속 플랫폼 최저
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1051,22 +1092,22 @@ elif page == "Meta 수정 제안":
     with col2:
         st.markdown("""
         <div class="kpi-card orange" style="text-align:left; padding:20px;">
-            <div style="font-size:16px; font-weight:900;">소재 다변화</div>
-            <div style="font-size:22px; font-weight:900; margin:10px 0;">가격소재 70% → 50%</div>
+            <div style="font-size:16px; font-weight:900;">에브리타임 축소 → 재배분</div>
+            <div style="font-size:22px; font-weight:900; margin:10px 0;">12.8% → 5%</div>
             <div style="font-size:13px; line-height:1.6;">
-                피로도 리스크 감소<br>
-                나머지를 이사가격+여자모델
+                대학생 타겟 효율 낮음<br>
+                절감분을 이사가격으로 이동
             </div>
         </div>
         """, unsafe_allow_html=True)
 
         st.markdown("""
         <div class="kpi-card" style="text-align:left; padding:20px; margin-top:16px;">
-            <div style="font-size:16px; font-weight:900;">에브리타임 모니터링</div>
-            <div style="font-size:22px; font-weight:900; margin:10px 0;">CVR 11% 개선 관찰</div>
+            <div style="font-size:16px; font-weight:900;">CBO → 수동 예산 배분</div>
+            <div style="font-size:22px; font-weight:900; margin:10px 0;">자동 → 수동 전환</div>
             <div style="font-size:13px; line-height:1.6;">
-                CTR은 높지만 전환 약함<br>
-                개선 안 되면 축소
+                가격소재 70% → 55%<br>
+                효율 소재에 수동 예산 집중
             </div>
         </div>
         """, unsafe_allow_html=True)
