@@ -560,7 +560,7 @@ elif page == "Google Deep-Dive":
     divider()
 
     # ── A. Weekly Campaign CPL Trend ──
-    section("캠페인별 주간 CPL 추이")
+    section("구글 검색광고(수동) vs PMax(자동)")
 
     insight("""
     <strong>핵심: 수동(검색)이 자동(PMax)보다 나은가?</strong><br>
@@ -575,7 +575,7 @@ elif page == "Google Deep-Dive":
     fig.update_layout(height=420, plot_bgcolor='rgba(0,0,0,0)',
                       xaxis=dict(title='주차', showgrid=True, gridcolor='#f0f0f0'),
                       yaxis=dict(title='CPL (₩)', showgrid=True, gridcolor='#f0f0f0'),
-                      title=dict(text='캠페인별 주간 CPL 추이', font=dict(size=14)))
+                      title=dict(text='구글 검색광고(수동) vs PMax(자동)', font=dict(size=14)))
     fig.update_traces(line_width=3, marker_size=8)
     st.plotly_chart(fig, use_container_width=True)
 
