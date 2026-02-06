@@ -457,8 +457,8 @@ if page == "Executive Summary":
 
     st.markdown("")
     st.markdown("""
-    <div style="text-align:center; font-size:15px; color:#666; margin:8px 0;">
-        총 광고비 <strong style="color:#1B3A5C; font-size:18px;">₩40,916,071</strong> · 총 전환 <strong style="color:#1B3A5C; font-size:18px;">6,473건</strong> · 전체 CPL <strong style="color:#1B3A5C; font-size:18px;">₩6,322</strong>
+    <div style="text-align:center; font-size:18px; color:#666; margin:12px 0;">
+        총 광고비 <strong style="color:#1B3A5C; font-size:24px;">₩40,916,071</strong> · 총 전환 <strong style="color:#1B3A5C; font-size:24px;">6,473건</strong> · 전체 CPL <strong style="color:#1B3A5C; font-size:24px;">₩6,322</strong>
     </div>
     """, unsafe_allow_html=True)
 
@@ -468,27 +468,21 @@ if page == "Executive Summary":
     section("Top Findings")
 
     st.markdown("""
-    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0;">
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
         <strong style="font-size:16px;">1. 전체 예산의 16%가 서비스와 맞지 않는 유저에게 사용되고 있습니다.</strong><br>
-        <span style="padding-left:20px; color:#555;">
-            Google 용달/화물 키워드에 약 177만원이 투입 중이나, 이 유저들은 "물건 운송"이 목적이지 이사 비교가 아닙니다.<br>
-            여기에 전환 0건인 키워드 226개(약 118만원)와 Meta 비효율 소재(약 364만원)를 합치면<br>
-            <strong>3개월간 총 약 660만원, 월 약 220만원</strong>이 낭비되고 있습니다.
-        </span>
+        Google 용달/화물 키워드에 약 177만원이 투입 중이나, 이 유저들은 "물건 운송"이 목적이지 이사 비교가 아닙니다.
+        여기에 전환 0건인 키워드 226개(약 118만원)와 Meta 비효율 소재(약 364만원)를 합치면
+        <strong>3개월간 총 약 660만원, 월 약 220만원</strong>이 낭비되고 있습니다.
     </div>
-    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0; margin-top:12px;">
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:8px;">
         <strong style="font-size:16px;">2. Meta 가격 소재 이미지 하나가 전체 예산의 약 70%를 담당하고 있습니다.</strong><br>
-        <span style="padding-left:20px; color:#555;">
-            현재로선 성과가 좋지만, 만약 이 이미지의 성과가 떨어질 경우 Meta 전체 성과가 급락할 수 있습니다.<br>
-            다른 좋은 대안 소재를 찾아야 합니다.
-        </span>
+        현재로선 성과가 좋지만, 만약 이 이미지의 성과가 떨어질 경우 Meta 전체 성과가 급락할 수 있습니다.
+        다른 좋은 대안 소재를 찾아야 합니다.
     </div>
-    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0; margin-top:12px;">
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:8px;">
         <strong style="font-size:16px;">3. Threads가 가장 효율적인 플랫폼이지만 예산의 4.5%만 투입 중입니다.</strong><br>
-        <span style="padding-left:20px; color:#555;">
-            13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있으나,<br>
-            Instagram(93%)에 예산이 편중되어 있어 Threads 확대 여지가 큽니다.
-        </span>
+        13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있으나,
+        Instagram(93%)에 예산이 편중되어 있어 Threads 확대 여지가 큽니다.
     </div>
     """, unsafe_allow_html=True)
 
@@ -518,13 +512,14 @@ if page == "Executive Summary":
         <div style="background:#fff8f5; border-radius:12px; padding:20px; border:1px solid #f0d0c0;">
             <div style="font-size:16px; font-weight:700; color:#FF6B35; margin-bottom:12px;">Meta Ads</div>
             <div style="font-size:14px; line-height:1.9; color:#333;">
-                <strong>Instagram / Facebook / Threads</strong>에<br>
-                광고 소재(이미지+카피)를 노출.<br><br>
-                현재 <strong>4개 활성 소재</strong>로 운영 중:<br>
+                <strong>4개 메시지</strong>로 운영 중:<br>
                 &nbsp;&nbsp;· 가격 소재 (예산의 70%)<br>
                 &nbsp;&nbsp;· 에브리타임 (20대 타겟)<br>
-                &nbsp;&nbsp;· 이사 가격 / 여자 모델<br><br>
-                → <strong>소재(메시지)별 성과 차이가 핵심</strong>
+                &nbsp;&nbsp;· 이사 가격<br>
+                &nbsp;&nbsp;· 여자 모델<br><br>
+                4개 메시지는 <strong>Instagram / Facebook / Threads</strong>에<br>
+                이미지+문구로 광고되는 중.<br>
+                → <strong>메시지별 성과 차이가 핵심</strong>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -535,8 +530,8 @@ if page == "Executive Summary":
     section("분석 범위 제한")
     st.markdown("""
     <div style="font-size:15px; line-height:2.2; color:#555; padding:4px 0;">
-        광고비가 정말 매출로 잘 이어지는지를 확인하기 위해서는 이사대학 내부 DB와 연동을 해야 자세한 분석이 가능합니다.<br><br>
-        지금 이 분석 데이터는 Google, Meta 광고관리자를 통해 확인한 것으로, 상담신청까지만 추적이 가능합니다.<br>
+        광고비가 정말 매출로 잘 이어지는지를 확인하기 위해서는 <strong style="color:#333;">이사대학 내부 DB와 연동</strong>을 해야 자세한 분석이 가능합니다.<br><br>
+        지금 이 분석 데이터는 Google, Meta 광고관리자를 통해 확인한 것으로, <strong style="color:#333;">사용자가 상담신청을 했는지</strong>까지만 추적이 가능합니다.<br>
         유저들이 실제로 서비스를 사용했는지, 고객 당 매출과 마진이 어떻게 되는지는 확인할 수 없습니다.<br>
         따라서 마케팅 성과 목표로 설정된 상담신청까지의 과정만을 분석한 자료라고 이해하시면 됩니다.
     </div>
