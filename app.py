@@ -114,9 +114,9 @@ st.markdown("""
 # ═══════════════════════════════════════════════
 
 # 채널 종합
-TOTAL_SPEND = 40_916_071  # Google 15,452,143 + Meta 25,463,928
-TOTAL_CONV = 6_473  # Google 1,638 + Meta 4,835
-TOTAL_CPL = 6_322  # weighted average
+TOTAL_SPEND = 40_916_071
+TOTAL_CONV = 6_473
+TOTAL_CPL = 6_322
 GOOGLE_SPEND = 15_452_143
 GOOGLE_CONV = 1_638
 GOOGLE_CPL = 9_432
@@ -124,19 +124,18 @@ META_SPEND = 25_463_928
 META_CONV = 4_835
 META_CPL = 5_267
 
-# Google 키워드 의도별
+# Google 키워드 의도별 (keyword report 기반 — 정확 데이터)
 google_intent = pd.DataFrame({
-    '검색 의도': ['브랜드\n("이사대학")', '원룸/소형이사', '외국인(영어)', '포장이사', '가격/견적', '일반 이사', '지역+이사', '용달/화물'],
-    '의도_short': ['브랜드', '원룸/소형', '외국인', '포장이사', '가격/견적', '일반이사', '지역+이사', '용달/화물'],
-    '비용': [420424, 214547, 1889192, 443625, 285220, 1029073, 449963, 2626506],
-    '전환': [89, 20, 171, 35, 22, 63, 29, 140],
-    'CPL': [4741, 10727, 11048, 12675, 13266, 16334, 15788, 18761],
-    'CTR': [53.4, 3.1, 10.7, 3.0, 3.8, 3.5, 5.9, 4.7],
-    'CVR': [15.4, 27.4, 17.8, 21.3, 19.0, 13.9, 17.8, 12.6],
-    '예산비중': [5.7, 2.9, 25.7, 6.0, 3.9, 14.0, 6.1, 35.7],
-    '효율': ['BEST', 'CVR최고', '볼륨OK', '보통', '보통', '비효율', '비효율', 'WORST'],
-    '서비스매칭': ['완벽', '완벽', '좋음', '좋음', '완벽', '보통', '보통', '미스매치'],
+    'segment': ['브랜드', '기타(영어+이삿짐센터)', '원룸/소형', '포장이사', '일반이사', '가격/견적', '용달/화물', '지역+이사', '외국인'],
+    'keywords': [1, 80, 36, 49, 40, 29, 80, 53, 1],
+    'cost': [394261, 2227000, 357555, 412435, 460648, 284624, 1774389, 488317, 80001],
+    'conversions': [84, 193, 28, 30, 32, 19, 104, 28, 2],
+    'cpl': [4655, 11509, 12769, 13747, 14395, 14980, 17061, 17133, 40000],
+    'clicks': [544, 1058, 127, 153, 202, 109, 750, 171, 91],
+    'impressions': [1023, 12418, 3623, 4955, 7267, 2972, 17065, 2922, 1426],
 })
+PMAX_BENCHMARK = 6976
+SEARCH_CPL = 13363
 
 # Google 캠페인
 google_campaign = pd.DataFrame({
@@ -389,13 +388,11 @@ with st.sidebar:
     page = st.radio("", [
         "Executive Summary",
         "Google Deep-Dive",
-        "키워드 인벤토리",
+        "Google 수정 제안",
         "Meta Deep-Dive",
-        "Meta 인벤토리",
+        "Meta 수정 제안",
         "크로스채널 인사이트",
         "가설 & 원인 분석",
-        "예산 시뮬레이터",
-        "테스트 로드맵",
     ], index=0, label_visibility="collapsed")
 
     st.markdown("---")
@@ -419,37 +416,41 @@ if page == "Executive Summary":
     st.markdown("##### 주간 분석 (2025.11.02 ~ 2026.01.31, 13주) | Google Ads + Meta Ads")
     divider()
 
-    # ── B. TOP 3 FINDINGS ──
-    section("TOP 3 FINDINGS")
+    # ── B. 광고 집행 현황 ──
+    section("광고 집행 현황")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("""
+        | 항목 | 수치 |
+        |------|------|
+        | **총 광고비** | ₩40,916,071 |
+        | **주별 평균** | ₩3,147,390 |
+        | **월 평균** | ₩13,638,690 |
+        | **Google Ads** | ₩15,452,143 (37.8%) |
+        | **Meta Ads** | ₩25,463,928 (62.2%) |
+        """)
+    with col2:
+        st.markdown("""
+        | 항목 | 수치 |
+        |------|------|
+        | **총 전환** | 6,473건 |
+        | **주별 평균** | 498건 |
+        | **Google CPL** | ₩9,432 |
+        | **Meta CPL** | ₩5,267 |
+        | **전체 CPL** | ₩6,322 |
+        """)
 
-    # One Line Finding — large, prominent, centered
-    st.markdown("""
-    <div class="insight-box success" style="text-align:center; padding:32px 24px;">
-        <div style="font-size:22px; font-weight:900; color:#1B3A5C; line-height:1.5;">
-            이사대학의 광고는 광고를 통해 전달하고자 하는 메시지가<br>유저의 의도와 맞지 않습니다.
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    divider()
+
+    # ── C. TOP FINDINGS ──
+    section("TOP FINDINGS")
 
     st.markdown("")
 
-    # Deep Analysis Findings — 2 cards side by side
+    # Deep Analysis Findings — 2 cards side by side (SWAPPED)
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("""
-        <div class="kpi-card orange" style="text-align:left; padding:20px;">
-            <div style="font-size:17px; font-weight:900; margin:8px 0; line-height:1.5;">
-                가격 비교 메시지는 효율이 좋으나, 동일한 이미지로 예산의 70%를 사용
-            </div>
-            <div style="font-size:13px; opacity:0.9; line-height:1.7; margin-top:12px;">
-                Meta '가격 소재' 광고세트 하나가 전체 Meta 예산의 70%, 전환의 72%를 독식.
-                소재 피로 시 대안 부재.
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col2:
         st.markdown("""
         <div class="kpi-card red" style="text-align:left; padding:20px;">
             <div style="font-size:17px; font-weight:900; margin:8px 0; line-height:1.5;">
@@ -464,21 +465,34 @@ if page == "Executive Summary":
         </div>
         """, unsafe_allow_html=True)
 
+    with col2:
+        st.markdown("""
+        <div class="kpi-card orange" style="text-align:left; padding:20px;">
+            <div style="font-size:17px; font-weight:900; margin:8px 0; line-height:1.5;">
+                가격 비교 메시지는 효율이 좋으나, 동일한 이미지로 예산의 70%를 사용
+            </div>
+            <div style="font-size:13px; opacity:0.9; line-height:1.7; margin-top:12px;">
+                Meta '가격 소재' 광고세트 하나가 전체 Meta 예산의 70%, 전환의 72%를 독식.
+                소재 피로 시 대안 부재.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
     divider()
 
-    # ── C. EXPECTED IMPROVEMENT ──
+    # ── D. EXPECTED IMPROVEMENT ──
     section("EXPECTED IMPROVEMENT")
 
     st.markdown("""
     <div style="text-align:center; font-size:16px; font-weight:700; color:#1B3A5C; margin-bottom:16px;">
-        현재 &rarr; 적용 후 (보수적)
+        현재 &rarr; 적용 후 (보수적 20% 개선)
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown(f"""
     <div class="kpi-container">
-        {kpi_card("Google 검색 CPL", "₩14,714 → ₩10,300", "−30%", "green")}
-        {kpi_card("월 추가 전환", "+239건", "동일 예산 기준", "green")}
+        {kpi_card("Google 검색 CPL", "₩14,323 → ₩11,458", "−20%", "green")}
+        {kpi_card("추가 전환 (13주)", "+162건", "동일 예산, 키워드 최적화", "green")}
         {kpi_card("월 절감 가능", "₩220만원", "비효율 예산 제거", "green")}
     </div>
     """, unsafe_allow_html=True)
@@ -486,12 +500,12 @@ if page == "Executive Summary":
     st.markdown("")
     insight("""
     의도별 광고 카피 분화 + 비효율 키워드 정리만으로, 검색 캠페인 CPL을 PMax 수준에 근접시킬 수 있습니다.
-    <strong>보수적으로 CPL 30% 개선 시 동일 예산으로 월 239건 추가 전환 가능.</strong>
+    <strong>보수적으로 CPL 20% 개선 시 동일 예산으로 13주간 162건 추가 전환 가능.</strong>
     """, "success")
 
     divider()
 
-    # ── D. METHODOLOGY ──
+    # ── E. METHODOLOGY ──
     section("분석 방법론")
 
     insight("""
@@ -508,20 +522,6 @@ if page == "Executive Summary":
     &#8226; 실제 서비스 이용 여부, 서비스 이용 시 단가(객단가) 등은 확인 불가<br>
     &#8226; → 내부 회사 DB 연동 시 Lead → 계약 전환율, 채널별 객단가 분석 가능
     """)
-
-    divider()
-
-    # ── E. KPI OVERVIEW ──
-    section("KPI OVERVIEW")
-
-    st.markdown(f"""
-    <div class="kpi-container">
-        {kpi_card("총 광고비 (13주)", "₩40,916,071", "주 평균 ₩3,147K")}
-        {kpi_card("총 전환 (상담신청)", "6,473건", "주 평균 498건")}
-        {kpi_card("평균 CPL", "₩6,322")}
-        {kpi_card("Meta CPL 추세", "₩4,527", "↓ 21% (11월→1월)", "green")}
-    </div>
-    """, unsafe_allow_html=True)
 
     divider()
 
@@ -552,7 +552,7 @@ if page == "Executive Summary":
 
 
 # ═══════════════════════════════════════════════
-# PAGE: Google Deep-Dive
+# PAGE: Google Deep-Dive (MERGED with keyword inventory)
 # ═══════════════════════════════════════════════
 elif page == "Google Deep-Dive":
 
@@ -560,7 +560,7 @@ elif page == "Google Deep-Dive":
     st.caption(f"총 광고비 ₩{GOOGLE_SPEND:,} | 전환 {GOOGLE_CONV:,}건 | CPL ₩{GOOGLE_CPL:,}")
     divider()
 
-    # ── Weekly Campaign CPL Trend ──
+    # ── A. Weekly Campaign CPL Trend ──
     section("캠페인별 주간 CPL 추이")
 
     insight("""
@@ -594,7 +594,7 @@ elif page == "Google Deep-Dive":
 
     divider()
 
-    # 의도별 분석
+    # ── B. 유저 검색 의도별 세그먼트 분석 ──
     section("유저 검색 의도별 세그먼트 분석")
 
     insight("""
@@ -603,26 +603,94 @@ elif page == "Google Deep-Dive":
     유저의 <strong>검색 의도(intent)</strong>가 이사대학 서비스와 얼마나 매칭되는지가 전환의 핵심입니다.
     """)
 
-    # CPL Bar + Service Match
-    df = google_intent.sort_values('CPL')
-    colors = [EFF_COLORS.get(e, '#999') for e in df['효율']]
+    # CPL horizontal bar chart with PMax benchmark
+    df_sorted = google_intent.sort_values('cpl', ascending=True)
+
+    bar_colors = []
+    for cpl in df_sorted['cpl']:
+        if cpl < PMAX_BENCHMARK:
+            bar_colors.append(COLORS['best'])
+        elif cpl < PMAX_BENCHMARK * 2:
+            bar_colors.append(COLORS['mid'])
+        else:
+            bar_colors.append(COLORS['worst'])
 
     fig = go.Figure()
     fig.add_trace(go.Bar(
-        x=df['의도_short'], y=df['CPL'], marker_color=colors,
-        text=[f'₩{v:,}' for v in df['CPL']], textposition='outside',
-        textfont=dict(size=13, family='Noto Sans KR'),
+        y=df_sorted['segment'],
+        x=df_sorted['cpl'],
+        orientation='h',
+        marker_color=bar_colors,
+        text=[f'₩{v:,}' for v in df_sorted['cpl']],
+        textposition='outside',
+        textfont=dict(size=12, family='Noto Sans KR'),
     ))
-    fig.add_hline(y=GOOGLE_CPL, line_dash="dot", line_color="#ccc", annotation_text=f"Google 평균 ₩{GOOGLE_CPL:,}")
-    fig.update_layout(height=380, margin=dict(l=20,r=20,t=20,b=20), plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='CPL (₩)'), xaxis_title='')
+    fig.add_vline(
+        x=PMAX_BENCHMARK, line_dash="dash", line_color=COLORS['blue'], line_width=2,
+        annotation_text=f"PMax 기준 ₩{PMAX_BENCHMARK:,}",
+        annotation_position="top",
+        annotation_font_size=11,
+        annotation_font_color=COLORS['blue'],
+    )
+    fig.update_layout(
+        height=420, margin=dict(l=20, r=80, t=30, b=20),
+        plot_bgcolor='rgba(0,0,0,0)',
+        xaxis=dict(title='CPL (₩)', showgrid=True, gridcolor='#f0f0f0'),
+        yaxis=dict(title=''),
+        title=dict(text='의도 세그먼트별 CPL (PMax 벤치마크 대비)', font=dict(size=14)),
+    )
     st.plotly_chart(fig, use_container_width=True)
 
-    # Opportunity Matrix
-    section("기회 매트릭스: CPL vs 전환율")
+    # Color legend
+    st.markdown("""
+    <div style="display:flex; gap:24px; justify-content:center; font-size:13px; margin-bottom:16px;">
+        <span><span style="color:#2ECC71; font-weight:700;">●</span> PMax보다 효율적</span>
+        <span><span style="color:#F39C12; font-weight:700;">●</span> PMax의 1~2배</span>
+        <span><span style="color:#E74C3C; font-weight:700;">●</span> PMax의 2배 초과</span>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Summary table
+    st.markdown("**전체 지표 테이블**")
+    display_df = google_intent.copy()
+    display_df = display_df[['segment', 'cpl', 'cost', 'impressions', 'clicks', 'conversions', 'keywords']]
+    display_df.columns = ['세그먼트', 'CPL', '비용', '노출', '클릭', '전환', '키워드 수']
+    display_df['비용'] = display_df['비용'].apply(lambda x: f'₩{x:,}')
+    display_df['CPL'] = display_df['CPL'].apply(lambda x: f'₩{x:,}')
+    display_df['노출'] = display_df['노출'].apply(lambda x: f'{x:,}')
+    st.dataframe(display_df, use_container_width=True, hide_index=True)
+
+    st.caption("**참고**: 키워드 보고서 기준 (검색 캠페인 비용의 약 79% 커버)")
+
+    divider()
+
+    # ── C. 기회 매트릭스 ──
+    section("기회 매트릭스: CPL vs CVR")
+
+    # Calculate CTR and CVR
+    df_matrix = google_intent.copy()
+    df_matrix['CTR'] = (df_matrix['clicks'] / df_matrix['impressions'] * 100).round(2)
+    df_matrix['CVR'] = (df_matrix['conversions'] / df_matrix['clicks'] * 100).round(2)
+
+    # Exclude 외국인 (only 2 conversions)
+    df_matrix_plot = df_matrix[df_matrix['segment'] != '외국인'].copy()
+
+    # Service matching
+    service_match_map = {
+        '브랜드': '완벽',
+        '기타(영어+이삿짐센터)': '좋음',
+        '원룸/소형': '완벽',
+        '포장이사': '좋음',
+        '일반이사': '보통',
+        '가격/견적': '완벽',
+        '용달/화물': '미스매치',
+        '지역+이사': '보통',
+    }
+    df_matrix_plot['서비스매칭'] = df_matrix_plot['segment'].map(service_match_map)
 
     fig2 = px.scatter(
-        google_intent, x='CPL', y='CVR', size='비용', color='서비스매칭',
-        text='의도_short', size_max=60,
+        df_matrix_plot, x='cpl', y='CVR', size='cost', color='서비스매칭',
+        text='segment', size_max=60,
         color_discrete_map={'완벽':'#2ECC71', '좋음':'#3498DB', '보통':'#F39C12', '미스매치':'#E74C3C'},
     )
     fig2.update_traces(textposition='top center', textfont_size=11)
@@ -639,14 +707,14 @@ elif page == "Google Deep-Dive":
     st.plotly_chart(fig2, use_container_width=True)
 
     insight("""
-    <strong>왼쪽 위 = Sweet Spot</strong> (CPL 낮고 CVR 높음): 브랜드, 원룸/소형이사<br>
-    <strong>오른쪽 아래 = Danger Zone</strong> (CPL 높고 CVR 낮음): 용달/화물, 일반 이사<br><br>
+    <strong>왼쪽 위 = Sweet Spot</strong> (CPL 낮고 CVR 높음): 브랜드, 원룸/소형, 가격/견적<br>
+    <strong>오른쪽 아래 = Danger Zone</strong> (CPL 높고 CVR 낮음): 용달/화물, 지역+이사<br><br>
     버블 크기 = 예산 규모. <strong style="color:#E74C3C;">가장 큰 버블(용달/화물)이 Danger Zone에 있다</strong>는 것이 핵심 문제.
     """, "danger")
 
     divider()
 
-    # ── Weekly Intent Segment CPL ──
+    # ── D. 의도 세그먼트별 주간 CPL 추이 ──
     section("의도 세그먼트별 주간 CPL 추이")
 
     insight("주별로 각 의도 세그먼트의 CPL이 어떻게 변하는지 확인합니다. <strong>0전환 주차(CPL=0)는 제외</strong>했습니다.")
@@ -675,138 +743,7 @@ elif page == "Google Deep-Dive":
 
     divider()
 
-    # 낭비 분석
-    section("낭비 분석: 어디서 돈이 새고 있나")
-
-    wasted = 2_626_506
-    possible_conv = int(wasted / 6411)  # 소형이사 CPL 기준
-    actual_conv = 140
-
-    col1, col2, col3 = st.columns(3)
-    col1.metric("용달/화물 투입 예산", f"₩{wasted:,}", delta="전체의 35.7%")
-    col2.metric("용달로 얻은 전환", f"{actual_conv}건", delta=f"CPL ₩{18761:,}", delta_color="inverse")
-    col3.metric("소형이사였다면?", f"~{possible_conv}건", delta=f"+{possible_conv - actual_conv}건 (+{(possible_conv/actual_conv-1)*100:.0f}%)")
-
-    insight(f"""
-    같은 ₩{wasted:,}을 <strong>소형이사 키워드</strong>(CPL ₩6,411)에 쓰면<br>
-    <strong style="color:#2ECC71;">{possible_conv}건</strong> 전환 가능 (현재 {actual_conv}건 → <strong>+{possible_conv-actual_conv}건</strong>)<br><br>
-    이것은 추정이 아니라, 이미 소형이사 CVR 27.4%로 <strong>검증된 숫자</strong>입니다.
-    """, "success")
-
-    divider()
-
-    # 캠페인 & PMax
-    section("캠페인 구조")
-
-    col1, col2 = st.columns(2)
-    with col1:
-        fig = go.Figure(go.Bar(
-            x=google_campaign['캠페인'], y=google_campaign['CPL'],
-            marker_color=[COLORS['best'], COLORS['worst'], COLORS['mid']],
-            text=[f'₩{v:,}' for v in google_campaign['CPL']], textposition='auto',
-        ))
-        fig.update_layout(height=320, title='캠페인별 CPL', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0'))
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col2:
-        fig = go.Figure(go.Bar(
-            x=pmax_asset['에셋그룹'], y=pmax_asset['CPL'],
-            marker_color=[COLORS['blue'], COLORS['best'], COLORS['mid']],
-            text=[f'₩{v:,}' for v in pmax_asset['CPL']], textposition='auto',
-        ))
-        fig.update_layout(height=320, title='PMax 에셋그룹별 CPL', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0'))
-        st.plotly_chart(fig, use_container_width=True)
-
-    insight("""
-    PMax CPL ₩6,880은 검색(₩14,323) 대비 절반이지만, <strong>리드 품질은 미검증</strong>.<br>
-    PMax는 구글 AI가 자동 최적화하는 캠페인 — CPA는 낮지만 <strong>상담→계약 전환율이 검색 대비 낮을 수 있음</strong>.<br>
-    이건 CRM 데이터 연동 후에야 확인 가능합니다 (Phase 3).
-    """, "warning")
-
-
-# ═══════════════════════════════════════════════
-# PAGE: 키워드 인벤토리
-# ═══════════════════════════════════════════════
-elif page == "키워드 인벤토리":
-
-    st.markdown("# 키워드 인벤토리")
-    st.caption("Google 검색 캠페인 — 의도 세그먼트별 키워드 분석")
-    divider()
-
-    # ── A. Intent Segment Overview ──
-    section("의도 세그먼트 개요")
-
-    intent_data = pd.DataFrame({
-        'segment': ['브랜드', '기타(영어+이삿짐센터)', '원룸/소형', '포장이사', '일반이사', '가격/견적', '용달/화물', '지역+이사', '외국인'],
-        'keywords': [1, 80, 36, 49, 40, 29, 80, 53, 1],
-        'cost': [394261, 2227000, 357555, 412435, 460648, 284624, 1774389, 488317, 80001],
-        'conversions': [84, 193, 28, 30, 32, 19, 104, 28, 2],
-        'cpl': [4655, 11509, 12769, 13747, 14395, 14980, 17061, 17133, 40000],
-        'clicks': [544, 1058, 127, 153, 202, 109, 750, 171, 91],
-        'impressions': [1023, 12418, 3623, 4955, 7267, 2972, 17065, 2922, 1426]
-    })
-
-    pmax_benchmark = 6976
-
-    # CPL bar chart — horizontal, sorted
-    df_sorted = intent_data.sort_values('cpl', ascending=True)
-
-    bar_colors = []
-    for cpl in df_sorted['cpl']:
-        if cpl < pmax_benchmark:
-            bar_colors.append(COLORS['best'])      # green
-        elif cpl < pmax_benchmark * 2:
-            bar_colors.append(COLORS['mid'])        # orange
-        else:
-            bar_colors.append(COLORS['worst'])      # red
-
-    fig = go.Figure()
-    fig.add_trace(go.Bar(
-        y=df_sorted['segment'],
-        x=df_sorted['cpl'],
-        orientation='h',
-        marker_color=bar_colors,
-        text=[f'₩{v:,}' for v in df_sorted['cpl']],
-        textposition='outside',
-        textfont=dict(size=12, family='Noto Sans KR'),
-    ))
-    fig.add_vline(
-        x=pmax_benchmark, line_dash="dash", line_color=COLORS['blue'], line_width=2,
-        annotation_text=f"PMax 기준 ₩{pmax_benchmark:,}",
-        annotation_position="top",
-        annotation_font_size=11,
-        annotation_font_color=COLORS['blue'],
-    )
-    fig.update_layout(
-        height=420, margin=dict(l=20, r=80, t=30, b=20),
-        plot_bgcolor='rgba(0,0,0,0)',
-        xaxis=dict(title='CPL (₩)', showgrid=True, gridcolor='#f0f0f0'),
-        yaxis=dict(title=''),
-        title=dict(text='의도 세그먼트별 CPL (PMax 벤치마크 대비)', font=dict(size=14)),
-    )
-    st.plotly_chart(fig, use_container_width=True)
-
-    # Color legend
-    st.markdown("""
-    <div style="display:flex; gap:24px; justify-content:center; font-size:13px; margin-bottom:16px;">
-        <span><span style="color:#2ECC71; font-weight:700;">●</span> PMax보다 효율적</span>
-        <span><span style="color:#F39C12; font-weight:700;">●</span> PMax의 1~2배</span>
-        <span><span style="color:#E74C3C; font-weight:700;">●</span> PMax의 2배 초과</span>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Table
-    st.markdown("**전체 지표 테이블**")
-    display_df = intent_data.copy()
-    display_df.columns = ['세그먼트', '키워드 수', '비용', '전환', 'CPL', '클릭', '노출']
-    display_df['비용'] = display_df['비용'].apply(lambda x: f'₩{x:,}')
-    display_df['CPL'] = display_df['CPL'].apply(lambda x: f'₩{x:,}')
-    display_df['노출'] = display_df['노출'].apply(lambda x: f'{x:,}')
-    st.dataframe(display_df, use_container_width=True, hide_index=True)
-
-    divider()
-
-    # ── B. 같은 카피 문제 ──
+    # ── E. 같은 카피 문제 ──
     section("같은 카피 문제 — 의도-메시지 불일치")
 
     st.markdown("""
@@ -836,13 +773,13 @@ elif page == "키워드 인벤토리":
 
     divider()
 
-    # ── C. PMax vs Search Comparison ──
+    # ── F. PMax vs 검색 CPL 비교 ──
     section("PMax vs 검색 CPL 비교")
 
     pmax_search_data = pd.DataFrame({
-        'campaign': ['PMax 전체', '검색-내국인', '검색-외국인', 'PMax: 리타겟팅', 'PMax: 맞춤(소형이사)', 'PMax: 맞춤(지역이사)', 'PMax: 경쟁사타겟'],
-        'cpl': [6976, 14714, 10825, 6401, 7042, 7873, 6796],
-        'type': ['PMax', '검색', '검색', 'PMax 세부', 'PMax 세부', 'PMax 세부', 'PMax 세부'],
+        'campaign': ['PMax 전체', '검색-내국인', '검색-외국인', 'PMax: 리타겟팅', 'PMax: 맞춤(소형이사)', 'PMax: 맞춤(지역이사)'],
+        'cpl': [6976, 14323, 10816, 6218, 7017, 7580],
+        'type': ['PMax', '검색', '검색', 'PMax 세부', 'PMax 세부', 'PMax 세부'],
     })
 
     type_colors = {
@@ -873,18 +810,69 @@ elif page == "키워드 인벤토리":
     col1, col2 = st.columns(2)
     with col1:
         insight("""
-        <strong>PMax 전체 CPL ₩6,976</strong> — 검색(₩14,714) 대비 <strong>52% 저렴</strong><br>
-        PMax 내에서도 리타겟팅(₩6,401)과 경쟁사타겟(₩6,796)이 가장 효율적
+        <strong>PMax 전체 CPL ₩6,976</strong> — 검색(₩14,323) 대비 <strong>51% 저렴</strong><br>
+        PMax 내에서도 리타겟팅(₩6,218)이 가장 효율적
         """, "success")
     with col2:
         insight("""
-        <strong>검색-내국인 CPL ₩14,714</strong>가 PMax의 2.1배<br>
+        <strong>검색-내국인 CPL ₩14,323</strong>이 PMax의 2.1배<br>
         카피 분화 없이 동일 메시지 사용 → <strong>메시지 최적화 여지 큼</strong>
         """, "warning")
 
     divider()
 
-    # ── D. Top/Bottom Keywords per Segment ──
+    # ── G. 캠페인 구조 ──
+    section("캠페인 구조")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        fig = go.Figure(go.Bar(
+            x=google_campaign['캠페인'], y=google_campaign['CPL'],
+            marker_color=[COLORS['best'], COLORS['worst'], COLORS['mid']],
+            text=[f'₩{v:,}' for v in google_campaign['CPL']], textposition='auto',
+        ))
+        fig.update_layout(height=320, title='캠페인별 CPL', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0'))
+        st.plotly_chart(fig, use_container_width=True)
+
+    with col2:
+        fig = go.Figure(go.Bar(
+            x=pmax_asset['에셋그룹'], y=pmax_asset['CPL'],
+            marker_color=[COLORS['blue'], COLORS['best'], COLORS['mid']],
+            text=[f'₩{v:,}' for v in pmax_asset['CPL']], textposition='auto',
+        ))
+        fig.update_layout(height=320, title='PMax 에셋그룹별 CPL', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0'))
+        st.plotly_chart(fig, use_container_width=True)
+
+    insight("""
+    PMax CPL ₩6,880은 검색(₩14,323) 대비 절반이지만, <strong>리드 품질은 미검증</strong>.<br>
+    PMax는 구글 AI가 자동 최적화하는 캠페인 — CPA는 낮지만 <strong>상담→계약 전환율이 검색 대비 낮을 수 있음</strong>.<br>
+    이건 CRM 데이터 연동 후에야 확인 가능합니다.
+    """, "warning")
+
+    divider()
+
+    # ── H. 낭비 분석 ──
+    section("낭비 분석: 어디서 돈이 새고 있나")
+
+    wasted = 1774389
+    avg_cpl_good = 12769
+    possible_conv = int(wasted / avg_cpl_good)
+    actual_conv = 104
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("용달/화물 투입 예산", f"₩{wasted:,}", delta="전체의 28.5%")
+    col2.metric("용달로 얻은 전환", f"{actual_conv}건", delta=f"CPL ₩{17061:,}", delta_color="inverse")
+    col3.metric("원룸/소형이었다면?", f"~{possible_conv}건", delta=f"+{possible_conv - actual_conv}건 (+{int((possible_conv/actual_conv-1)*100)}%)")
+
+    insight(f"""
+    같은 ₩{wasted:,}을 <strong>원룸/소형 키워드</strong>(CPL ₩12,769)에 쓰면<br>
+    <strong style="color:#2ECC71;">{possible_conv}건</strong> 전환 가능 (현재 {actual_conv}건 → <strong>+{possible_conv-actual_conv}건</strong>)<br><br>
+    이것은 추정이 아니라, 이미 원룸/소형 CVR 22%로 <strong>검증된 숫자</strong>입니다.
+    """, "success")
+
+    divider()
+
+    # ── I. 세그먼트별 주요 키워드 상세 ──
     section("세그먼트별 주요 키워드 상세")
 
     insight("각 세그먼트의 비용 상위 키워드와 CPL을 확인합니다. 펼쳐서 상세 데이터를 확인하세요.")
@@ -955,7 +943,124 @@ elif page == "키워드 인벤토리":
 
 
 # ═══════════════════════════════════════════════
-# PAGE: Meta Deep-Dive
+# PAGE: Google 수정 제안 (NEW)
+# ═══════════════════════════════════════════════
+elif page == "Google 수정 제안":
+    st.markdown("# Google 검색 캠페인 수정 제안")
+    st.caption("키워드 재구성 + 광고 카피 분화를 통한 CPL 20% 개선")
+    divider()
+
+    # ── Section 1: 문제 진단 ──
+    section("문제 진단")
+
+    st.markdown(f"""
+    <div class="kpi-container">
+        {kpi_card("검색 CPL", "₩14,323", "PMax의 2.1배", "red")}
+        {kpi_card("비효율 예산 (13주)", "₩2,957K", "용달+0전환 키워드", "red")}
+        {kpi_card("동일 카피 문제", "3개 광고그룹", "15 타이틀 + 4 설명 동일", "red")}
+    </div>
+    """, unsafe_allow_html=True)
+
+    insight("""
+    <strong>핵심 문제: 3개 광고그룹이 완전히 동일한 카피를 사용</strong><br>
+    → "용달 가격"을 검색한 유저와 "원룸 이사"를 검색한 유저가 같은 광고를 본다<br>
+    → 검색 의도와 광고 메시지 불일치가 <strong>검색 CPL이 PMax의 2배인 핵심 원인</strong>
+    """, "danger")
+
+    divider()
+
+    # ── Section 2: 비용 분석 ──
+    section("비용 분석 — 비효율의 대가")
+
+    waste_table = pd.DataFrame({
+        '비효율 항목': ['용달/화물 과다지출', '0전환 키워드', '합계'],
+        '비용 (13주)': ['₩1,774,389', '₩1,183,000', '₩2,957,389'],
+        '월 환산': ['₩591K', '₩394K', '₩986K'],
+        '설명': ['CPL ₩17,061 — PMax의 2.4배', '226개 키워드, 전환 0건', ''],
+    })
+    st.dataframe(waste_table, use_container_width=True, hide_index=True)
+
+    insight("""
+    이 ₩2,957K를 PMax 수준(CPL ₩6,976)으로 사용했다면 <strong>424건</strong> 추가 전환 가능했습니다.
+    """, "warning")
+
+    divider()
+
+    # ── Section 3: 제안 — 세그먼트별 예산 재편성 ──
+    section("제안 — 세그먼트별 예산 재편성")
+
+    proposal_data = pd.DataFrame({
+        '세그먼트': ['브랜드', '원룸/소형', '가격/견적', '포장이사', '기타(영어)', '일반이사', '지역+이사', '용달/화물'],
+        '현재 예산': ['₩394K', '₩358K', '₩285K', '₩412K', '₩2,227K', '₩461K', '₩488K', '₩1,774K'],
+        '현재 CPL': ['₩4,655', '₩12,769', '₩14,980', '₩13,747', '₩11,509', '₩14,395', '₩17,133', '₩17,061'],
+        '현재 전환': [84, 28, 19, 30, 193, 32, 28, 104],
+        '방향': ['→ 유지', '↑↑ 증액', '↑↑ 증액', '↑ 소폭증액', '→ 카피최적화', '↓ 감액', '↓ 감액', '↓↓ 대폭감액'],
+        '제안 예산': ['₩400K', '₩1,200K', '₩800K', '₩600K', '₩2,200K', '₩350K', '₩300K', '₩500K'],
+        '목표 CPL': ['₩4,655', '₩10,215', '₩11,984', '₩10,998', '₩9,207', '₩11,516', '₩13,706', '₩13,649'],
+        '예상 전환': [86, 117, 67, 55, 239, 30, 22, 37],
+    })
+    st.dataframe(proposal_data, use_container_width=True, hide_index=True)
+
+    insight("""
+    제안 예산 합계: ₩6,350K (현재 ₩6,399K 대비 유사). 예산 재배분 + CPL 20% 개선으로 <strong>총 전환 520건 → 653건 (+26%)</strong> 달성 가능.
+    """, "success")
+
+    divider()
+
+    # ── Section 4: 핵심 액션 ──
+    section("핵심 액션")
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.markdown("""
+        <div class="kpi-card red" style="text-align:center; padding:20px;">
+            <div style="font-size:18px; font-weight:900;">용달/화물 ↓↓</div>
+            <div style="font-size:24px; font-weight:900; margin:12px 0;">₩1,774K → ₩500K</div>
+            <div style="font-size:13px; line-height:1.6;">
+                이사 의도 없는 단품배송 키워드 제거
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div class="kpi-card green" style="text-align:center; padding:20px;">
+            <div style="font-size:18px; font-weight:900;">원룸/가격 ↑↑</div>
+            <div style="font-size:24px; font-weight:900; margin:12px 0;">₩643K → ₩2,000K</div>
+            <div style="font-size:13px; line-height:1.6;">
+                서비스 매칭 최고 세그먼트 확대
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown("""
+        <div class="kpi-card" style="text-align:center; padding:20px;">
+            <div style="font-size:18px; font-weight:900;">카피 분화</div>
+            <div style="font-size:24px; font-weight:900; margin:12px 0;">3개 → 8개 광고그룹</div>
+            <div style="font-size:13px; line-height:1.6;">
+                의도별 맞춤 메시지 전달
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    divider()
+
+    # ── Section 5: 예상 효과 ──
+    section("예상 효과")
+
+    st.markdown(f"""
+    <div class="kpi-container">
+        {kpi_card("검색 CPL", "₩14,323 → ₩11,458", "−20%", "green")}
+        {kpi_card("추가 전환 (13주)", "+133건", "520 → 653건", "green")}
+        {kpi_card("비효율 절감", "₩986K/월", "연 ₩11.8M", "green")}
+    </div>
+    """, unsafe_allow_html=True)
+
+
+# ═══════════════════════════════════════════════
+# PAGE: Meta Deep-Dive (UPDATED)
 # ═══════════════════════════════════════════════
 elif page == "Meta Deep-Dive":
 
@@ -971,8 +1076,14 @@ elif page == "Meta Deep-Dive":
     이사대학은 광고세트별로 다른 소재 메시지를 사용 → <strong>광고세트 = 메시지 전략</strong>으로 볼 수 있습니다.
     """)
 
+    # Active creatives only (filter)
+    active_adsets = meta_adset[
+        (meta_adset['예산비중'] >= 0.5) &
+        (~meta_adset['소재_short'].isin(['소재ALL', '신규(12)', '신규(11)', '공통']))
+    ]
+
     # 메인 차트
-    df_meta = meta_adset[meta_adset['예산비중'] >= 0.5].sort_values('CPL')
+    df_meta = active_adsets.sort_values('CPL')
     colors = [EFF_COLORS.get(e, '#999') for e in df_meta['효율']]
 
     fig = go.Figure()
@@ -985,23 +1096,40 @@ elif page == "Meta Deep-Dive":
     fig.update_layout(height=380, plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='CPL (₩)'))
     st.plotly_chart(fig, use_container_width=True)
 
-    # CTR vs CVR
-    section("CTR vs CVR: 관심과 전환의 괴리")
+    divider()
 
-    df_sig = meta_adset[meta_adset['예산비중'] >= 0.5]
-    fig = px.scatter(df_sig, x='CTR', y='CVR', size='비용', color='소재_short', text='소재_short', size_max=55,
-                     color_discrete_sequence=px.colors.qualitative.Bold)
-    fig.update_traces(textposition='top center', textfont_size=11)
-    fig.update_layout(height=420, plot_bgcolor='rgba(0,0,0,0)',
-                      xaxis=dict(title='CTR (%) — 광고 클릭률', showgrid=True, gridcolor='#f0f0f0'),
-                      yaxis=dict(title='CVR (%) — 전환율', showgrid=True, gridcolor='#f0f0f0'))
+    # CTR × CVR combined
+    section("종합 효율: CTR × CVR")
+
+    insight("""
+    <strong>CTR(클릭률) × CVR(전환율) = 노출 대비 전환 효율</strong><br>
+    CTR이 높아도 전환 안 되면 의미 없고, CVR이 높아도 클릭이 없으면 볼륨이 안 나옵니다.<br>
+    <strong>두 지표를 곱한 종합 효율</strong>로 소재의 실질 성과를 비교합니다.
+    """)
+
+    # Calculate composite efficiency
+    df_active = active_adsets.copy()
+    df_active['종합효율'] = df_active['CTR'] * df_active['CVR'] / 100
+    df_active = df_active.sort_values('종합효율', ascending=False)
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=df_active['소재_short'],
+        y=df_active['종합효율'],
+        marker_color=[COLORS['best'] if v > 0.2 else COLORS['mid'] if v > 0.14 else COLORS['worst'] for v in df_active['종합효율']],
+        text=[f'{v:.3f}%' for v in df_active['종합효율']],
+        textposition='outside',
+    ))
+    fig.update_layout(height=380, plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='CTR × CVR (%)'))
     st.plotly_chart(fig, use_container_width=True)
 
     insight("""
-    <strong style="color:#E74C3C;">"에브리타임"</strong>: CTR 1.20% (최고) but CVR 11.0% (최저급) = <strong>호기심 클릭</strong><br>
-    <strong style="color:#2ECC71;">"이사 가격"</strong>: CTR 0.99% (보통) but CVR 27.1% (최고) = <strong>전환 의도 클릭</strong><br><br>
-    CTR이 높다고 좋은 게 아닙니다. <strong>전환으로 이어지는 클릭</strong>이 중요합니다.<br>
-    "이사 가격" 소재는 관심 없는 사람은 안 클릭하지만, 클릭하는 사람은 진짜 이사 견적이 필요한 사람.
+    <strong>순위 해석</strong>:<br>
+    &#8226; <strong>이사가격 (0.268%)</strong>: CTR은 보통이지만 CVR 최고 → <strong>전환 의도 클릭</strong><br>
+    &#8226; <strong>여자모델 (0.220%)</strong>: 의외의 2위, CVR이 높음<br>
+    &#8226; <strong>가격소재 (0.147%)</strong>: 메인 소재, 볼륨은 최대<br>
+    &#8226; <strong>에브리타임 (0.132%)</strong>: CTR 최고이지만 CVR 최저 → <strong>호기심 클릭</strong><br><br>
+    <strong>CTR이 높다고 좋은 게 아닙니다. 전환으로 이어지는 클릭이 중요합니다.</strong>
     """, "success")
 
     divider()
@@ -1060,264 +1188,111 @@ elif page == "Meta Deep-Dive":
 
 
 # ═══════════════════════════════════════════════
-# PAGE: Meta 인벤토리
+# PAGE: Meta 수정 제안 (NEW)
 # ═══════════════════════════════════════════════
-elif page == "Meta 인벤토리":
-
-    st.markdown("# Meta 인벤토리")
-    st.caption("Meta Ads 캠페인 구조 및 광고세트 심화 분석")
+elif page == "Meta 수정 제안":
+    st.markdown("# Meta Ads 수정 제안")
+    st.caption("소재 다변화 + 플랫폼 확대를 통한 안정적 성장")
     divider()
 
-    # ── A. Campaign Hierarchy Tree ──
-    section("캠페인 구조 (Campaign → Ad Set)")
-
-    st.markdown("""
-    <div class="tree-box">
-        <div class="campaign">❤️ 원룸_DB 한국인 15 &nbsp; <span style="color:#2ECC71; font-size:13px;">(₩11.8M, CPL ₩4,850)</span></div>
-        <div class="sub">├── 4. 가격 소재 <span style="color:#999;">(전체 지출의 70%)</span></div>
-        <div class="sub">├── 1. 이사 가격</div>
-        <div class="sub">├── 3. 여자 모델</div>
-        <div class="sub">└── 2. 공통 소재</div>
-        <br>
-        <div class="campaign">💛 DB단가 한국인 5 &nbsp; <span style="color:#2ECC71; font-size:13px;">(₩4.2M, CPL ₩4,915)</span></div>
-        <div class="sub">└── (동일 4개 세트, CBO 배분)</div>
-        <br>
-        <div class="campaign">💚 에타 한국인 5 &nbsp; <span style="color:#3498DB; font-size:13px;">(₩3.2M, CPL ₩5,166)</span></div>
-        <div class="sub">└── 1. 에브리타임 (20대 타겟) — <strong style="color:#9B59B6;">EXCLUSIVE</strong></div>
-        <br>
-        <div class="campaign">❤️ 9~15시 3 &nbsp; <span style="color:#F39C12; font-size:13px;">(₩2.6M, CPL ₩6,810)</span></div>
-        <div class="sub">└── (동일 4개 세트, CBO 배분)</div>
-        <br>
-        <div class="campaign">❤️ 유사&제외 5 <span style="color:#E74C3C;">[OFF]</span> &nbsp; <span style="color:#E74C3C; font-size:13px;">(₩3.4M, CPL ₩6,544)</span></div>
-        <div class="sub">└── ★ 소재 ALL — <strong style="color:#9B59B6;">EXCLUSIVE</strong></div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    insight("""
-    <strong>구조 특징:</strong> 대부분 캠페인이 동일한 4개 광고세트를 공유 (CBO로 Meta가 자동 배분).<br>
-    "에브리타임"과 "소재 ALL"만 각각의 전용 캠페인에서 독립 운영됨.
-    """)
-
-    divider()
-
-    # ── B. Ad Set Performance Table + Chart ──
-    section("광고세트별 성과 분석")
-
-    adset_data = pd.DataFrame({
-        'ad_set': ['이사 가격', '가격 소재', '에브리타임 (20대)', '여자 모델', '★ 소재 ALL', '신규 소재(12.12)', '공통 소재', '신규 소재(11월)'],
-        'message': ['가격 호기심 자극', '견적/비용 비교', '대학생 자취방', '여성 혼자 이사', '소재 믹스(유사타겟)', '신규 테스트', '범용 브랜드', '초기 테스트'],
-        'cost': [628981, 17793636, 3248482, 151583, 3415809, 205059, 3639, 17226],
-        'conversions': [164, 3479, 629, 26, 522, 16, 1, 1],
-        'cpl': [3835, 5115, 5165, 5830, 6544, 12816, 3639, 17226],
-        'ctr': [0.99, 0.82, 1.19, 0.92, 0.78, 0.86, 1.15, 1.50],
-        'trend': ['안정', '개선중', '안정', '개선중', '불안정 → OFF', '실패 → OFF', '볼륨없음', '실패 → OFF'],
-        'status': ['Active', 'Active', 'Active', 'Active', 'OFF', 'OFF', 'Active', 'OFF']
-    })
-
-    # Horizontal bar chart
-    df_as = adset_data.sort_values('cpl', ascending=True)
-    status_colors = {'Active': COLORS['ok'], 'OFF': COLORS['gray']}
-
-    fig = go.Figure()
-    fig.add_trace(go.Bar(
-        y=df_as['ad_set'],
-        x=df_as['cpl'],
-        orientation='h',
-        marker_color=[status_colors[s] for s in df_as['status']],
-        text=[f'₩{v:,}' for v in df_as['cpl']],
-        textposition='outside',
-        textfont=dict(size=12, family='Noto Sans KR'),
-    ))
-    fig.update_layout(
-        height=400, margin=dict(l=20, r=80, t=30, b=20),
-        plot_bgcolor='rgba(0,0,0,0)',
-        xaxis=dict(title='CPL (₩)', showgrid=True, gridcolor='#f0f0f0'),
-        yaxis=dict(title=''),
-        title=dict(text='광고세트별 CPL (Active vs OFF)', font=dict(size=14)),
-    )
-    st.plotly_chart(fig, use_container_width=True)
-
-    st.markdown("""
-    <div style="display:flex; gap:24px; justify-content:center; font-size:13px; margin-bottom:16px;">
-        <span><span style="color:#3498DB; font-weight:700;">●</span> Active</span>
-        <span><span style="color:#95A5A6; font-weight:700;">●</span> OFF</span>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Detail table
-    st.markdown("**광고세트 상세 테이블**")
-    display_adset = adset_data.copy()
-    display_adset.columns = ['광고세트', '메시지 전략', '비용', '전환', 'CPL', 'CTR (%)', '트렌드', '상태']
-    display_adset['비용'] = display_adset['비용'].apply(lambda x: f'₩{x:,}')
-    display_adset['CPL'] = display_adset['CPL'].apply(lambda x: f'₩{x:,}')
-    st.dataframe(display_adset, use_container_width=True, hide_index=True)
-
-    divider()
-
-    # ── C. Platform x Ad Set Heatmap ──
-    section("플랫폼 x 광고세트 CPL 히트맵")
-
-    platform_adset_raw = {
-        ('이사 가격', 'Instagram'): 3811, ('이사 가격', 'Threads'): 4627, ('이사 가격', 'Facebook'): 2973,
-        ('가격 소재', 'Instagram'): 5209, ('가격 소재', 'Threads'): 3949, ('가격 소재', 'Facebook'): 4860,
-        ('에브리타임', 'Instagram'): 5177, ('에브리타임', 'Threads'): 740, ('에브리타임', 'Facebook'): 6614,
-        ('여자 모델', 'Instagram'): 5996, ('여자 모델', 'Threads'): 5920,
-        ('★ 소재 ALL', 'Instagram'): 6619, ('★ 소재 ALL', 'Threads'): 4979, ('★ 소재 ALL', 'Facebook'): 6588,
-        ('신규 소재(12.12)', 'Instagram'): 14235, ('신규 소재(12.12)', 'Threads'): 9382, ('신규 소재(12.12)', 'Facebook'): 8188,
-    }
-
-    ad_sets_hm = ['이사 가격', '가격 소재', '에브리타임', '여자 모델', '★ 소재 ALL', '신규 소재(12.12)']
-    platforms_hm = ['Instagram', 'Threads', 'Facebook']
-
-    z_data = []
-    text_data = []
-    for ad in ad_sets_hm:
-        row = []
-        text_row = []
-        for plat in platforms_hm:
-            val = platform_adset_raw.get((ad, plat), None)
-            row.append(val)
-            text_row.append(f'₩{val:,}' if val else '-')
-        z_data.append(row)
-        text_data.append(text_row)
-
-    fig = go.Figure(data=go.Heatmap(
-        z=z_data,
-        x=platforms_hm,
-        y=ad_sets_hm,
-        text=text_data,
-        texttemplate="%{text}",
-        textfont=dict(size=13, family='Noto Sans KR'),
-        colorscale=[
-            [0, '#2ECC71'],     # low CPL = green
-            [0.35, '#F1C40F'],  # mid
-            [0.7, '#E67E22'],   # high
-            [1, '#E74C3C'],     # very high = red
-        ],
-        colorbar=dict(title='CPL (₩)', titlefont=dict(size=11)),
-        hoverongaps=False,
-    ))
-    fig.update_layout(
-        height=400, margin=dict(l=20, r=20, t=30, b=20),
-        title=dict(text='플랫폼 x 광고세트 CPL — 낮을수록 녹색', font=dict(size=14)),
-        yaxis=dict(autorange='reversed'),
-    )
-    st.plotly_chart(fig, use_container_width=True)
-
-    insight("""
-    <strong style="color:#2ECC71;">에브리타임 x Threads = ₩740</strong> — 압도적 최저 CPL (표본 작을 수 있으나 주목)<br>
-    <strong>Threads가 거의 모든 소재에서 Instagram보다 CPL 낮음</strong> — 플랫폼 확대 근거<br>
-    Facebook은 "이사 가격" 소재(₩2,973)에서만 최저, 나머지는 가장 비쌈
-    """, "success")
-
-    divider()
-
-    # ── D. Monthly CPL Trend per Ad Set ──
-    section("광고세트별 월별 CPL 추이")
-
-    monthly_cpl = pd.DataFrame({
-        'month': ['Nov', 'Dec', 'Jan'],
-        '가격 소재': [5729, 5525, 4527],
-        '이사 가격': [4604, 3596, 4190],
-        '에브리타임': [5763, 4737, 5110],
-        '★ 소재 ALL': [10060, 4830, 12867],
-        '여자 모델': [None, 6585, 3174],
-    })
-
-    monthly_long = monthly_cpl.melt(id_vars='month', var_name='광고세트', value_name='CPL')
-    monthly_long = monthly_long.dropna()
-
-    fig = px.line(monthly_long, x='month', y='CPL', color='광고세트', markers=True,
-                  color_discrete_map={
-                      '가격 소재': COLORS['blue'],
-                      '이사 가격': COLORS['best'],
-                      '에브리타임': COLORS['mid'],
-                      '★ 소재 ALL': COLORS['worst'],
-                      '여자 모델': '#9B59B6',
-                  })
-    fig.update_layout(
-        height=400, plot_bgcolor='rgba(0,0,0,0)',
-        xaxis=dict(title='', showgrid=True, gridcolor='#f0f0f0'),
-        yaxis=dict(title='CPL (₩)', showgrid=True, gridcolor='#f0f0f0'),
-        title=dict(text='광고세트별 월별 CPL 추이', font=dict(size=14)),
-    )
-    fig.update_traces(line_width=3, marker_size=10)
-    st.plotly_chart(fig, use_container_width=True)
-
-    col1, col2 = st.columns(2)
-    with col1:
-        insight("""
-        <strong style="color:#2ECC71;">가격 소재:</strong> ₩5,729 → ₩4,527 <strong>(-21%)</strong> 꾸준히 개선<br>
-        <strong style="color:#9B59B6;">여자 모델:</strong> ₩6,585 → ₩3,174 <strong>(-52%)</strong> 급격한 개선
-        """, "success")
-    with col2:
-        insight("""
-        <strong style="color:#E74C3C;">★ 소재 ALL:</strong> ₩10,060 → ₩4,830 → ₩12,867 <strong>(V자 반등 = 풀 소진)</strong><br>
-        <strong style="color:#F39C12;">에브리타임:</strong> ₩5,763 → ₩5,110 <strong>(소폭 개선, 구조적 한계)</strong>
-        """, "warning")
-
-    divider()
-
-    # ── E. Concentration Risk Warning ──
-    section("집중도 리스크")
-
-    st.markdown("""
-    <div class="insight-box danger" style="text-align:center;">
-        <div style="font-size:48px; font-weight:900; color:#E74C3C; margin-bottom:8px;">70%</div>
-        <div style="font-size:18px; font-weight:700; color:#1B3A5C;">
-            "가격 소재" 1개가 전체 지출의 70%, 전환의 72%를 독식
-        </div>
-        <div style="font-size:14px; color:#666; margin-top:8px;">
-            이 소재에 피로도가 오면 <strong>전체 Meta 성과가 급락</strong>합니다<br>
-            백업 소재 육성이 시급합니다 — "이사 가격"(CPL ₩3,835)이 유력 후보
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Pie chart for visual emphasis
-    col1, col2 = st.columns(2)
-    with col1:
-        fig = go.Figure(go.Pie(
-            values=[70, 12.8, 13.7, 3.5],
-            labels=['가격 소재', '에브리타임', '소재 ALL', '기타'],
-            marker_colors=[COLORS['worst'], COLORS['mid'], COLORS['gray'], '#ddd'],
-            hole=0.55,
-            textinfo='label+percent',
-            textfont=dict(size=12),
-        ))
-        fig.update_layout(height=280, margin=dict(l=10,r=10,t=30,b=10), title=dict(text='지출 비중', font=dict(size=13)), showlegend=False)
-        st.plotly_chart(fig, use_container_width=True)
-    with col2:
-        fig = go.Figure(go.Pie(
-            values=[72, 13.2, 11.1, 3.7],
-            labels=['가격 소재', '에브리타임', '소재 ALL', '기타'],
-            marker_colors=[COLORS['worst'], COLORS['mid'], COLORS['gray'], '#ddd'],
-            hole=0.55,
-            textinfo='label+percent',
-            textfont=dict(size=12),
-        ))
-        fig.update_layout(height=280, margin=dict(l=10,r=10,t=30,b=10), title=dict(text='전환 비중', font=dict(size=13)), showlegend=False)
-        st.plotly_chart(fig, use_container_width=True)
-
-    divider()
-
-    # ── F. Threads Opportunity ──
-    section("Threads 확대 기회")
+    # ── Section 1: 문제 진단 ──
+    section("문제 진단")
 
     st.markdown(f"""
     <div class="kpi-container">
-        {kpi_card("Threads 평균 CPL", "₩4,111", "전 플랫폼 최저", "green")}
-        {kpi_card("현재 지출 비중", "4.5%", "과소 투입", "orange")}
-        {kpi_card("권장 목표 비중", "15%", "CPL 유지 검증 후", "green")}
+        {kpi_card("가격소재 집중도", "70%", "예산의 70%가 1개 소재", "red")}
+        {kpi_card("Threads 과소투자", "4.5%", "CPL 최저 플랫폼인데", "orange")}
+        {kpi_card("소재 피로 리스크", "고", "가격소재 의존 시 대안 부재", "red")}
     </div>
     """, unsafe_allow_html=True)
 
     insight("""
-    <strong>Threads는 거의 모든 광고세트에서 Instagram보다 CPL이 낮습니다.</strong><br>
-    현재 전체 지출의 4.5%만 Threads에 할당 — 광고주 경쟁이 적어 CPM이 낮은 것으로 추정.<br><br>
-    <strong>권장 액션:</strong> 단계적으로 5% → 10% → 15%까지 확대하면서 CPL 추이 모니터링.<br>
-    CPL이 ₩5,000 이하로 유지되면 계속 확대, 초과하면 현 수준 유지.
-    """, "success")
+    <strong>가격소재 1개에 70% 의존 → 이 소재에 피로도가 오면 전체 Meta 성과가 급락합니다.</strong><br>
+    Threads는 13주 연속 CPL 최저인데 예산의 4.5%만 투입 중.
+    """, "danger")
+
+    divider()
+
+    # ── Section 2: Active 소재 현황 ──
+    section("Active 소재 현황")
+
+    active_status_table = pd.DataFrame({
+        '소재': ['이사가격', '가격소재', '에브리타임', '여자모델'],
+        'CPL': ['₩3,850', '₩5,171', '₩5,154', '₩5,777'],
+        '비용': ['₩601K', '₩17,348K', '₩3,180K', '₩150K'],
+        '전환': [156, 3355, 617, 26],
+        'CTR': ['0.99%', '0.81%', '1.20%', '0.93%'],
+        'CVR': ['27.1%', '18.1%', '11.0%', '23.6%'],
+        'CTR×CVR': ['0.268%', '0.147%', '0.132%', '0.220%'],
+        '예산비중': ['2.4%', '69.6%', '12.8%', '0.6%'],
+    })
+    st.dataframe(active_status_table, use_container_width=True, hide_index=True)
+
+    divider()
+
+    # ── Section 3: 제안 ──
+    section("제안")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("""
+        <div class="kpi-card green" style="text-align:left; padding:20px;">
+            <div style="font-size:16px; font-weight:900;">Threads 확대</div>
+            <div style="font-size:22px; font-weight:900; margin:10px 0;">4.5% → 15%</div>
+            <div style="font-size:13px; line-height:1.6;">
+                CPL ₩3,800~4,700<br>
+                13주 연속 최저
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="kpi-card green" style="text-align:left; padding:20px; margin-top:16px;">
+            <div style="font-size:16px; font-weight:900;">이사가격 확대</div>
+            <div style="font-size:22px; font-weight:900; margin:10px 0;">2.4% → 10%</div>
+            <div style="font-size:13px; line-height:1.6;">
+                CPL ₩3,850 최저<br>
+                CTR×CVR 최고
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div class="kpi-card orange" style="text-align:left; padding:20px;">
+            <div style="font-size:16px; font-weight:900;">소재 다변화</div>
+            <div style="font-size:22px; font-weight:900; margin:10px 0;">가격소재 70% → 50%</div>
+            <div style="font-size:13px; line-height:1.6;">
+                피로도 리스크 감소<br>
+                나머지를 이사가격+여자모델
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="kpi-card" style="text-align:left; padding:20px; margin-top:16px;">
+            <div style="font-size:16px; font-weight:900;">에브리타임 모니터링</div>
+            <div style="font-size:22px; font-weight:900; margin:10px 0;">CVR 11% 개선 관찰</div>
+            <div style="font-size:13px; line-height:1.6;">
+                CTR은 높지만 전환 약함<br>
+                개선 안 되면 축소
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    divider()
+
+    # ── Section 4: 예상 효과 ──
+    section("예상 효과")
+
+    st.markdown(f"""
+    <div class="kpi-container">
+        {kpi_card("Meta CPL", "₩5,267 → ₩4,800", "−9%", "green")}
+        {kpi_card("Threads 전환 증가", "+150건/13주", "예산 비중 15% 시", "green")}
+        {kpi_card("소재 피로 리스크", "고→중", "1개 의존도 해소", "green")}
+    </div>
+    """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════════
@@ -1534,216 +1509,6 @@ elif page == "가설 & 원인 분석":
 
             계절적 수요 패턴과 타겟 품질이 동시에 작용.
             """)
-
-
-# ═══════════════════════════════════════════════
-# PAGE: 예산 시뮬레이터
-# ═══════════════════════════════════════════════
-elif page == "예산 시뮬레이터":
-
-    st.markdown("# 예산 시뮬레이터")
-    st.caption("예산 재배분 시 예상 효과를 실시간으로 확인하세요")
-    divider()
-
-    section("Google 검색 예산 재배분")
-
-    insight("현재 Google 검색 예산 배분과 CPL을 기준으로, 예산을 재배분하면 전환이 어떻게 변하는지 시뮬레이션합니다.")
-
-    total_search_budget = 7_358_550  # 검색 캠페인 총 예산 (키워드 비용 합)
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.markdown("**현재 배분**")
-        st.caption(f"검색 캠페인 키워드 비용 합계: ₩{total_search_budget:,}")
-        pct_yongdal = st.slider("용달/화물 비중 (%)", 0, 60, 36, key='yd')
-        pct_small = st.slider("소형이사/원룸 비중 (%)", 0, 40, 3, key='sm')
-        pct_price = st.slider("가격/견적 비중 (%)", 0, 30, 4, key='pr')
-        pct_rest = 100 - pct_yongdal - pct_small - pct_price
-        if pct_rest < 0:
-            st.error("비중 합이 100%를 초과합니다!")
-            pct_rest = 0
-        st.caption(f"나머지 (외국인+일반+지역+포장+브랜드): {pct_rest}%")
-
-    with col2:
-        # CPL assumptions
-        cpl_yongdal = 18761
-        cpl_small = 6411
-        cpl_price = 7900
-        cpl_rest = 11500  # 가중 평균
-
-        budget_yd = total_search_budget * pct_yongdal / 100
-        budget_sm = total_search_budget * pct_small / 100
-        budget_pr = total_search_budget * pct_price / 100
-        budget_rest = total_search_budget * pct_rest / 100
-
-        conv_yd = budget_yd / cpl_yongdal if cpl_yongdal > 0 else 0
-        conv_sm = budget_sm / cpl_small if cpl_small > 0 else 0
-        conv_pr = budget_pr / cpl_price if cpl_price > 0 else 0
-        conv_rest = budget_rest / cpl_rest if cpl_rest > 0 else 0
-        total_conv_sim = conv_yd + conv_sm + conv_pr + conv_rest
-        total_cpl_sim = total_search_budget / total_conv_sim if total_conv_sim > 0 else 0
-
-        # 현재 전환 (기준)
-        current_conv = 569  # 검색 캠페인 키워드 전환 합계 (근사)
-        conv_delta = total_conv_sim - current_conv
-        conv_delta_pct = (conv_delta / current_conv * 100) if current_conv > 0 else 0
-
-        st.markdown("**시뮬레이션 결과**")
-        st.metric("예상 총 전환", f"{total_conv_sim:.0f}건", delta=f"{conv_delta:+.0f}건 ({conv_delta_pct:+.1f}%)")
-        st.metric("예상 평균 CPL", f"₩{total_cpl_sim:,.0f}", delta=f"₩{total_cpl_sim - 12900:+,.0f} vs 현재", delta_color="inverse")
-
-        # Breakdown
-        sim_df = pd.DataFrame({
-            '세그먼트': ['용달/화물', '소형이사/원룸', '가격/견적', '나머지'],
-            '예산': [budget_yd, budget_sm, budget_pr, budget_rest],
-            '예상 전환': [conv_yd, conv_sm, conv_pr, conv_rest],
-            'CPL': [cpl_yongdal, cpl_small, cpl_price, cpl_rest],
-        })
-
-        fig = go.Figure()
-        fig.add_trace(go.Bar(x=sim_df['세그먼트'], y=sim_df['예상 전환'], marker_color=[COLORS['worst'], COLORS['best'], COLORS['good'], COLORS['gray']],
-                             text=[f'{v:.0f}건' for v in sim_df['예상 전환']], textposition='auto'))
-        fig.update_layout(height=280, margin=dict(l=20,r=20,t=20,b=20), plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='전환 (건)'))
-        st.plotly_chart(fig, use_container_width=True)
-
-    divider()
-
-    section("추천 시나리오")
-
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        # Current
-        st.markdown("**현재**")
-        st.caption("용달 36% / 소형 3% / 가격 4%")
-        st.metric("전환", "~569건")
-        st.metric("CPL", "₩12,900")
-
-    with col2:
-        # Conservative
-        st.markdown("**보수적 재배분**")
-        st.caption("용달 20% / 소형 15% / 가격 10%")
-        c_conv = total_search_budget * 0.20 / cpl_yongdal + total_search_budget * 0.15 / cpl_small + total_search_budget * 0.10 / cpl_price + total_search_budget * 0.55 / cpl_rest
-        st.metric("전환", f"~{c_conv:.0f}건", delta=f"+{c_conv-569:.0f}건")
-        st.metric("CPL", f"₩{total_search_budget/c_conv:,.0f}", delta=f"₩{total_search_budget/c_conv-12900:+,.0f}", delta_color="inverse")
-
-    with col3:
-        # Aggressive
-        st.markdown("**공격적 재배분**")
-        st.caption("용달 10% / 소형 25% / 가격 15%")
-        a_conv = total_search_budget * 0.10 / cpl_yongdal + total_search_budget * 0.25 / cpl_small + total_search_budget * 0.15 / cpl_price + total_search_budget * 0.50 / cpl_rest
-        st.metric("전환", f"~{a_conv:.0f}건", delta=f"+{a_conv-569:.0f}건")
-        st.metric("CPL", f"₩{total_search_budget/a_conv:,.0f}", delta=f"₩{total_search_budget/a_conv-12900:+,.0f}", delta_color="inverse")
-
-    insight(f"""
-    <strong>보수적으로만 해도 +{c_conv-569:.0f}건 (+{(c_conv/569-1)*100:.0f}%)</strong>, 공격적이면 <strong>+{a_conv-569:.0f}건 (+{(a_conv/569-1)*100:.0f}%)</strong>.<br><br>
-    <strong>단, 이건 CPL 기준 추정</strong>입니다. 실제로는:<br>
-    1) 소형이사 볼륨을 늘리면 CPL이 소폭 상승할 수 있고<br>
-    2) 용달을 줄이면 용달 CPL이 개선될 수 있습니다 (비효율 키워드 제거 효과)<br>
-    → <strong>Phase 1에서 실제 테스트 후 검증 필요</strong>
-    """, "warning")
-
-
-# ═══════════════════════════════════════════════
-# PAGE: 테스트 로드맵
-# ═══════════════════════════════════════════════
-elif page == "테스트 로드맵":
-
-    st.markdown("# 테스트 로드맵")
-    st.caption("3단계 실행 계획 — 가설을 검증하고 최적화 체계를 구축합니다")
-    divider()
-
-    # Visual timeline
-    phase_select = st.radio("Phase 선택", ["전체 보기", "Phase 1: 즉시 실행", "Phase 2: A/B 테스트", "Phase 3: 데이터 연동"], horizontal=True)
-
-    divider()
-
-    if phase_select in ["전체 보기", "Phase 1: 즉시 실행"]:
-        section("PHASE 1 — 즉시 실행 (1~2주)")
-        st.markdown("**저위험, 고효과 액션. 지금 바로 시작 가능.**")
-
-        actions_p1 = [
-            ("1", "용달 키워드 정리", "102개 키워드 리뷰 → 이사 무관 키워드 제외", "₩1.3M+ 절감", "H1, H3"),
-            ("2", "소형이사/가격 키워드 확대", "용달 감축분 → 소형이사/가격으로 이동", "+180건 전환 예상", "대안 A, D"),
-            ("3", "서비스 불가 지역 OFF", "경남/제주/충북 등 확인 후 광고 중단", "낭비 예산 즉시 절감", "H5"),
-            ("4", "소재ALL 예산 축소", "50% 감축 → 가격 소재로 이동", "CPL ₩6,544→₩5,171", "H8, 대안 F"),
-        ]
-
-        for num, action, detail, effect, hyp in actions_p1:
-            with st.container():
-                col1, col2, col3, col4 = st.columns([0.5, 3, 3, 2])
-                col1.markdown(f"**{num}**")
-                col2.markdown(f"**{action}**")
-                col3.caption(detail)
-                col4.markdown(f"🎯 {effect}")
-
-        st.markdown("")
-        insight("Phase 1만으로도 <strong>동일 예산 대비 전환수 15~20% 개선</strong>이 보수적으로 기대됩니다.", "success")
-
-    if phase_select in ["전체 보기", "Phase 2: A/B 테스트"]:
-        divider()
-        section("PHASE 2 — A/B 테스트 (3~4주)")
-        st.markdown("**데이터로 검증. 최적 소재/타겟/플랫폼 확정.**")
-
-        actions_p2 = [
-            ("5", "Meta 소재 A/B 테스트", '현행 "가격 소재" vs "이사 가격" vs "여자 모델"', "최적 소재 확정", "대안 F"),
-            ("6", "에타 소재 변형 테스트", "현행 vs 가격 메시지 결합 버전", "CVR 11%→18%+ 목표", "대안 E"),
-            ("7", "Threads 예산 확대", "5% → 15%로 확대", "CPL ₩4,114 유지 검증", "-"),
-            ("8", "Google LP 변형", "용달/소형이사 전용 랜딩페이지 테스트", "CVR 개선 검증", "H2"),
-        ]
-
-        for num, action, detail, effect, hyp in actions_p2:
-            with st.container():
-                col1, col2, col3, col4 = st.columns([0.5, 3, 3, 2])
-                col1.markdown(f"**{num}**")
-                col2.markdown(f"**{action}**")
-                col3.caption(detail)
-                col4.markdown(f"🎯 {effect}")
-
-    if phase_select in ["전체 보기", "Phase 3: 데이터 연동"]:
-        divider()
-        section("PHASE 3 — 데이터 연동 (1~2개월)")
-        st.markdown("**진짜 ROI를 보려면 내부 데이터가 필요합니다.**")
-
-        actions_p3 = [
-            ("9", "CRM 데이터 연동", "광고 전환 vs 실제 상담 DB 대조", "리드 품질 검증"),
-            ("10", "PMax 리드 품질 검증", "PMax vs 검색 리드의 계약율 비교", "PMax 예산 확정"),
-            ("11", "채널별 ROAS 산출", "계약 금액 기반 진짜 ROI 계산", "최종 예산 배분 근거"),
-            ("12", "전환 추적 감사", "대행사와 전환 태그 점검", "데이터 신뢰도 확보"),
-        ]
-
-        for num, action, detail, effect in actions_p3:
-            with st.container():
-                col1, col2, col3, col4 = st.columns([0.5, 3, 3, 2])
-                col1.markdown(f"**{num}**")
-                col2.markdown(f"**{action}**")
-                col3.caption(detail)
-                col4.markdown(f"🎯 {effect}")
-
-        insight("""
-        <strong>현재 분석의 한계</strong>: 지금은 광고 플랫폼 데이터(리드 획득까지)만 볼 수 있습니다.<br>
-        리드→계약 전환율, 채널별 리드 품질, 실제 매출 기여도는 <strong>내부 CRM 데이터</strong>가 필요합니다.<br><br>
-        Phase 3 완료 시: <strong>감이 아닌 데이터 기반 마케팅 의사결정 체계 구축</strong>
-        """, "warning")
-
-    divider()
-
-    # Impact summary
-    section("기대 효과 요약")
-
-    st.markdown(f"""
-    <div class="kpi-container">
-        {kpi_card("Phase 1 (즉시)", "+15~20%", "전환수 개선 (동일 예산)", "green")}
-        {kpi_card("Phase 2 (A/B)", "최적 소재 확정", "데이터 기반 검증")}
-        {kpi_card("Phase 3 (연동)", "실제 ROAS", "감→데이터 전환", "orange")}
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("")
-    insight("""
-    이 분석과 테스트는 단순한 '광고 운영 최적화'가 아닙니다.<br>
-    <strong>이사대학의 마케팅 의사결정 체계를 '감'에서 '데이터'로 전환하는 과정</strong>입니다.
-    """, "success")
 
 
 # ═══════════════════════════════════════════════
