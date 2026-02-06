@@ -769,42 +769,6 @@ elif page == "Google Deep-Dive":
     PMax에 근접한 CPL까지 개선할 수 있습니다. → <strong>Google 수정 제안</strong> 페이지에서 구체적인 액션 확인
     """)
 
-    divider()
-
-    # ── E. 낭비 분석 ──
-    section("낭비 분석: 어디서 돈이 새고 있나")
-
-    st.markdown("""
-    <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0;">
-        <strong style="font-size:16px; color:#E74C3C;">용달/화물 키워드 — 약 177만원 투입, CPL ₩17,061</strong><br>
-        <span style="padding-left:20px; color:#555;">
-            이 세그먼트의 유저는 "물건 운송"이 목적이지 이사 비교가 아닙니다.<br>
-            검색 예산의 28.5%를 차지하나, 같은 금액을 서비스 매칭이 높은 원룸/소형 키워드(CPL ₩12,769)에 쓰면<br>
-            <strong>104건 → 139건 (+34%)</strong>으로 전환이 증가합니다.
-        </span>
-    </div>
-    <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0; margin-top:4px;">
-        <strong style="font-size:16px; color:#E74C3C;">0전환 키워드 226개 — 약 118만원 투입</strong><br>
-        <span style="padding-left:20px; color:#555;">
-            13주간 전환이 단 1건도 발생하지 않은 키워드에 월 약 39만원이 소진되고 있습니다.<br>
-            제거 시 즉시 비용 절감 가능합니다.
-        </span>
-    </div>
-    <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0; margin-top:4px;">
-        <strong style="font-size:16px; color:#555;">합계: 월 약 99만원 (약 296만원 / 13주)</strong><br>
-        <span style="padding-left:20px; color:#555;">
-            이 예산의 리디렉션 방향은 <strong>Google 수정 제안</strong> 페이지에서 확인하세요.
-        </span>
-    </div>
-    """, unsafe_allow_html=True)
-
-    insight("""
-    <strong>참고: 소형이사 키워드 검색 볼륨</strong><br>
-    예산 리디렉션 시 검색량이 충분해야 합니다. 1인 가구 804.5만 세대 + 경쟁사 데이터 기준으로
-    "원룸이사", "소형이사" 키워드는 충분한 볼륨이 있을 것으로 추정됩니다.<br>
-    정확한 검색량은 Google Keyword Planner 확인이 필요합니다.
-    """, "warning")
-
 
 
 # ═══════════════════════════════════════════════
@@ -815,48 +779,85 @@ elif page == "Google 수정 제안":
     st.caption("키워드 재구성 + 광고 카피 분화를 통한 CPL 20% 개선")
     divider()
 
-    # ── Section 1: 핵심 액션 + 예상 효과 ──
-    section("핵심 액션 + 예상 효과")
+    # ── Section 1: 낭비 분석 ──
+    section("낭비 분석: 어디서 돈이 새고 있나")
 
-    col1, col2, col3 = st.columns(3)
+    st.markdown("""
+    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0;">
+        <strong style="font-size:16px; color:#E74C3C;">용달/화물 키워드 — 약 177만원 투입, CPL ₩17,061</strong><br>
+        <span style="padding-left:20px; color:#555;">
+            이 세그먼트의 유저는 "물건 운송"이 목적이지 이사 비교가 아닙니다.<br>
+            검색 예산의 28.5%를 차지하나, 같은 금액을 서비스 매칭이 높은 원룸/소형 키워드(CPL ₩12,769)에 쓰면<br>
+            <strong>104건 → 139건 (+34%)</strong>으로 전환이 증가합니다.
+        </span>
+    </div>
+    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0; margin-top:8px;">
+        <strong style="font-size:16px; color:#E74C3C;">0전환 키워드 226개 — 약 118만원 투입</strong><br>
+        <span style="padding-left:20px; color:#555;">
+            13주간 전환이 단 1건도 발생하지 않은 키워드에 월 약 39만원이 소진되고 있습니다.<br>
+            제거 시 즉시 비용 절감 가능합니다.
+        </span>
+    </div>
+    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0; margin-top:8px;">
+        <strong style="font-size:16px; color:#555;">합계: 월 약 99만원 (약 296만원 / 13주)</strong>
+    </div>
+    """, unsafe_allow_html=True)
 
-    with col1:
-        st.markdown("""
-        <div class="kpi-card red" style="text-align:center; padding:20px;">
-            <div style="font-size:18px; font-weight:900;">용달/화물 ↓↓</div>
-            <div style="font-size:24px; font-weight:900; margin:12px 0;">177만 → 50만원</div>
-            <div style="font-size:13px; line-height:1.6;">
-                이사 의도 없는 단품배송 키워드 제거<br>
-                → 월 약 42만원 절감
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+    insight("""
+    <strong>참고: 소형이사 키워드 검색 볼륨</strong><br>
+    예산 리디렉션 시 검색량이 충분해야 합니다.<br>
+    1인 가구 804.5만 세대 + 경쟁사 데이터 기준으로 "원룸이사", "소형이사" 키워드는 충분한 볼륨이 있을 것으로 추정됩니다.<br>
+    정확한 검색량은 Google Keyword Planner 확인이 필요합니다.
+    """, "warning")
 
-    with col2:
-        st.markdown("""
-        <div class="kpi-card green" style="text-align:center; padding:20px;">
-            <div style="font-size:18px; font-weight:900;">원룸/가격 ↑↑</div>
-            <div style="font-size:24px; font-weight:900; margin:12px 0;">64만 → 200만원</div>
-            <div style="font-size:13px; line-height:1.6;">
-                서비스 매칭 최고 세그먼트 확대<br>
-                → 전환 +89건 (13주)
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+    divider()
 
-    with col3:
-        st.markdown("""
-        <div class="kpi-card" style="text-align:center; padding:20px;">
-            <div style="font-size:18px; font-weight:900;">카피 분화</div>
-            <div style="font-size:24px; font-weight:900; margin:12px 0;">3개 → 8개 광고그룹</div>
-            <div style="font-size:13px; line-height:1.6;">
-                의도별 맞춤 메시지 전달<br>
-                → CPL 20% 개선 기대
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+    # ── Section 2: 수정 제안 ──
+    section("수정 제안")
 
-    st.markdown("")
+    st.markdown("""
+    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0;">
+        <strong style="font-size:16px;">1. 용달/화물 키워드 대폭 감액 (177만원 → 50만원)</strong><br>
+        <span style="padding-left:20px; color:#555;">
+            용달/화물 세그먼트는 유저의 검색 의도가 이사대학 서비스와 맞지 않습니다.<br>
+            "용달 가격", "1톤 용달" 등을 검색하는 유저는 단품 배송이 목적이라 이사 견적 비교 서비스와 미스매치됩니다.<br>
+            현재 177만원(검색 예산의 28.5%)이 투입되고 있는데, 이 중 이사 의도가 없는 키워드를 제거하고 50만원 수준으로 축소하면<br>
+            월 약 42만원, 연간 약 500만원의 비용을 절감할 수 있습니다.
+        </span>
+    </div>
+    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0; margin-top:12px;">
+        <strong style="font-size:16px;">2. 원룸/소형 + 가격/견적 키워드 증액 (64만원 → 200만원)</strong><br>
+        <span style="padding-left:20px; color:#555;">
+            원룸/소형이사와 가격/견적 키워드는 이사대학 서비스와 가장 잘 매칭되는 세그먼트입니다.<br>
+            "원룸 이사", "이사 가격 비교" 등을 검색하는 유저는 정확히 이사대학이 제공하는 서비스를 찾고 있습니다.<br>
+            현재 두 세그먼트 합산 64만원에 불과한 예산을 200만원으로 늘리면,<br>
+            용달에서 절감한 예산을 전환 가능성이 높은 유저에게 재투입하는 효과가 있습니다.<br>
+            13주 기준 약 89건의 추가 전환이 예상됩니다.
+        </span>
+    </div>
+    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0; margin-top:12px;">
+        <strong style="font-size:16px;">3. 광고 카피 분화 (3개 → 8개 광고그룹)</strong><br>
+        <span style="padding-left:20px; color:#555;">
+            현재 3개 광고그룹(용달/이사/소형이사)이 완전히 동일한 15개 타이틀 + 4개 설명문을 사용하고 있습니다.<br>
+            "용달 가격"을 검색한 유저와 "원룸 이사"를 검색한 유저가 같은 광고를 보는 것이 검색 CPL이 PMax의 2배인 핵심 원인입니다.<br>
+            세그먼트별로 다른 카피를 작성해서 검색 의도와 광고 메시지를 일치시키면,<br>
+            검색 CPL을 현재 ₩14,323에서 약 20% 낮춘 ₩11,458까지 개선할 수 있습니다.
+        </span>
+    </div>
+    """, unsafe_allow_html=True)
+
+    divider()
+
+    # ── Section 3: 예상 효과 ──
+    section("예상 효과")
+
+    st.markdown("""
+    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0;">
+        위 3가지 수정안을 모두 적용하면, <strong>총 예산 규모는 거의 동일(약 640만원 → 약 635만원)</strong>하면서도<br>
+        예산이 서비스와 매칭되는 유저에게 집중되어 다음과 같은 효과가 예상됩니다.
+    </div>
+    """, unsafe_allow_html=True)
+
     st.markdown(f"""
     <div class="kpi-container">
         {kpi_card("검색 CPL", "₩14,323 → ₩11,458", "−20%", "green")}
@@ -867,8 +868,8 @@ elif page == "Google 수정 제안":
 
     divider()
 
-    # ── Section 2: 세그먼트별 예산 재편성 ──
-    section("세그먼트별 예산 재편성")
+    # ── Section 4: 세그먼트별 예산 재편성 상세 ──
+    section("세그먼트별 예산 재편성 상세")
 
     proposal_data = pd.DataFrame({
         '세그먼트': ['브랜드', '원룸/소형', '가격/견적', '포장이사', '기타(영어)', '일반이사', '지역+이사', '용달/화물'],
@@ -881,33 +882,6 @@ elif page == "Google 수정 제안":
         '예상 전환': [86, 117, 67, 55, 239, 30, 22, 37],
     })
     st.dataframe(proposal_data, use_container_width=True, hide_index=True)
-
-    insight("""
-    제안 예산 합계: 약 635만원 (현재 약 640만원 대비 유사).<br>
-    예산 재배분 + CPL 20% 개선으로 <strong>총 전환 520건 → 653건 (+26%)</strong> 달성 가능.
-    """, "success")
-
-    divider()
-
-    # ── Section 3: 근거 ──
-    section("근거")
-
-    st.markdown("""
-    <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0;">
-        <strong style="color:#E74C3C;">1. 비효율 예산 약 296만원 (13주)</strong><br>
-        <span style="padding-left:20px; color:#555;">
-            용달/화물 과다지출 약 177만원 (CPL ₩17,061, PMax의 2.4배) +
-            0전환 키워드 226개에 약 118만원 소진. 월 환산 약 99만원.
-        </span>
-    </div>
-    <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0; margin-top:4px;">
-        <strong style="color:#E74C3C;">2. 동일 카피 문제</strong><br>
-        <span style="padding-left:20px; color:#555;">
-            3개 광고그룹이 동일한 15개 타이틀 + 4개 설명문 사용.
-            검색 의도-메시지 불일치가 검색 CPL ₩14,323 (PMax의 2.1배)의 핵심 원인.
-        </span>
-    </div>
-    """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════════
