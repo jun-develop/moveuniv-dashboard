@@ -114,15 +114,15 @@ st.markdown("""
 # ═══════════════════════════════════════════════
 
 # 채널 종합
-TOTAL_SPEND = 41_220_286
-TOTAL_CONV = 6_452
-TOTAL_CPL = 6_389
-GOOGLE_SPEND = 16_300_122
-GOOGLE_CONV = 1_758
-GOOGLE_CPL = 9_273
-META_SPEND = 24_920_164
-META_CONV = 4_694
-META_CPL = 5_309
+TOTAL_SPEND = 40_916_071  # Google 15,452,143 + Meta 25,463,928
+TOTAL_CONV = 6_473  # Google 1,638 + Meta 4,835
+TOTAL_CPL = 6_322  # weighted average
+GOOGLE_SPEND = 15_452_143
+GOOGLE_CONV = 1_638
+GOOGLE_CPL = 9_432
+META_SPEND = 25_463_928
+META_CONV = 4_835
+META_CPL = 5_267
 
 # Google 키워드 의도별
 google_intent = pd.DataFrame({
@@ -258,7 +258,7 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown("**분석 기간**")
-    st.caption("2025.11 ~ 2026.01 (3개월)")
+    st.caption("2025.11.02 ~ 2026.01.31 (13주)")
     st.markdown("**데이터 소스**")
     st.caption("Google Ads + Meta Ads")
     st.caption("(광고 플랫폼 데이터 기준)")
@@ -272,81 +272,118 @@ with st.sidebar:
 # ═══════════════════════════════════════════════
 if page == "Executive Summary":
 
+    # ── A. Title + Period ──
     st.markdown("# 이사대학 마케팅 심화 분석")
-    st.markdown("##### 3개월(2025.11~2026.01) Google Ads + Meta Ads 통합 분석")
+    st.markdown("##### 주간 분석 (2025.11.02 ~ 2026.01.31, 13주) | Google Ads + Meta Ads")
     divider()
 
-    # KPI Row
-    st.markdown(f"""
-    <div class="kpi-container">
-        {kpi_card("총 광고비 (3개월)", "₩41,220,286")}
-        {kpi_card("총 전환 (상담신청)", "6,452건")}
-        {kpi_card("평균 CPL", "₩6,389")}
-        {kpi_card("Meta CPL 추세 (1월)", "₩4,664", "↓ 25% vs 11월", "green")}
+    # ── B. TOP 3 FINDINGS ──
+    section("TOP 3 FINDINGS")
+
+    # One Line Finding — large, prominent, centered
+    st.markdown("""
+    <div class="insight-box success" style="text-align:center; padding:32px 24px;">
+        <div style="font-size:22px; font-weight:900; color:#1B3A5C; line-height:1.5;">
+            이사대학의 광고는 광고를 통해 전달하고자 하는 메시지가<br>유저의 의도와 맞지 않습니다.
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("")
 
-    # 핵심 발견 #1
-    section("ONE-LINE FINDING")
-    insight("""
-    <strong style="font-size:18px; color:#1B3A5C;">
-    현재 광고의 핵심 문제는 '채널 선택'이 아니라, 메시지와 유저 의도의 매칭입니다.
-    </strong><br><br>
-    Google과 Meta 전 채널에서 <strong style="color:#2ECC71;">"가격 비교"</strong> 메시지가 일관되게 최고 효율을 보입니다.
-    반면, 예산의 35%가 서비스와 맞지 않는 유저에게 쓰이고 있습니다.
-    """, "success")
-
-    divider()
-
-    # ── NEW: 핵심 발견 (Deep Analysis) ──
-    section("DEEP ANALYSIS 핵심 발견")
-
-    col1, col2, col3 = st.columns(3)
+    # Deep Analysis Findings — 2 cards side by side
+    col1, col2 = st.columns(2)
 
     with col1:
         st.markdown("""
-        <div class="kpi-card red" style="text-align:left; padding:20px;">
-            <div class="kpi-label">FINDING — Google 검색</div>
-            <div style="font-size:18px; font-weight:900; margin:8px 0;">동일 카피 사용</div>
-            <div style="font-size:13px; opacity:0.9; line-height:1.6;">
-                3개 광고그룹 모두 <strong>같은 15개 타이틀, 4개 설명문</strong> 사용<br>
-                검색 의도별 메시지 분화 없음<br>
-                <strong>의도-메시지 불일치 = CPL 2배의 핵심 원인</strong>
+        <div class="kpi-card orange" style="text-align:left; padding:20px;">
+            <div style="font-size:17px; font-weight:900; margin:8px 0; line-height:1.5;">
+                가격 비교 메시지는 효율이 좋으나, 동일한 이미지로 예산의 70%를 사용
+            </div>
+            <div style="font-size:13px; opacity:0.9; line-height:1.7; margin-top:12px;">
+                Meta '가격 소재' 광고세트 하나가 전체 Meta 예산의 70%, 전환의 72%를 독식.
+                소재 피로 시 대안 부재.
             </div>
         </div>
         """, unsafe_allow_html=True)
 
     with col2:
         st.markdown("""
-        <div class="kpi-card orange" style="text-align:left; padding:20px;">
-            <div class="kpi-label">FINDING — Meta 소재</div>
-            <div style="font-size:18px; font-weight:900; margin:8px 0;">"가격" 70% 독식</div>
-            <div style="font-size:13px; opacity:0.9; line-height:1.6;">
-                가격 소재 1개가 전체 지출 70%, 전환 72%<br>
-                압도적 승자이나 <strong>피로도 리스크</strong> 심각<br>
-                <strong>소재 다각화 + 백업 시급</strong>
+        <div class="kpi-card red" style="text-align:left; padding:20px;">
+            <div style="font-size:17px; font-weight:900; margin:8px 0; line-height:1.5;">
+                전체 예산의 16% (월 약 220만원)가 서비스와 맞지 않는 유저에게 사용
             </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col3:
-        st.markdown("""
-        <div class="kpi-card green" style="text-align:left; padding:20px;">
-            <div class="kpi-label">FINDING — Meta Threads</div>
-            <div style="font-size:18px; font-weight:900; margin:8px 0;">CPL 최저 ₩4,111</div>
-            <div style="font-size:13px; opacity:0.9; line-height:1.6;">
-                모든 플랫폼 중 CPL 가장 낮음<br>
-                현재 전체 지출의 <strong>4.5%만</strong> 사용<br>
-                <strong>확대 투자 기회</strong>
+            <div style="font-size:12px; opacity:0.85; line-height:1.7; margin-top:12px;">
+                근거: Google 용달/화물 키워드 &#8361;1,774K (단품 배송 의도 &#8800; 이사 비교 플랫폼)
+                + 0전환 키워드 226개 &#8361;1,183K
+                + Meta 비효율 소재(&#9733;소재ALL+신규) &#8361;3,638K
+                = 총 &#8361;6,595K (3개월)
             </div>
         </div>
         """, unsafe_allow_html=True)
 
     divider()
 
-    # 채널 비교
+    # ── C. EXPECTED IMPROVEMENT ──
+    section("EXPECTED IMPROVEMENT")
+
+    st.markdown("""
+    <div style="text-align:center; font-size:16px; font-weight:700; color:#1B3A5C; margin-bottom:16px;">
+        현재 &rarr; 적용 후 (보수적)
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown(f"""
+    <div class="kpi-container">
+        {kpi_card("Google 검색 CPL", "₩14,714 → ₩10,300", "−30%", "green")}
+        {kpi_card("월 추가 전환", "+239건", "동일 예산 기준", "green")}
+        {kpi_card("월 절감 가능", "₩220만원", "비효율 예산 제거", "green")}
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("")
+    insight("""
+    의도별 광고 카피 분화 + 비효율 키워드 정리만으로, 검색 캠페인 CPL을 PMax 수준에 근접시킬 수 있습니다.
+    <strong>보수적으로 CPL 30% 개선 시 동일 예산으로 월 239건 추가 전환 가능.</strong>
+    """, "success")
+
+    divider()
+
+    # ── D. METHODOLOGY ──
+    section("분석 방법론")
+
+    insight("""
+    <strong style="font-size:15px;">&#128202; 분석 구조</strong><br><br>
+    <strong>&#8226; Google Ads</strong>: 검색 캠페인(키워드 분석) + PMax(벤치마크)로 분리<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;- PMax는 자동 최적화 캠페인(블랙박스)이므로 성과 벤치마크로 활용<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;- 검색 캠페인은 키워드 → 의도(intent) 세그먼트로 분류하여 분석<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;- 핵심 질문: <strong>"수동 운영(검색)이 자동(PMax)보다 나은가?"</strong><br><br>
+    <strong>&#8226; Meta Ads</strong>: 플랫폼별(Instagram/Facebook/Threads) → 소재(메시지)별 분석<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;- 먼저 플랫폼 효율 비교, 그 다음 소재별 메시지 효율 비교<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;- 핵심 질문: <strong>"어떤 메시지가 어떤 플랫폼에서 잘 되는가?"</strong><br><br>
+    <strong style="color:#E67E22;">&#9888;&#65039; 분석 범위 제한</strong><br>
+    &#8226; 현재 데이터는 Lead(상담신청)까지만 추적 가능<br>
+    &#8226; 실제 서비스 이용 여부, 서비스 이용 시 단가(객단가) 등은 확인 불가<br>
+    &#8226; → 내부 회사 DB 연동 시 Lead → 계약 전환율, 채널별 객단가 분석 가능
+    """)
+
+    divider()
+
+    # ── E. KPI OVERVIEW ──
+    section("KPI OVERVIEW")
+
+    st.markdown(f"""
+    <div class="kpi-container">
+        {kpi_card("총 광고비 (13주)", "₩40,916,071", "주 평균 ₩3,147K")}
+        {kpi_card("총 전환 (상담신청)", "6,473건", "주 평균 498건")}
+        {kpi_card("평균 CPL", "₩6,322")}
+        {kpi_card("Meta CPL 추세", "₩4,527", "↓ 21% (11월→1월)", "green")}
+    </div>
+    """, unsafe_allow_html=True)
+
+    divider()
+
+    # ── F. CHANNEL COMPARISON ──
     section("CHANNEL OVERVIEW")
     col1, col2 = st.columns(2)
 
@@ -363,57 +400,13 @@ if page == "Executive Summary":
         fig.update_layout(height=300, margin=dict(l=20,r=20,t=40,b=20), title=dict(text='CPL (전환당 비용)', font=dict(size=14)), yaxis_title='', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0'))
         st.plotly_chart(fig, use_container_width=True)
 
+    # Budget share callout
     insight(f"""
-    Meta가 CPL 기준 <strong>43% 저렴</strong> (₩5,309 vs ₩9,273).<br>
-    단, 이것은 <strong>리드 획득 비용</strong>일 뿐 — 리드 품질(상담→계약 전환율)은 아직 미검증.<br>
+    <strong>Google</strong>: ₩15.5M (37.8%) | 1,638건 | CPL ₩9,432<br>
+    <strong>Meta</strong>: ₩25.5M (62.2%) | 4,835건 | CPL ₩5,267<br><br>
+    Meta가 CPL 기준 <strong>44% 저렴</strong>. 단, 이것은 <strong>리드 획득 비용</strong>일 뿐 — 리드 품질(상담→계약 전환율)은 아직 미검증.<br>
     Google 리드의 계약율이 Meta보다 2배 높다면, 실제로는 Google이 나을 수 있습니다.
     """, "warning")
-
-    divider()
-
-    # 3대 핵심 발견
-    section("TOP 3 FINDINGS")
-
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.markdown(f"""
-        <div class="kpi-card red" style="text-align:left; padding:20px;">
-            <div class="kpi-label">FINDING #1 — 낭비</div>
-            <div style="font-size:22px; font-weight:900; margin:8px 0;">₩2,626,506</div>
-            <div style="font-size:13px; opacity:0.9; line-height:1.6;">
-                Google 예산의 35.7%가 '용달/화물' 키워드에 투입<br>
-                CPL ₩18,761 — 전체 최악<br>
-                <strong>유저 의도와 서비스 미스매치</strong>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col2:
-        st.markdown(f"""
-        <div class="kpi-card green" style="text-align:left; padding:20px;">
-            <div class="kpi-label">FINDING #2 — 기회</div>
-            <div style="font-size:22px; font-weight:900; margin:8px 0;">CVR 27.4%</div>
-            <div style="font-size:13px; opacity:0.9; line-height:1.6;">
-                '원룸/소형이사' 전환율 최고<br>
-                그런데 예산 비중 겨우 2.9%<br>
-                <strong>가장 잘 맞는 유저에게 예산이 너무 적음</strong>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col3:
-        st.markdown(f"""
-        <div class="kpi-card" style="text-align:left; padding:20px;">
-            <div class="kpi-label">FINDING #3 — 패턴</div>
-            <div style="font-size:22px; font-weight:900; margin:8px 0;">"가격 비교"</div>
-            <div style="font-size:13px; opacity:0.9; line-height:1.6;">
-                전 채널에서 가격 관련 메시지가 최고 효율<br>
-                Google 가격 CPL ₩5,767 / Meta ₩3,850<br>
-                <strong>핵심 소구 포인트 = "가격 비교"</strong>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════════
