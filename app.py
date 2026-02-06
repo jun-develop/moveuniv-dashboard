@@ -86,7 +86,7 @@ st.markdown("""
     section[data-testid="stSidebar"] > div { padding-top: 1rem; }
 
     /* Divider */
-    .fancy-divider { height: 3px; background: linear-gradient(90deg, #2E75B6, #2ECC71, #F39C12); border-radius: 2px; margin: 32px 0; }
+    .fancy-divider { height: 1px; background: #e0e0e0; margin: 32px 0; }
 
     /* Campaign tree */
     .tree-box {
@@ -432,7 +432,7 @@ if page == "Executive Summary":
                 </div>
                 <div>
                     <div style="font-size:12px; color:#888;">CPL</div>
-                    <div style="font-size:22px; font-weight:900; color:#E74C3C;">₩9,432 <span style="font-size:13px; font-weight:500;">평균 대비 +49%</span></div>
+                    <div style="font-size:22px; font-weight:900; color:#4285F4;">₩9,432 <span style="font-size:13px; font-weight:500;">평균 대비 +49%</span></div>
                 </div>
             </div>
         </div>
@@ -449,7 +449,7 @@ if page == "Executive Summary":
                 </div>
                 <div>
                     <div style="font-size:12px; color:#888;">CPL</div>
-                    <div style="font-size:22px; font-weight:900; color:#2ECC71;">₩5,267 <span style="font-size:13px; font-weight:500;">평균 대비 −17%</span></div>
+                    <div style="font-size:22px; font-weight:900; color:#FF6B35;">₩5,267 <span style="font-size:13px; font-weight:500;">평균 대비 −17%</span></div>
                 </div>
             </div>
         </div>
@@ -468,25 +468,25 @@ if page == "Executive Summary":
     section("Top Findings")
 
     st.markdown("""
-    <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0;">
-        <strong style="font-size:16px; color:#E74C3C;">1. 전체 예산의 16%가 서비스와 맞지 않는 유저에게 사용되고 있습니다.</strong><br>
+    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0;">
+        <strong style="font-size:16px;">1. 전체 예산의 16%가 서비스와 맞지 않는 유저에게 사용되고 있습니다.</strong><br>
         <span style="padding-left:20px; color:#555;">
-            Google 용달/화물 키워드에 ₩1,774K 투입 중이나, 이 유저들은 "물건 운송"이 목적이지 이사 비교가 아닙니다.
-            여기에 전환 0건인 키워드 226개(₩1,183K)와 Meta 비효율 소재(₩3,638K)를 합치면
-            <strong>3개월간 총 ₩6,595K, 월 약 220만원</strong>이 낭비되고 있습니다.
+            Google 용달/화물 키워드에 약 177만원이 투입 중이나, 이 유저들은 "물건 운송"이 목적이지 이사 비교가 아닙니다.<br>
+            여기에 전환 0건인 키워드 226개(약 118만원)와 Meta 비효율 소재(약 364만원)를 합치면<br>
+            <strong>3개월간 총 약 660만원, 월 약 220만원</strong>이 낭비되고 있습니다.
         </span>
     </div>
-    <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0; margin-top:8px;">
-        <strong style="font-size:16px; color:#F39C12;">2. Meta 광고가 소수 이미지에 과도하게 의존하고 있습니다.</strong><br>
+    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0; margin-top:12px;">
+        <strong style="font-size:16px;">2. Meta 가격 소재 이미지 하나가 전체 예산의 약 70%를 담당하고 있습니다.</strong><br>
         <span style="padding-left:20px; color:#555;">
-            '가격 소재' 광고세트 하나가 Meta 전체 예산의 70%, 전환의 72%를 담당하고 있습니다.
-            이 이미지에 피로도가 오면 전체 Meta 성과가 급락할 수 있으나, 현재 대안 소재가 부족합니다.
+            현재로선 성과가 좋지만, 만약 이 이미지의 성과가 떨어질 경우 Meta 전체 성과가 급락할 수 있습니다.<br>
+            다른 좋은 대안 소재를 찾아야 합니다.
         </span>
     </div>
-    <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0; margin-top:8px;">
-        <strong style="font-size:16px; color:#2E75B6;">3. Threads가 가장 효율적인 플랫폼이지만 예산의 4.5%만 투입 중입니다.</strong><br>
+    <div style="font-size:15px; line-height:2.2; color:#333; padding:8px 0; margin-top:12px;">
+        <strong style="font-size:16px;">3. Threads가 가장 효율적인 플랫폼이지만 예산의 4.5%만 투입 중입니다.</strong><br>
         <span style="padding-left:20px; color:#555;">
-            13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있으나,
+            13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있으나,<br>
             Instagram(93%)에 예산이 편중되어 있어 Threads 확대 여지가 큽니다.
         </span>
     </div>
@@ -534,10 +534,11 @@ if page == "Executive Summary":
     # ── E. 분석 범위 제한 ──
     section("분석 범위 제한")
     st.markdown("""
-    <div style="font-size:15px; line-height:1.9; color:#555; padding:4px 0;">
-        현재 데이터는 <strong style="color:#333;">Lead(상담신청)</strong>까지만 추적 가능합니다.<br>
-        실제 서비스 이용 여부, 서비스 이용 시 단가(객단가)는 확인할 수 없습니다.<br>
-        내부 DB 연동 시 Lead → 계약 전환율, 채널별 객단가까지 분석할 수 있습니다.
+    <div style="font-size:15px; line-height:2.2; color:#555; padding:4px 0;">
+        광고비가 정말 매출로 잘 이어지는지를 확인하기 위해서는 이사대학 내부 DB와 연동을 해야 자세한 분석이 가능합니다.<br><br>
+        지금 이 분석 데이터는 Google, Meta 광고관리자를 통해 확인한 것으로, 상담신청까지만 추적이 가능합니다.<br>
+        유저들이 실제로 서비스를 사용했는지, 고객 당 매출과 마진이 어떻게 되는지는 확인할 수 없습니다.<br>
+        따라서 마케팅 성과 목표로 설정된 상담신청까지의 과정만을 분석한 자료라고 이해하시면 됩니다.
     </div>
     """, unsafe_allow_html=True)
 
@@ -586,12 +587,12 @@ elif page == "Google Deep-Dive":
     col1, col2 = st.columns(2)
     with col1:
         insight("""
-        <strong style="color:#2ECC71;">PMax (벤치마크)</strong>: 11월 ₩11K → 1월 ₩5.2K <strong>(-53%)</strong><br>
+        <strong style="color:#2ECC71;">PMax (벤치마크)</strong>: 11월 ₩11,000 → 1월 ₩5,200 <strong>(-53%)</strong><br>
         자동 최적화가 시간이 지나면서 학습 → CPL 점진적 하락
         """, "success")
     with col2:
         insight("""
-        <strong style="color:#E74C3C;">검색(내국인)</strong>: ₩17K~₩30K → ₩10K~₩13K<br>
+        <strong style="color:#E74C3C;">검색(내국인)</strong>: ₩17,000~₩30,000 → ₩10,000~₩13,000<br>
         변동폭이 크고, PMax 대비 <strong>항상 2배 이상</strong> = 메시지 문제
         """, "danger")
 
@@ -775,22 +776,22 @@ elif page == "Google Deep-Dive":
 
     st.markdown("""
     <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0;">
-        <strong style="font-size:16px; color:#E74C3C;">용달/화물 키워드 — ₩1,774K 투입, CPL ₩17,061</strong><br>
+        <strong style="font-size:16px; color:#E74C3C;">용달/화물 키워드 — 약 177만원 투입, CPL ₩17,061</strong><br>
         <span style="padding-left:20px; color:#555;">
-            이 세그먼트의 유저는 "물건 운송"이 목적이지 이사 비교가 아닙니다.
-            검색 예산의 28.5%를 차지하나, 같은 금액을 서비스 매칭이 높은 원룸/소형 키워드(CPL ₩12,769)에 쓰면
+            이 세그먼트의 유저는 "물건 운송"이 목적이지 이사 비교가 아닙니다.<br>
+            검색 예산의 28.5%를 차지하나, 같은 금액을 서비스 매칭이 높은 원룸/소형 키워드(CPL ₩12,769)에 쓰면<br>
             <strong>104건 → 139건 (+34%)</strong>으로 전환이 증가합니다.
         </span>
     </div>
     <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0; margin-top:4px;">
-        <strong style="font-size:16px; color:#E74C3C;">0전환 키워드 226개 — ₩1,183K 투입</strong><br>
+        <strong style="font-size:16px; color:#E74C3C;">0전환 키워드 226개 — 약 118만원 투입</strong><br>
         <span style="padding-left:20px; color:#555;">
-            13주간 전환이 단 1건도 발생하지 않은 키워드에 월 약 ₩394K가 소진되고 있습니다.
+            13주간 전환이 단 1건도 발생하지 않은 키워드에 월 약 39만원이 소진되고 있습니다.<br>
             제거 시 즉시 비용 절감 가능합니다.
         </span>
     </div>
     <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0; margin-top:4px;">
-        <strong style="font-size:16px; color:#555;">합계: 월 약 ₩986K (₩2,957K / 13주)</strong><br>
+        <strong style="font-size:16px; color:#555;">합계: 월 약 99만원 (약 296만원 / 13주)</strong><br>
         <span style="padding-left:20px; color:#555;">
             이 예산의 리디렉션 방향은 <strong>Google 수정 제안</strong> 페이지에서 확인하세요.
         </span>
@@ -823,10 +824,10 @@ elif page == "Google 수정 제안":
         st.markdown("""
         <div class="kpi-card red" style="text-align:center; padding:20px;">
             <div style="font-size:18px; font-weight:900;">용달/화물 ↓↓</div>
-            <div style="font-size:24px; font-weight:900; margin:12px 0;">₩1,774K → ₩500K</div>
+            <div style="font-size:24px; font-weight:900; margin:12px 0;">177만 → 50만원</div>
             <div style="font-size:13px; line-height:1.6;">
                 이사 의도 없는 단품배송 키워드 제거<br>
-                → 월 ₩425K 절감
+                → 월 약 42만원 절감
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -835,7 +836,7 @@ elif page == "Google 수정 제안":
         st.markdown("""
         <div class="kpi-card green" style="text-align:center; padding:20px;">
             <div style="font-size:18px; font-weight:900;">원룸/가격 ↑↑</div>
-            <div style="font-size:24px; font-weight:900; margin:12px 0;">₩643K → ₩2,000K</div>
+            <div style="font-size:24px; font-weight:900; margin:12px 0;">64만 → 200만원</div>
             <div style="font-size:13px; line-height:1.6;">
                 서비스 매칭 최고 세그먼트 확대<br>
                 → 전환 +89건 (13주)
@@ -860,7 +861,7 @@ elif page == "Google 수정 제안":
     <div class="kpi-container">
         {kpi_card("검색 CPL", "₩14,323 → ₩11,458", "−20%", "green")}
         {kpi_card("추가 전환 (13주)", "+133건", "520 → 653건", "green")}
-        {kpi_card("비효율 절감", "₩986K/월", "연 ₩11.8M", "green")}
+        {kpi_card("비효율 절감", "약 99만원/월", "연 약 1,180만원", "green")}
     </div>
     """, unsafe_allow_html=True)
 
@@ -871,18 +872,18 @@ elif page == "Google 수정 제안":
 
     proposal_data = pd.DataFrame({
         '세그먼트': ['브랜드', '원룸/소형', '가격/견적', '포장이사', '기타(영어)', '일반이사', '지역+이사', '용달/화물'],
-        '현재 예산': ['₩394K', '₩358K', '₩285K', '₩412K', '₩2,227K', '₩461K', '₩488K', '₩1,774K'],
+        '현재 예산': ['39만', '36만', '28만', '41만', '223만', '46만', '49만', '177만'],
         '현재 CPL': ['₩4,655', '₩12,769', '₩14,980', '₩13,747', '₩11,509', '₩14,395', '₩17,133', '₩17,061'],
         '현재 전환': [84, 28, 19, 30, 193, 32, 28, 104],
         '방향': ['→ 유지', '↑↑ 증액', '↑↑ 증액', '↑ 소폭증액', '→ 카피최적화', '↓ 감액', '↓ 감액', '↓↓ 대폭감액'],
-        '제안 예산': ['₩400K', '₩1,200K', '₩800K', '₩600K', '₩2,200K', '₩350K', '₩300K', '₩500K'],
+        '제안 예산': ['40만', '120만', '80만', '60만', '220만', '35만', '30만', '50만'],
         '목표 CPL': ['₩4,655', '₩10,215', '₩11,984', '₩10,998', '₩9,207', '₩11,516', '₩13,706', '₩13,649'],
         '예상 전환': [86, 117, 67, 55, 239, 30, 22, 37],
     })
     st.dataframe(proposal_data, use_container_width=True, hide_index=True)
 
     insight("""
-    제안 예산 합계: ₩6,350K (현재 ₩6,399K 대비 유사).<br>
+    제안 예산 합계: 약 635만원 (현재 약 640만원 대비 유사).<br>
     예산 재배분 + CPL 20% 개선으로 <strong>총 전환 520건 → 653건 (+26%)</strong> 달성 가능.
     """, "success")
 
@@ -893,10 +894,10 @@ elif page == "Google 수정 제안":
 
     st.markdown("""
     <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0;">
-        <strong style="color:#E74C3C;">1. 비효율 예산 ₩2,957K (13주)</strong><br>
+        <strong style="color:#E74C3C;">1. 비효율 예산 약 296만원 (13주)</strong><br>
         <span style="padding-left:20px; color:#555;">
-            용달/화물 과다지출 ₩1,774K (CPL ₩17,061, PMax의 2.4배) +
-            0전환 키워드 226개에 ₩1,183K 소진. 월 환산 ₩986K.
+            용달/화물 과다지출 약 177만원 (CPL ₩17,061, PMax의 2.4배) +
+            0전환 키워드 226개에 약 118만원 소진. 월 환산 약 99만원.
         </span>
     </div>
     <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0; margin-top:4px;">
@@ -1033,7 +1034,7 @@ elif page == "Meta 수정 제안":
     active_status_table = pd.DataFrame({
         '소재': ['이사가격', '가격소재', '에브리타임', '여자모델'],
         'CPL': ['₩3,850', '₩5,171', '₩5,154', '₩5,777'],
-        '비용': ['₩601K', '₩17,348K', '₩3,180K', '₩150K'],
+        '비용': ['60만', '1,735만', '318만', '15만'],
         '전환': [156, 3355, 617, 26],
         'CTR': ['0.99%', '0.81%', '1.20%', '0.93%'],
         'CVR': ['27.1%', '18.1%', '11.0%', '23.6%'],
