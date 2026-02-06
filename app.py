@@ -392,7 +392,6 @@ with st.sidebar:
         "Meta Deep-Dive",
         "Meta 수정 제안",
         "크로스채널 인사이트",
-        "가설 & 원인 분석",
     ], index=0, label_visibility="collapsed")
 
     st.markdown("---")
@@ -418,27 +417,50 @@ if page == "Executive Summary":
 
     # ── B. 광고 집행 현황 ──
     section("광고 집행 현황")
+
+    # Top KPI Cards
+    st.markdown(f"""
+    <div class="kpi-container">
+        {kpi_card("총 광고비", "₩40.9M", "주 평균 ₩3.1M · 월 평균 ₩13.6M")}
+        {kpi_card("총 전환 (상담신청)", "6,473건", "주 평균 498건")}
+        {kpi_card("전체 CPL", "₩6,322", "전환당 비용")}
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("")
+
+    # Channel breakdown with visual bars
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("""
-        | 항목 | 수치 |
-        |------|------|
-        | **총 광고비** | ₩40,916,071 |
-        | **주별 평균** | ₩3,147,390 |
-        | **월 평균** | ₩13,638,690 |
-        | **Google Ads** | ₩15,452,143 (37.8%) |
-        | **Meta Ads** | ₩25,463,928 (62.2%) |
-        """)
+        <div style="background:linear-gradient(135deg, #f0f5ff 0%, #e8f0fe 100%); border-radius:12px; padding:20px; border-left:4px solid #4285F4;">
+            <div style="font-size:13px; color:#666; font-weight:500;">Google Ads</div>
+            <div style="font-size:28px; font-weight:900; color:#4285F4; margin:4px 0;">₩15,452,143</div>
+            <div style="display:flex; gap:24px; margin-top:8px;">
+                <div><span style="font-size:12px; color:#888;">비중</span><br><strong>37.8%</strong></div>
+                <div><span style="font-size:12px; color:#888;">전환</span><br><strong>1,638건</strong></div>
+                <div><span style="font-size:12px; color:#888;">CPL</span><br><strong>₩9,432</strong></div>
+            </div>
+            <div style="background:#ddd; border-radius:4px; height:8px; margin-top:12px;">
+                <div style="background:#4285F4; width:37.8%; height:8px; border-radius:4px;"></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     with col2:
         st.markdown("""
-        | 항목 | 수치 |
-        |------|------|
-        | **총 전환** | 6,473건 |
-        | **주별 평균** | 498건 |
-        | **Google CPL** | ₩9,432 |
-        | **Meta CPL** | ₩5,267 |
-        | **전체 CPL** | ₩6,322 |
-        """)
+        <div style="background:linear-gradient(135deg, #fff5f0 0%, #ffe8e0 100%); border-radius:12px; padding:20px; border-left:4px solid #FF6B35;">
+            <div style="font-size:13px; color:#666; font-weight:500;">Meta Ads</div>
+            <div style="font-size:28px; font-weight:900; color:#FF6B35; margin:4px 0;">₩25,463,928</div>
+            <div style="display:flex; gap:24px; margin-top:8px;">
+                <div><span style="font-size:12px; color:#888;">비중</span><br><strong>62.2%</strong></div>
+                <div><span style="font-size:12px; color:#888;">전환</span><br><strong>4,835건</strong></div>
+                <div><span style="font-size:12px; color:#888;">CPL</span><br><strong>₩5,267</strong></div>
+            </div>
+            <div style="background:#ddd; border-radius:4px; height:8px; margin-top:12px;">
+                <div style="background:#FF6B35; width:62.2%; height:8px; border-radius:4px;"></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
     divider()
 
@@ -505,50 +527,54 @@ if page == "Executive Summary":
 
     divider()
 
-    # ── E. METHODOLOGY ──
-    section("분석 방법론")
+    # ── E. 광고 운영 현황 ──
+    section("광고 운영 현황")
 
-    insight("""
-    <strong style="font-size:15px;">&#128202; 분석 구조</strong><br><br>
-    <strong>&#8226; Google Ads</strong>: 검색 캠페인(키워드 분석) + PMax(벤치마크)로 분리<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;- PMax는 자동 최적화 캠페인(블랙박스)이므로 성과 벤치마크로 활용<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;- 검색 캠페인은 키워드 → 의도(intent) 세그먼트로 분류하여 분석<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;- 핵심 질문: <strong>"수동 운영(검색)이 자동(PMax)보다 나은가?"</strong><br><br>
-    <strong>&#8226; Meta Ads</strong>: 플랫폼별(Instagram/Facebook/Threads) → 소재(메시지)별 분석<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;- 먼저 플랫폼 효율 비교, 그 다음 소재별 메시지 효율 비교<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;- 핵심 질문: <strong>"어떤 메시지가 어떤 플랫폼에서 잘 되는가?"</strong><br><br>
-    <strong style="color:#E67E22;">&#9888;&#65039; 분석 범위 제한</strong><br>
-    &#8226; 현재 데이터는 Lead(상담신청)까지만 추적 가능<br>
-    &#8226; 실제 서비스 이용 여부, 서비스 이용 시 단가(객단가) 등은 확인 불가<br>
-    &#8226; → 내부 회사 DB 연동 시 Lead → 계약 전환율, 채널별 객단가 분석 가능
-    """)
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("""
+        <div style="background:linear-gradient(135deg, #f0f5ff 0%, #e8f0fe 100%); border-radius:12px; padding:20px; border:1px solid #d0e0f0;">
+            <div style="font-size:15px; font-weight:700; color:#4285F4; margin-bottom:12px;">Google Ads</div>
+            <div style="font-size:13px; line-height:2.0; color:#333;">
+                <strong>1. 검색 광고 (키워드)</strong><br>
+                &nbsp;&nbsp;유저가 검색한 키워드에 따라 광고 노출.<br>
+                &nbsp;&nbsp;내국인 / 외국인 2개 캠페인 운영 중.<br><br>
+                <strong>2. PMax (실적최대화)</strong><br>
+                &nbsp;&nbsp;구글 AI가 이미지·텍스트를 자동 조합하여<br>
+                &nbsp;&nbsp;검색, 유튜브, Gmail 등 최적 위치에 노출.<br>
+                &nbsp;&nbsp;→ <strong>자동 최적화 성과를 벤치마크로 활용</strong>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    with col2:
+        st.markdown("""
+        <div style="background:linear-gradient(135deg, #fff5f0 0%, #ffe8e0 100%); border-radius:12px; padding:20px; border:1px solid #f0d0c0;">
+            <div style="font-size:15px; font-weight:700; color:#FF6B35; margin-bottom:12px;">Meta Ads</div>
+            <div style="font-size:13px; line-height:2.0; color:#333;">
+                <strong>Instagram / Facebook / Threads</strong>에<br>
+                광고 소재(이미지+카피)를 노출.<br><br>
+                현재 <strong>4개 활성 소재</strong>로 운영 중:<br>
+                &nbsp;&nbsp;· 가격 소재 (예산의 70%)<br>
+                &nbsp;&nbsp;· 에브리타임 (20대 타겟)<br>
+                &nbsp;&nbsp;· 이사 가격 / 여자 모델<br><br>
+                → <strong>소재(메시지)별 성과 차이가 핵심</strong>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
     divider()
 
-    # ── F. CHANNEL COMPARISON ──
-    section("CHANNEL OVERVIEW")
-    col1, col2 = st.columns(2)
-
-    with col1:
-        fig = go.Figure()
-        fig.add_trace(go.Bar(x=['Google Ads', 'Meta Ads'], y=[GOOGLE_SPEND, META_SPEND], marker_color=[COLORS['google'], COLORS['meta']], text=[f'₩{GOOGLE_SPEND:,.0f}', f'₩{META_SPEND:,.0f}'], textposition='inside', textfont=dict(color='white', size=14)))
-        fig.update_layout(height=300, margin=dict(l=20,r=20,t=40,b=20), title=dict(text='광고비', font=dict(size=14)), yaxis_title='', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0'))
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col2:
-        fig = go.Figure()
-        fig.add_trace(go.Bar(x=['Google Ads', 'Meta Ads'], y=[GOOGLE_CPL, META_CPL], marker_color=[COLORS['google'], COLORS['meta']], text=[f'₩{GOOGLE_CPL:,}', f'₩{META_CPL:,}'], textposition='inside', textfont=dict(color='white', size=16, family='Noto Sans KR')))
-        fig.add_hline(y=TOTAL_CPL, line_dash="dot", line_color="#999", annotation_text=f"평균 ₩{TOTAL_CPL:,}", annotation_font_size=11)
-        fig.update_layout(height=300, margin=dict(l=20,r=20,t=40,b=20), title=dict(text='CPL (전환당 비용)', font=dict(size=14)), yaxis_title='', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0'))
-        st.plotly_chart(fig, use_container_width=True)
-
-    # Budget share callout
-    insight(f"""
-    <strong>Google</strong>: ₩15.5M (37.8%) | 1,638건 | CPL ₩9,432<br>
-    <strong>Meta</strong>: ₩25.5M (62.2%) | 4,835건 | CPL ₩5,267<br><br>
-    Meta가 CPL 기준 <strong>44% 저렴</strong>. 단, 이것은 <strong>리드 획득 비용</strong>일 뿐 — 리드 품질(상담→계약 전환율)은 아직 미검증.<br>
-    Google 리드의 계약율이 Meta보다 2배 높다면, 실제로는 Google이 나을 수 있습니다.
-    """, "warning")
+    # ── F. 분석 범위 제한 ──
+    st.markdown("""
+    <div style="background:#f8f8f8; border:1px solid #e0e0e0; border-radius:8px; padding:16px; margin:8px 0;">
+        <div style="font-size:13px; font-weight:600; color:#888; margin-bottom:8px;">&#9888;&#65039; 분석 범위 제한</div>
+        <div style="font-size:13px; color:#666; line-height:1.7;">
+            &#8226; 현재 데이터는 <strong>Lead(상담신청)</strong>까지만 추적 가능<br>
+            &#8226; 실제 서비스 이용 여부, 서비스 이용 시 단가(객단가)는 확인 불가<br>
+            &#8226; 내부 DB 연동 시 Lead → 계약 전환율, 채널별 객단가 분석 가능
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════════
@@ -557,7 +583,19 @@ if page == "Executive Summary":
 elif page == "Google Deep-Dive":
 
     st.markdown("# Google Ads Deep-Dive")
-    st.caption(f"총 광고비 ₩{GOOGLE_SPEND:,} | 전환 {GOOGLE_CONV:,}건 | CPL ₩{GOOGLE_CPL:,}")
+    st.caption("검색 캠페인 + PMax · 2025.11 ~ 2026.01 (13주)")
+    divider()
+
+    # ── Key KPI ──
+    st.markdown(f"""
+    <div class="kpi-container">
+        {kpi_card("총 광고비", f"₩{GOOGLE_SPEND:,}", "전체의 37.8%")}
+        {kpi_card("총 전환", f"{GOOGLE_CONV:,}건", f"CPL ₩{GOOGLE_CPL:,}")}
+        {kpi_card("PMax CPL", f"₩{PMAX_BENCHMARK:,}", "벤치마크 (자동 최적화)")}
+        {kpi_card("검색 CPL", f"₩{SEARCH_CPL:,}", "PMax의 1.9배 — 개선 여지", "red")}
+    </div>
+    """, unsafe_allow_html=True)
+
     divider()
 
     # ── A. Weekly Campaign CPL Trend ──
@@ -565,7 +603,7 @@ elif page == "Google Deep-Dive":
 
     insight("""
     <strong>핵심: 수동(검색)이 자동(PMax)보다 나은가?</strong><br>
-    PMax(자동)의 CPL이 벤치마크. 검색 캠페인이 이보다 높으면 메시지 최적화가 필요합니다.
+    PMax(자동)의 CPL이 벤치마크. 검색 캠페인이 이보다 높으면 <strong>개선 여지가 있다</strong>는 뜻입니다.
     """)
 
     # Filter to weeks W45-W05 only (exclude partial W44)
@@ -592,13 +630,20 @@ elif page == "Google Deep-Dive":
         변동폭이 크고, PMax 대비 <strong>항상 2배 이상</strong> = 메시지 문제
         """, "danger")
 
+    insight("""
+    <strong style="font-size:15px; color:#1B3A5C;">결론: 검색 캠페인에 개선 여지가 크다</strong><br><br>
+    검색(내국인) CPL ₩14,323은 PMax ₩6,976의 <strong>2.1배</strong>.<br>
+    동일한 상품을 광고하는데 수동(검색)이 자동(PMax)보다 2배 비싸다는 것은,<br>
+    <strong>키워드-메시지 매칭을 최적화하면 CPL을 크게 낮출 수 있다</strong>는 뜻입니다.<br><br>
+    → 어디서 비효율이 발생하는지 확인하기 위해, <strong>유저 검색 의도별로 세그먼트를 나눠서 분석</strong>합니다.
+    """)
+
     divider()
 
     # ── B. 유저 검색 의도별 세그먼트 분석 ──
     section("유저 검색 의도별 세그먼트 분석")
 
     insight("""
-    <strong>왜 '의도별'로 봐야 하는가?</strong><br>
     같은 Google 검색이라도 "이사대학" 검색과 "용달 가격" 검색은 전혀 다른 유저입니다.<br>
     유저의 <strong>검색 의도(intent)</strong>가 이사대학 서비스와 얼마나 매칭되는지가 전환의 핵심입니다.
     """)
@@ -608,9 +653,9 @@ elif page == "Google Deep-Dive":
 
     bar_colors = []
     for cpl in df_sorted['cpl']:
-        if cpl < PMAX_BENCHMARK:
+        if cpl < SEARCH_CPL * 0.6:
             bar_colors.append(COLORS['best'])
-        elif cpl < PMAX_BENCHMARK * 2:
+        elif cpl < SEARCH_CPL:
             bar_colors.append(COLORS['mid'])
         else:
             bar_colors.append(COLORS['worst'])
@@ -626,27 +671,34 @@ elif page == "Google Deep-Dive":
         textfont=dict(size=12, family='Noto Sans KR'),
     ))
     fig.add_vline(
-        x=PMAX_BENCHMARK, line_dash="dash", line_color=COLORS['blue'], line_width=2,
-        annotation_text=f"PMax 기준 ₩{PMAX_BENCHMARK:,}",
+        x=SEARCH_CPL, line_dash="dash", line_color=COLORS['worst'], line_width=2,
+        annotation_text=f"검색 평균 ₩{SEARCH_CPL:,}",
         annotation_position="top",
         annotation_font_size=11,
-        annotation_font_color=COLORS['blue'],
+        annotation_font_color=COLORS['worst'],
+    )
+    fig.add_vline(
+        x=PMAX_BENCHMARK, line_dash="dot", line_color=COLORS['best'], line_width=1.5,
+        annotation_text=f"PMax ₩{PMAX_BENCHMARK:,}",
+        annotation_position="bottom",
+        annotation_font_size=10,
+        annotation_font_color=COLORS['best'],
     )
     fig.update_layout(
         height=420, margin=dict(l=20, r=80, t=30, b=20),
         plot_bgcolor='rgba(0,0,0,0)',
         xaxis=dict(title='CPL (₩)', showgrid=True, gridcolor='#f0f0f0'),
         yaxis=dict(title=''),
-        title=dict(text='의도 세그먼트별 CPL (PMax 벤치마크 대비)', font=dict(size=14)),
+        title=dict(text='의도 세그먼트별 CPL (검색 평균 · PMax 벤치마크 대비)', font=dict(size=14)),
     )
     st.plotly_chart(fig, use_container_width=True)
 
     # Color legend
     st.markdown("""
     <div style="display:flex; gap:24px; justify-content:center; font-size:13px; margin-bottom:16px;">
-        <span><span style="color:#2ECC71; font-weight:700;">●</span> PMax보다 효율적</span>
-        <span><span style="color:#F39C12; font-weight:700;">●</span> PMax의 1~2배</span>
-        <span><span style="color:#E74C3C; font-weight:700;">●</span> PMax의 2배 초과</span>
+        <span><span style="color:#2ECC71; font-weight:700;">●</span> 검색 평균 대비 우수</span>
+        <span><span style="color:#F39C12; font-weight:700;">●</span> 검색 평균 이하</span>
+        <span><span style="color:#E74C3C; font-weight:700;">●</span> 검색 평균 초과 (비효율)</span>
     </div>
     """, unsafe_allow_html=True)
 
@@ -821,37 +873,7 @@ elif page == "Google Deep-Dive":
 
     divider()
 
-    # ── G. 캠페인 구조 ──
-    section("캠페인 구조")
-
-    col1, col2 = st.columns(2)
-    with col1:
-        fig = go.Figure(go.Bar(
-            x=google_campaign['캠페인'], y=google_campaign['CPL'],
-            marker_color=[COLORS['best'], COLORS['worst'], COLORS['mid']],
-            text=[f'₩{v:,}' for v in google_campaign['CPL']], textposition='auto',
-        ))
-        fig.update_layout(height=320, title='캠페인별 CPL', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0'))
-        st.plotly_chart(fig, use_container_width=True)
-
-    with col2:
-        fig = go.Figure(go.Bar(
-            x=pmax_asset['에셋그룹'], y=pmax_asset['CPL'],
-            marker_color=[COLORS['blue'], COLORS['best'], COLORS['mid']],
-            text=[f'₩{v:,}' for v in pmax_asset['CPL']], textposition='auto',
-        ))
-        fig.update_layout(height=320, title='PMax 에셋그룹별 CPL', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0'))
-        st.plotly_chart(fig, use_container_width=True)
-
-    insight("""
-    PMax CPL ₩6,880은 검색(₩14,323) 대비 절반이지만, <strong>리드 품질은 미검증</strong>.<br>
-    PMax는 구글 AI가 자동 최적화하는 캠페인 — CPA는 낮지만 <strong>상담→계약 전환율이 검색 대비 낮을 수 있음</strong>.<br>
-    이건 CRM 데이터 연동 후에야 확인 가능합니다.
-    """, "warning")
-
-    divider()
-
-    # ── H. 낭비 분석 ──
+    # ── G. 낭비 분석 ──
     section("낭비 분석: 어디서 돈이 새고 있나")
 
     wasted = 1774389
@@ -869,6 +891,13 @@ elif page == "Google Deep-Dive":
     <strong style="color:#2ECC71;">{possible_conv}건</strong> 전환 가능 (현재 {actual_conv}건 → <strong>+{possible_conv-actual_conv}건</strong>)<br><br>
     이것은 추정이 아니라, 이미 원룸/소형 CVR 22%로 <strong>검증된 숫자</strong>입니다.
     """, "success")
+
+    insight("""
+    <strong>검토 필요: 소형이사 키워드에 충분한 검색 볼륨이 있는가?</strong><br>
+    예산을 리디렉션하려면 해당 키워드의 검색량이 충분해야 합니다.<br>
+    → "원룸이사", "소형이사", "1인 이사" 등의 검색량 확인 후 최종 판단 필요<br>
+    → 검색량 부족 시 "이사 비용", "이사 가격 비교" 등 가격 의도 키워드로 대안 가능
+    """, "warning")
 
     divider()
 
@@ -1405,110 +1434,6 @@ elif page == "크로스채널 인사이트":
     """)
 
 
-# ═══════════════════════════════════════════════
-# PAGE: 가설 & 원인 분석
-# ═══════════════════════════════════════════════
-elif page == "가설 & 원인 분석":
-
-    st.markdown("# 가설 & 원인 분석")
-    st.caption("비효율 세그먼트가 왜 안 되는지 — 가설 기반 접근")
-    divider()
-
-    tab_g, tab_m = st.tabs(["Google 가설 (H1~H5)", "Meta 가설 (H6~H9)"])
-
-    with tab_g:
-        section("Google 검색 비효율 가설")
-
-        with st.expander("H1: 용달/화물 의도 미스매치 — 가장 유력", expanded=True):
-            col1, col2 = st.columns([2, 1])
-            with col1:
-                st.markdown("""
-                **현상**: 예산 35.7%(₩2,626,506), CPL ₩18,761 (최악), CVR 12.6% (최저)
-
-                **가설**: "용달"을 검색하는 유저는 이사가 아니라 **물건 운송**(냉장고, 가구 등)이 목적.
-                이사대학은 **이사 견적 비교** 서비스 → 니즈가 근본적으로 다름.
-
-                **근거**:
-                - 용달 키워드 102개 중 이사 관련은 일부 ("이사용달", "원룸용달")
-                - 나머지는 "화물운송", "용달가격", "1톤트럭" 등 운송 관련
-                - 클릭은 하지만 (CTR 4.7%) 견적 폼에서 이탈 (CVR 12.6%)
-                """)
-            with col2:
-                fig = go.Figure(go.Pie(values=[35.7, 64.3], labels=['용달/화물', '나머지'], marker_colors=[COLORS['worst'], '#e8e8e8'], hole=0.6))
-                fig.update_layout(height=200, margin=dict(l=0,r=0,t=0,b=0), showlegend=False, annotations=[dict(text='35.7%', x=0.5, y=0.5, font_size=20, showarrow=False)])
-                st.plotly_chart(fig, use_container_width=True)
-
-        with st.expander("H2: 용달 랜딩페이지 미스매치"):
-            st.markdown("""
-            "용달" 검색 → 이사 견적 페이지 도착 → **단순 운송 서비스 정보 없음** → 이탈
-
-            용달 유저가 기대하는 것: "1톤 트럭으로 냉장고 옮기는 데 얼마?"
-            이사대학이 보여주는 것: "이사 견적 비교해보세요"
-            → **기대와 현실 불일치 = 즉시 이탈**
-            """)
-
-        with st.expander("H3: 키워드 확장 과잉"):
-            st.markdown("""
-            광고그룹 "용달키워드"에 **102개** 키워드가 몰려있음 (권장: 10~20개).
-            → 관련 없는 검색어에도 노출되어 무효 클릭 증가.
-            → 정밀 관리 불가능한 수준.
-            """)
-
-        with st.expander("H4: 일반 이사 키워드 경쟁 과열"):
-            st.markdown("""
-            "이사업체", "이삿짐센터" 등은 **한진, 현대 등 대형 업체**와 입찰 경쟁.
-            → CPC(클릭당 비용) 높은데 이사대학 인지도는 낮아 전환율↓.
-            → CPL ₩16,334 — 브랜드 키워드(₩4,741) 대비 **3.4배** 높음.
-            """)
-
-        with st.expander("H5: 지역 키워드 정밀도 부족"):
-            st.markdown("""
-            | 지역 | CPL | 전환 |
-            |------|-----|------|
-            | 대구 | ₩7,062 | 6건 |
-            | 서울 | ₩10,992 | 6건 |
-            | 경남 | ₩58,198 | 1건 |
-            | 제주 | ₩18,047 | 2건 |
-
-            서비스 커버리지 없는 지역에도 광고 노출 → **전환되어도 계약 불가 = 순 낭비**
-            """)
-
-    with tab_m:
-        section("Meta 비효율 가설")
-
-        with st.expander("H6: 에브리타임 — 호기심 클릭 > 전환 의도", expanded=True):
-            st.markdown("""
-            **현상**: CTR 1.20% (최고) but CVR 11.0% (최저급)
-
-            **가설**: 에타(에브리타임)는 20대 대학생 커뮤니티.
-            이사 안 해도 "싸다" 보면 일단 클릭 → 실제 이사 계획 없으면 전환 안 됨.
-
-            **"관심은 많은데 안 사"** 패턴 — CTR↑ CVR↓의 전형.
-            """)
-
-        with st.expander("H7: 에브리타임 — 20대 퍼널 이탈"):
-            st.markdown("""
-            견적 폼이 20대 UX에 안 맞거나, 부모님 동의 필요한 단계에서 이탈.
-            → 다른 소재는 CTR↓ CVR↑ 패턴인데 에타만 CTR↑ CVR↓
-            → 20대 특화 랜딩페이지 필요 가능성.
-            """)
-
-        with st.expander("H8: 소재 ALL — 유사타겟 풀 소진"):
-            st.markdown("""
-            **월별 CPL**: ₩10,060 → ₩4,830 → ₩12,867 (불안정)
-
-            유사타겟 = 전환 유저와 "비슷한" 유저를 Meta AI가 찾아줌.
-            → 처음엔 유사도 높은 유저부터 노출 → 점점 먼 유저로 확장.
-            → 12월에 "달콤한 구간"을 거친 후 1월에 풀 소진.
-            """)
-
-        with st.expander("H9: 소재 ALL — 시즌 x 타겟 품질"):
-            st.markdown("""
-            12월(이사 비수기) → 이사 의도 있는 유저**만** 반응 → CPL↓
-            1월(이사 시즌 시작) → 넓은 유저 유입 → 탐색형 유저가 희석 → CPL↑
-
-            계절적 수요 패턴과 타겟 품질이 동시에 작용.
-            """)
 
 
 # ═══════════════════════════════════════════════
