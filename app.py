@@ -988,15 +988,14 @@ elif page == "Meta 수정 제안":
 
     st.markdown("""
     <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
-        아래 수정안을 모두 적용하면, <strong>총 예산 규모는 동일</strong>하면서도
-        Threads 확대 + 소재 다변화를 통해 다음과 같은 효과가 예상됩니다.
+        아래 2가지 수정안을 모두 적용하면, 예산이 효율적인 소재와 플랫폼에 집중되어 다음과 같은 효과가 예상됩니다.
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown(f"""
     <div class="kpi-container">
         {kpi_card("Meta CPL", "₩5,267 → ₩4,930", "−6%", "green")}
-        {kpi_card("소재 재배분 추가 전환", "+125건/13주", "에타 → 이사가격 이동", "green")}
+        {kpi_card("추가 전환 (13주)", "+125건", "소재 재배분 효과", "green")}
         {kpi_card("Threads 주간 전환", "21건 → 74건/주", "+253%", "green")}
     </div>
     """, unsafe_allow_html=True)
@@ -1092,41 +1091,18 @@ elif page == "추가 인사이트":
 
     st.markdown("""
     <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
-        이사대학 서비스에 들어가면 가장 먼저 보이는 화면이 <strong>"원룸이사 · 투룸이사 · 쓰리룸이사"의 가격 비교표</strong>입니다.
-        광고 메시지가 이 첫 화면과 일치할수록, 유저가 "내가 찾던 바로 그 서비스"라고 느끼고 전환으로 이어집니다.<br><br>
-        실제 데이터를 보면, <strong>"원룸/투룸 이사"를 명시적으로 보여주는 소재·키워드</strong>가
-        채널(Google/Meta)과 무관하게 가장 낮은 CPL을 기록하고 있습니다.
+        이사대학의 핵심 서비스는 <strong>"원룸이사 · 투룸이사"</strong>입니다.
+        서비스에 들어가면 첫 화면에서 가장 눈에 띄는 것이 <strong>"원룸이사" "투룸이사" 버튼</strong>이고,
+        유저가 이 버튼을 눌러 견적을 비교하는 것이 핵심 전환 흐름입니다.<br><br>
+        광고에서 이 <strong>"원룸/투룸 이사"를 직접 보여주면 성과가 좋고,
+        이것과 거리가 멀면 성과가 안 나옵니다.</strong>
+        채널(Google/Meta)과 무관하게 이 패턴이 일관되게 나타납니다.<br><br>
+        Meta 이사가격 소재(CPL ₩3,850)와 가격소재(CPL ₩5,171)는 광고 이미지에 "원룸이사, 투룸이사" 가격이 바로 보입니다.
+        유저가 광고를 클릭하면 서비스 첫 화면의 원룸/투룸이사 버튼과 <strong>기대한 그대로의 화면</strong>을 보게 됩니다.
+        반면 용달/화물(CPL ₩17,061), 일반이사(CPL ₩14,395), 에브리타임(CVR 11.0%)처럼
+        "원룸/투룸 이사"가 직접 보이지 않는 메시지는 성과가 2~3배 떨어집니다.
     </div>
     """, unsafe_allow_html=True)
-
-    # 크로스채널 메시지 비교
-    price_data = pd.DataFrame({
-        '채널/메시지': ['Google: 브랜드', 'Google: 원룸/소형이사', 'Meta: 이사가격\n(원룸~쓰리룸 가격표)', 'Meta: 가격소재\n(원룸~쓰리룸 가격표)', 'Meta: 에브리타임\n(대학생 커뮤니티)'],
-        'CPL': [4741, 12769, 3850, 5171, 5154],
-        '채널': ['Google', 'Google', 'Meta', 'Meta', 'Meta'],
-    })
-
-    fig = go.Figure()
-    fig.add_trace(go.Bar(
-        x=price_data['채널/메시지'], y=price_data['CPL'],
-        marker_color=[COLORS['google']]*2 + [COLORS['meta']]*3,
-        text=[f'₩{v:,}' for v in price_data['CPL']], textposition='outside',
-        textfont=dict(size=13),
-    ))
-    fig.add_hline(y=TOTAL_CPL, line_dash="dot", line_color="#ccc", annotation_text=f"전체 평균 ₩{TOTAL_CPL:,}")
-    fig.update_layout(height=400, plot_bgcolor='rgba(0,0,0,0)',
-                      yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='CPL (₩)'),
-                      title='"원룸/투룸 이사" 관련 메시지 — 전 채널 CPL')
-    st.plotly_chart(fig, use_container_width=True)
-
-    insight("""
-    <strong style="font-size:16px;">광고 메시지 = 서비스 첫 화면일수록 전환 효율이 높다</strong><br><br>
-    이사대학 서비스 첫 화면 = <strong>"원룸이사 5만원~, 투룸이사 15만원~"</strong> 가격 비교표.<br>
-    Meta 이사가격 소재(CPL ₩3,850)와 가격소재(CPL ₩5,171)는 이 화면과 거의 동일한 이미지를 광고로 사용 →
-    <strong>유저가 광고를 클릭하면 기대한 그대로의 화면</strong>을 보게 됩니다.<br><br>
-    반대로 에브리타임(CPL ₩5,154)은 대학생 커뮤니티 바이럴 형태라 흥미는 끌지만,
-    "원룸/투룸 이사 가격"이라는 메시지가 직접 보이지 않아 전환율(CVR 11.0%)이 낮습니다.
-    """, "success")
 
     divider()
 
@@ -1180,42 +1156,22 @@ elif page == "추가 인사이트":
         </div>
         """, unsafe_allow_html=True)
 
-    divider()
-
-    section("광고 메시지 ↔ 서비스 화면 일치도와 CPL")
-
     st.markdown("""
-    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
-        Google과 Meta를 통합해서 보면, <strong>광고에서 "원룸/투룸 이사"를 직접 보여줄수록 CPL이 낮아지는</strong> 패턴이 명확합니다.
-        서비스에 들어갔을 때 첫 화면과 광고 메시지가 일치하면 유저 이탈이 줄고 전환이 올라갑니다.
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:16px 0;">
+        공통점은 광고를 클릭한 유저가 서비스 첫 화면의 <strong>"원룸이사" "투룸이사" 버튼</strong>을 보고
+        "내가 찾던 게 아닌데?"라고 느끼는 것입니다.<br><br>
+        <strong>용달/화물</strong> 키워드로 들어온 유저는 물건 운송을 원하는데, 이사대학은 이사 견적 비교 서비스입니다.
+        서비스 자체가 다르기 때문에 아무리 유입이 많아도 전환으로 이어지지 않습니다.<br><br>
+        <strong>일반이사</strong> 키워드는 대형 이사(3톤 이상)를 찾는 유저가 많습니다.
+        이사대학의 강점인 "원룸/투룸 소형이사"와 맞지 않고,
+        대형 이사업체들과 직접 경쟁하게 되어 차별화가 어렵습니다.<br><br>
+        <strong>에브리타임</strong> 소재는 대학생의 흥미를 끌지만,
+        광고에서 "원룸/투룸 이사 가격"이 직접 보이지 않아 서비스 화면과 기대가 불일치합니다.
+        CTR(클릭률)은 1.20%로 가장 높지만, 실제 전환율(CVR 11.0%)은 이사가격(27.1%)의 절반도 안 됩니다.<br><br>
+        <strong>실행 함의</strong>: 새 소재나 키워드를 만들 때
+        <strong>"원룸/투룸 이사"가 광고에서 바로 보이는지</strong>를 기준으로 판단하면 실패를 줄일 수 있습니다.
     </div>
     """, unsafe_allow_html=True)
-
-    matrix_data = pd.DataFrame({
-        '메시지': ['이사가격\n(원룸~쓰리룸)', '브랜드', '원룸/소형', '가격소재\n(원룸~쓰리룸)', '에브리타임\n(대학생)', '포장이사', '일반이사', '지역+이사', '용달/화물'],
-        'CPL': [3850, 4741, 12769, 5171, 5154, 13747, 14395, 17133, 17061],
-        '메시지 일치도': [95, 90, 85, 90, 40, 60, 40, 50, 15],
-        '전환 볼륨': [156, 84, 28, 3355, 617, 30, 32, 28, 104],
-        '채널': ['Meta', 'Google', 'Google', 'Meta', 'Meta', 'Google', 'Google', 'Google', 'Google'],
-    })
-
-    fig = px.scatter(matrix_data, x='메시지 일치도', y='CPL', size='전환 볼륨', color='채널', text='메시지',
-                     color_discrete_map={'Google': COLORS['google'], 'Meta': COLORS['meta']}, size_max=50)
-    fig.update_traces(textposition='top center', textfont_size=10)
-    fig.update_layout(height=450, plot_bgcolor='rgba(0,0,0,0)',
-                      xaxis=dict(title='광고 ↔ 서비스 화면 일치도 (%) — 높을수록 "원룸/투룸 이사" 직접 노출', showgrid=True, gridcolor='#f0f0f0'),
-                      yaxis=dict(title='CPL (₩) — 낮을수록 효율적', showgrid=True, gridcolor='#f0f0f0', autorange='reversed'))
-    st.plotly_chart(fig, use_container_width=True)
-
-    insight("""
-    <strong>핵심 발견: "원룸/투룸 이사"를 직접 보여주는 메시지만 효율이 나온다.</strong><br><br>
-    이사대학 서비스의 첫 화면 = "원룸이사, 투룸이사, 쓰리룸이사" 가격 비교표.<br>
-    이 화면과 광고 메시지가 일치하는 소재(이사가격, 가격소재)는 CPL ₩3,850~₩5,171로 효율적이고,<br>
-    용달/화물(₩17,061), 일반이사(₩14,395)처럼 서비스와 맞지 않는 메시지는 CPL이 3~4배 높습니다.<br>
-    에브리타임도 대학생의 흥미를 끌지만 "원룸/투룸 이사"가 직접 보이지 않아 전환율이 절반 수준입니다.<br><br>
-    <strong>실행 함의</strong>: 새 소재/키워드를 만들 때 <strong>"원룸/투룸 이사 + 가격 비교"가 광고에서 바로 보이는지</strong>를
-    기준으로 판단하면 실패를 줄일 수 있습니다.
-    """)
 
 
 
