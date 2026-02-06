@@ -873,15 +873,51 @@ elif page == "Meta Deep-Dive":
     df_meta = active_adsets.sort_values('CPL')
     colors = [EFF_COLORS.get(e, '#999') for e in df_meta['효율']]
 
+    x_labels = [f"{row['소재_short']}<br><sub>(₩{row['비용']/10000:,.0f}만)</sub>" for _, row in df_meta.iterrows()]
     fig = go.Figure()
     fig.add_trace(go.Bar(
-        x=df_meta['소재_short'], y=df_meta['CPL'], marker_color=colors,
+        x=x_labels, y=df_meta['CPL'], marker_color=colors,
         text=[f'₩{v:,}' for v in df_meta['CPL']], textposition='outside',
         textfont=dict(size=13),
     ))
     fig.add_hline(y=META_CPL, line_dash="dot", line_color="#ccc", annotation_text=f"Meta 평균 ₩{META_CPL:,}")
-    fig.update_layout(height=380, plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='CPL (₩)'))
+    fig.update_layout(height=400, plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='CPL (₩)'))
     st.plotly_chart(fig, use_container_width=True)
+
+    # 대표 소재 이미지
+    import os
+    _img_dir = os.path.join(os.path.dirname(__file__), "images")
+    dd_col1, dd_col2, dd_col3 = st.columns(3)
+    with dd_col1:
+        _p = os.path.join(_img_dir, "meta_isagagyeok_ad.png")
+        if os.path.exists(_p):
+            st.image(_p)
+        st.markdown("""
+        <div style="text-align:center; font-size:13px; line-height:1.6;">
+            <strong>이사가격</strong> 대표 소재<br>
+            <span style="color:#888;">노출의 95% 이상이 이 이미지</span>
+        </div>
+        """, unsafe_allow_html=True)
+    with dd_col2:
+        _p = os.path.join(_img_dir, "meta_everytime_ad.png")
+        if os.path.exists(_p):
+            st.image(_p)
+        st.markdown("""
+        <div style="text-align:center; font-size:13px; line-height:1.6;">
+            <strong>에브리타임</strong> 대표 소재<br>
+            <span style="color:#888;">노출의 약 70%가 이 이미지</span>
+        </div>
+        """, unsafe_allow_html=True)
+    with dd_col3:
+        _p = os.path.join(_img_dir, "meta_price_ad.png")
+        if os.path.exists(_p):
+            st.image(_p)
+        st.markdown("""
+        <div style="text-align:center; font-size:13px; line-height:1.6;">
+            <strong>가격소재</strong> 대표 소재<br>
+            <span style="color:#888;">노출의 95% 이상이 이 이미지</span>
+        </div>
+        """, unsafe_allow_html=True)
 
     divider()
 
@@ -980,6 +1016,13 @@ elif page == "Meta 수정 제안":
     </div>
     """, unsafe_allow_html=True)
 
+    st.markdown("""
+    <div style="font-size:14px; color:#555; padding:8px 0; margin-bottom:4px;">
+        아래 3개 이미지가 Meta 전체 예산의 <strong style="color:#333;">약 85%</strong>를 차지합니다.
+        특히 ①번 가격소재 이미지 하나에 70%가 집중되어 있어 의존도가 매우 높습니다.
+    </div>
+    """, unsafe_allow_html=True)
+
     # Show 3 ad images side by side
     import os
     _img_dir = os.path.join(os.path.dirname(__file__), "images")
@@ -992,8 +1035,9 @@ elif page == "Meta 수정 제안":
         st.markdown("""
         <div style="text-align:center; font-size:13px; line-height:1.6; margin-top:8px;">
             <strong style="color:#E74C3C; font-size:14px;">① 가격소재</strong><br>
-            CPL ₩5,171 · <strong>예산 70%</strong> · 전환 3,355건<br>
-            <span style="color:#888;">예산 대부분이 이 이미지에 집중</span>
+            CPL ₩5,171 · <strong>전체 예산의 70%</strong> · 전환 3,355건<br>
+            노출의 95% 이상이 이 이미지<br>
+            <strong style="color:#E74C3C;">의존도 매우 높음 — 대안 소재 개발 시급</strong>
         </div>
         """, unsafe_allow_html=True)
 
@@ -1004,7 +1048,8 @@ elif page == "Meta 수정 제안":
         st.markdown("""
         <div style="text-align:center; font-size:13px; line-height:1.6; margin-top:8px;">
             <strong style="color:#2ECC71; font-size:14px;">② 이사가격</strong><br>
-            <strong>CPL ₩3,850 (최저)</strong> · 예산 2.4% · 전환 156건<br>
+            <strong>CPL ₩3,850 (최저)</strong> · 전체 예산의 2.4% · 전환 156건<br>
+            노출의 95% 이상이 이 이미지<br>
             <span style="color:#888;">CPL이 가장 낮은데 노출 최소</span>
         </div>
         """, unsafe_allow_html=True)
@@ -1016,7 +1061,8 @@ elif page == "Meta 수정 제안":
         st.markdown("""
         <div style="text-align:center; font-size:13px; line-height:1.6; margin-top:8px;">
             <strong style="color:#F39C12; font-size:14px;">③ 에브리타임</strong><br>
-            CPL ₩5,154 · 예산 12.8% · 전환 617건<br>
+            CPL ₩5,154 · 전체 예산의 12.8% · 전환 617건<br>
+            노출의 약 70%가 이 이미지<br>
             <span style="color:#888;">대학생 타겟이나 전환 효율 낮음</span>
         </div>
         """, unsafe_allow_html=True)
