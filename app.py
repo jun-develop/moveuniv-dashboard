@@ -1009,7 +1009,7 @@ elif page == "Meta 수정 제안":
     st.markdown("""
     <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
         이사가격 소재가 <strong>CPL ₩3,850으로 전 소재 중 가장 효율적</strong>이지만,
-        CBO(캠페인 예산 최적화) 자동 배분에 의해 <strong>전체 예산의 2.4%만</strong> 투입되고 있습니다.
+        Meta의 예산 자동 배분 기능에 의해 <strong>전체 예산의 2.4%만</strong> 투입되고 있습니다.
         반면 에브리타임 소재는 CPL이 34% 더 높은데도(₩5,154) 예산은 5배 이상(12.8%) 받고 있습니다.
     </div>
     """, unsafe_allow_html=True)
@@ -1078,23 +1078,11 @@ elif page == "Meta 수정 제안":
         예산 총액은 변하지 않지만, 더 효율적인 소재에 배분하는 것만으로
         <strong>13주 기준 순 +125건의 추가 전환</strong>이 가능합니다.<br><br>
         또한 <strong>Threads는 13주 연속 CPL 최저</strong>(₩2,700~₩5,000)를 기록하고 있으나,
-        CBO가 예산의 4.5%만 배분하고 있습니다.
+        예산 자동 배분이 4.5%만 배분하고 있습니다.
         가장 확실한 효율 개선 기회를 놓치고 있는 상황입니다.<br><br>
-        <strong style="color:#E74C3C;">결론: CBO 자동 배분에 맡기지 말고, 수동으로 예산 비중을 조정해야 합니다.</strong>
+        <strong style="color:#E74C3C;">결론: 예산 자동 배분에 맡기지 말고, 수동으로 예산 비중을 조정해야 합니다.</strong>
     </div>
     """, unsafe_allow_html=True)
-
-    st.markdown("**소재별 성과 요약**")
-    active_status_table = pd.DataFrame({
-        '소재': ['이사가격', '가격소재', '에브리타임'],
-        'CPL': ['₩3,850', '₩5,171', '₩5,154'],
-        '비용': ['60만', '1,735만', '318만'],
-        '전환': [156, 3355, 617],
-        'CTR': ['0.99%', '0.81%', '1.20%'],
-        'CVR': ['27.1%', '18.1%', '11.0%'],
-        '예산비중': ['2.4%', '69.6%', '12.8%'],
-    })
-    st.dataframe(active_status_table, use_container_width=True, hide_index=True)
 
     divider()
 
@@ -1103,9 +1091,9 @@ elif page == "Meta 수정 제안":
 
     st.markdown("""
     <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
-        <strong style="font-size:16px;">1. CBO 자동 배분 → 수동 예산 배분으로 전환</strong><br>
-        현재 Meta CBO(캠페인 예산 최적화)가 자동으로 예산을 배분하고 있습니다.
-        그런데 CBO가 가격소재 이미지 하나에 70%를 몰아주면서, CPL이 26% 더 낮은 이사가격 소재에는 2.4%만 배분하고 있습니다.
+        <strong style="font-size:16px;">1. 예산 자동 배분 → 수동 배분으로 전환</strong><br>
+        현재 Meta가 자동으로 예산을 배분하고 있습니다.
+        그런데 자동 배분이 가격소재 이미지 하나에 70%를 몰아주면서, CPL이 26% 더 낮은 이사가격 소재에는 2.4%만 배분하고 있습니다.
         더 효율적인 소재가 노출을 덜 받는 것은 자동 최적화의 한계입니다.
         수동으로 각 소재의 예산 비중을 직접 조정해야 전체 효율을 개선할 수 있습니다.
     </div>
@@ -1113,7 +1101,7 @@ elif page == "Meta 수정 제안":
         <strong style="font-size:16px;">2. 이사가격 소재 확대 (2.4% → 15%)</strong><br>
         이사가격 소재는 CPL ₩3,850으로 전 소재 중 가장 효율적입니다.
         "이사 견적비교 해서 평균 30만원 절약해요"라는 메시지가 이사대학 서비스의 핵심 가치와 가장 직접적으로 매칭됩니다.
-        현재 CBO 자동 배분으로 예산의 2.4%만 투입되고 있어, 수동으로 15%까지 늘리면 추가 전환을 확보할 수 있습니다.
+        현재 예산 자동 배분으로 2.4%만 투입되고 있어, 수동으로 15%까지 늘리면 추가 전환을 확보할 수 있습니다.
     </div>
     <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
         <strong style="font-size:16px;">3. 에브리타임 축소 → 이사가격으로 재배분 (12.8% → 5%)</strong><br>
@@ -1125,7 +1113,7 @@ elif page == "Meta 수정 제안":
     <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
         <strong style="font-size:16px;">4. Threads 플랫폼 확대 (4.5% → 15%)</strong><br>
         Threads는 13주 연속 CPL 최저(₩2,700~₩5,000)를 기록하고 있습니다.
-        현재 CBO 자동 배분으로 예산의 4.5%만 투입 중인데,
+        현재 예산 자동 배분으로 4.5%만 투입 중인데,
         별도 캠페인으로 분리하거나 비중을 수동 조정해서 15%까지 확대하면
         주간 전환이 21건에서 74건으로 약 253% 증가할 수 있습니다.
     </div>
@@ -1142,49 +1130,67 @@ elif page == "추가 인사이트":
     st.caption("Google + Meta 채널을 관통하는 메시지 효과 분석")
     divider()
 
-    section('왜 "가격" 메시지가 채널을 불문하고 효과적인가')
+    section('"원룸/투룸 이사" 메시지가 채널을 불문하고 효과적인 이유')
 
-    # 크로스채널 가격 메시지 비교
+    st.markdown("""
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
+        이사대학 서비스에 들어가면 가장 먼저 보이는 화면이 <strong>"원룸이사 · 투룸이사 · 쓰리룸이사"의 가격 비교표</strong>입니다.
+        광고 메시지가 이 첫 화면과 일치할수록, 유저가 "내가 찾던 바로 그 서비스"라고 느끼고 전환으로 이어집니다.<br><br>
+        실제 데이터를 보면, <strong>"원룸/투룸 이사"를 명시적으로 보여주는 소재·키워드</strong>가
+        채널(Google/Meta)과 무관하게 가장 낮은 CPL을 기록하고 있습니다.
+    </div>
+    """, unsafe_allow_html=True)
+
+    # 크로스채널 메시지 비교
     price_data = pd.DataFrame({
-        '채널/메시지': ['Google: 브랜드 [이사대학]', 'Google: 가격/견적 키워드', 'Google: 소형이사', 'Meta: "이사 가격"', 'Meta: "가격 소재"'],
-        'CPL': [4741, 5767, 6411, 3850, 5171],
-        '채널': ['Google', 'Google', 'Google', 'Meta', 'Meta'],
-        '공통점': ['가격비교 서비스', '가격 검색 의도', '핵심 타겟', '가격 직접 소구', '가격 메시지'],
+        '채널/메시지': ['Google: 브랜드', 'Google: 원룸/소형이사', 'Meta: 이사가격\n(원룸~쓰리룸 가격표)', 'Meta: 가격소재\n(원룸~쓰리룸 가격표)', 'Meta: 에브리타임\n(대학생 커뮤니티)'],
+        'CPL': [4741, 12769, 3850, 5171, 5154],
+        '채널': ['Google', 'Google', 'Meta', 'Meta', 'Meta'],
     })
 
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=price_data['채널/메시지'], y=price_data['CPL'],
-        marker_color=[COLORS['google']]*3 + [COLORS['meta']]*2,
+        marker_color=[COLORS['google']]*2 + [COLORS['meta']]*3,
         text=[f'₩{v:,}' for v in price_data['CPL']], textposition='outside',
         textfont=dict(size=13),
     ))
     fig.add_hline(y=TOTAL_CPL, line_dash="dot", line_color="#ccc", annotation_text=f"전체 평균 ₩{TOTAL_CPL:,}")
-    fig.update_layout(height=400, plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='CPL (₩)'), title='가격/비교 관련 메시지 — 전 채널 CPL')
+    fig.update_layout(height=400, plot_bgcolor='rgba(0,0,0,0)',
+                      yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='CPL (₩)'),
+                      title='"원룸/투룸 이사" 관련 메시지 — 전 채널 CPL')
     st.plotly_chart(fig, use_container_width=True)
 
     insight("""
-    <strong style="font-size:16px;">모든 채널에서 "가격/비교" 메시지가 평균 대비 30~40% 낮은 CPL</strong><br><br>
-    <strong>이유:</strong> 이사는 '반드시 해야 하는' 과업이라 <strong>가격이 핵심 의사결정 요인</strong>입니다.<br>
-    이사대학의 USP = "여러 업체 비교 견적" → <strong>"가격 비교"가 서비스 본질과 완벽 일치</strong>.<br><br>
-    유저 구매 여정: 이사 결정 → "얼마나 할까?" 검색 → 가격 비교 정보 발견 → 견적 요청<br>
-    이 흐름에 가장 자연스러운 메시지 = <strong>"가격 비교해서 저렴하게 이사하세요"</strong>
+    <strong style="font-size:16px;">광고 메시지 = 서비스 첫 화면일수록 전환 효율이 높다</strong><br><br>
+    이사대학 서비스 첫 화면 = <strong>"원룸이사 5만원~, 투룸이사 15만원~"</strong> 가격 비교표.<br>
+    Meta 이사가격 소재(CPL ₩3,850)와 가격소재(CPL ₩5,171)는 이 화면과 거의 동일한 이미지를 광고로 사용 →
+    <strong>유저가 광고를 클릭하면 기대한 그대로의 화면</strong>을 보게 됩니다.<br><br>
+    반대로 에브리타임(CPL ₩5,154)은 대학생 커뮤니티 바이럴 형태라 흥미는 끌지만,
+    "원룸/투룸 이사 가격"이라는 메시지가 직접 보이지 않아 전환율(CVR 11.0%)이 낮습니다.
     """, "success")
 
     divider()
 
-    section("반대로, 왜 다른 메시지는 덜 효과적인가")
+    section("효과 없는 메시지: 서비스와 맞지 않는 타겟")
+
+    st.markdown("""
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
+        반면 아래 메시지들은 CPL이 2~3배 높거나 전환 효율이 떨어집니다.
+        공통점은 <strong>"원룸/투룸 이사"라는 이사대학의 핵심 서비스와 메시지가 일치하지 않는다</strong>는 것입니다.
+    </div>
+    """, unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
         st.markdown(f"""
         <div class="kpi-card red" style="text-align:left; padding:18px; font-size:13px;">
-            <div style="font-weight:700; font-size:15px;">용달/화물</div>
-            <div style="font-size:22px; font-weight:900; margin:6px 0;">CPL ₩18,761</div>
+            <div style="font-weight:700; font-size:15px;">용달/화물 키워드</div>
+            <div style="font-size:22px; font-weight:900; margin:6px 0;">CPL ₩17,061</div>
             <div style="line-height:1.6; opacity:0.9;">
                 유저 의도 = 물건 운송<br>
-                이사대학 서비스 = 이사 견적<br>
+                이사대학 = 원룸/투룸 이사 비교<br>
                 <strong>→ 근본적 미스매치</strong>
             </div>
         </div>
@@ -1193,11 +1199,11 @@ elif page == "추가 인사이트":
     with col2:
         st.markdown(f"""
         <div class="kpi-card orange" style="text-align:left; padding:18px; font-size:13px;">
-            <div style="font-weight:700; font-size:15px;">일반 이사</div>
-            <div style="font-size:22px; font-weight:900; margin:6px 0;">CPL ₩16,334</div>
+            <div style="font-weight:700; font-size:15px;">일반이사 키워드</div>
+            <div style="font-size:22px; font-weight:900; margin:6px 0;">CPL ₩14,395</div>
             <div style="line-height:1.6; opacity:0.9;">
                 대형 이사업체와 경쟁<br>
-                이사대학 인지도 열세<br>
+                "원룸/투룸" 특화 메시지 없음<br>
                 <strong>→ 차별화 부족</strong>
             </div>
         </div>
@@ -1206,48 +1212,51 @@ elif page == "추가 인사이트":
     with col3:
         st.markdown(f"""
         <div class="kpi-card orange" style="text-align:left; padding:18px; font-size:13px;">
-            <div style="font-weight:700; font-size:15px;">에브리타임</div>
+            <div style="font-weight:700; font-size:15px;">에브리타임 소재</div>
             <div style="font-size:22px; font-weight:900; margin:6px 0;">CVR 11.0%</div>
             <div style="line-height:1.6; opacity:0.9;">
-                20대에게 흥미 유발<br>
-                실제 이사 니즈 부족<br>
-                <strong>→ 호기심 vs 전환 괴리</strong>
+                대학생에게 흥미 유발하지만<br>
+                서비스 화면과 메시지 불일치<br>
+                <strong>→ 호기심만, 전환은 부족</strong>
             </div>
         </div>
         """, unsafe_allow_html=True)
 
     divider()
 
-    section("서비스 적합도와 CPL의 관계")
+    section("광고 메시지 ↔ 서비스 화면 일치도와 CPL")
 
     st.markdown("""
-    <div style="font-size:15px; line-height:2.0; color:#333; padding:8px 0;">
-        Google과 Meta를 통합해서 보면, <strong>이사대학 서비스와 메시지가 일치할수록 CPL이 낮아지는</strong> 패턴이 명확합니다.<br>
-        아래 차트에서 오른쪽 위(서비스 적합도 높고 + CPL 낮음)에 있는 메시지일수록 효율적입니다.
+    <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0;">
+        Google과 Meta를 통합해서 보면, <strong>광고에서 "원룸/투룸 이사"를 직접 보여줄수록 CPL이 낮아지는</strong> 패턴이 명확합니다.
+        서비스에 들어갔을 때 첫 화면과 광고 메시지가 일치하면 유저 이탈이 줄고 전환이 올라갑니다.
     </div>
     """, unsafe_allow_html=True)
 
     matrix_data = pd.DataFrame({
-        '메시지': ['가격/비교', '브랜드', '소형이사', '포장이사', '에브리타임', '여자 모델', '일반이사', '지역+이사', '소재ALL', '용달/화물'],
-        'CPL': [3850, 4741, 6411, 12675, 5154, 5777, 16334, 15788, 6544, 18761],
-        '서비스 적합도': [95, 100, 95, 75, 40, 60, 50, 60, 50, 20],
-        '전환 볼륨': [156, 89, 20, 35, 617, 26, 63, 29, 522, 140],
-        '채널': ['Meta', 'Google', 'Google', 'Google', 'Meta', 'Meta', 'Google', 'Google', 'Meta', 'Google'],
+        '메시지': ['이사가격\n(원룸~쓰리룸)', '브랜드', '원룸/소형', '가격소재\n(원룸~쓰리룸)', '에브리타임\n(대학생)', '포장이사', '일반이사', '지역+이사', '용달/화물'],
+        'CPL': [3850, 4741, 12769, 5171, 5154, 13747, 14395, 17133, 17061],
+        '메시지 일치도': [95, 90, 85, 90, 40, 60, 40, 50, 15],
+        '전환 볼륨': [156, 84, 28, 3355, 617, 30, 32, 28, 104],
+        '채널': ['Meta', 'Google', 'Google', 'Meta', 'Meta', 'Google', 'Google', 'Google', 'Google'],
     })
 
-    fig = px.scatter(matrix_data, x='서비스 적합도', y='CPL', size='전환 볼륨', color='채널', text='메시지',
+    fig = px.scatter(matrix_data, x='메시지 일치도', y='CPL', size='전환 볼륨', color='채널', text='메시지',
                      color_discrete_map={'Google': COLORS['google'], 'Meta': COLORS['meta']}, size_max=50)
     fig.update_traces(textposition='top center', textfont_size=10)
     fig.update_layout(height=450, plot_bgcolor='rgba(0,0,0,0)',
-                      xaxis=dict(title='서비스 적합도 (%) — 높을수록 이사대학과 매칭', showgrid=True, gridcolor='#f0f0f0'),
+                      xaxis=dict(title='광고 ↔ 서비스 화면 일치도 (%) — 높을수록 "원룸/투룸 이사" 직접 노출', showgrid=True, gridcolor='#f0f0f0'),
                       yaxis=dict(title='CPL (₩) — 낮을수록 효율적', showgrid=True, gridcolor='#f0f0f0', autorange='reversed'))
     st.plotly_chart(fig, use_container_width=True)
 
     insight("""
-    <strong>핵심 발견: 채널과 무관하게, 서비스 적합도가 높은 메시지가 CPL이 낮다.</strong><br><br>
-    이사대학 = "이사 비교 견적" 서비스 → "가격 비교"라는 메시지가 서비스 본질과 가장 일치.<br>
-    반대로 "용달" "일반이사"처럼 이사대학과 관련성이 낮은 메시지는 CPL이 3~4배 높음.<br><br>
-    <strong>실행 함의</strong>: 새 소재/키워드를 만들 때 "이사대학이 뭘 잘하는지"를 기준으로 적합도를 먼저 판단한 뒤 투자하면 실패를 줄일 수 있습니다.
+    <strong>핵심 발견: "원룸/투룸 이사"를 직접 보여주는 메시지만 효율이 나온다.</strong><br><br>
+    이사대학 서비스의 첫 화면 = "원룸이사, 투룸이사, 쓰리룸이사" 가격 비교표.<br>
+    이 화면과 광고 메시지가 일치하는 소재(이사가격, 가격소재)는 CPL ₩3,850~₩5,171로 효율적이고,<br>
+    용달/화물(₩17,061), 일반이사(₩14,395)처럼 서비스와 맞지 않는 메시지는 CPL이 3~4배 높습니다.<br>
+    에브리타임도 대학생의 흥미를 끌지만 "원룸/투룸 이사"가 직접 보이지 않아 전환율이 절반 수준입니다.<br><br>
+    <strong>실행 함의</strong>: 새 소재/키워드를 만들 때 <strong>"원룸/투룸 이사 + 가격 비교"가 광고에서 바로 보이는지</strong>를
+    기준으로 판단하면 실패를 줄일 수 있습니다.
     """)
 
 
