@@ -869,22 +869,7 @@ elif page == "Meta Deep-Dive":
         (~meta_adset['소재_short'].isin(['소재ALL', '신규(12)', '신규(11)', '공통', '여자모델']))
     ]
 
-    # 메인 차트
-    df_meta = active_adsets.sort_values('CPL')
-    colors = [EFF_COLORS.get(e, '#999') for e in df_meta['효율']]
-
-    x_labels = [f"{row['소재_short']}<br><sub>(₩{row['비용']/10000:,.0f}만)</sub>" for _, row in df_meta.iterrows()]
-    fig = go.Figure()
-    fig.add_trace(go.Bar(
-        x=x_labels, y=df_meta['CPL'], marker_color=colors,
-        text=[f'₩{v:,}' for v in df_meta['CPL']], textposition='outside',
-        textfont=dict(size=13),
-    ))
-    fig.add_hline(y=META_CPL, line_dash="dot", line_color="#ccc", annotation_text=f"Meta 평균 ₩{META_CPL:,}")
-    fig.update_layout(height=400, plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='CPL (₩)'))
-    st.plotly_chart(fig, use_container_width=True)
-
-    # 대표 소재 이미지
+    # 대표 소재 이미지 (이미지 먼저, 차트 아래)
     import os
     _img_dir = os.path.join(os.path.dirname(__file__), "images")
     dd_col1, dd_col2, dd_col3 = st.columns(3)
@@ -893,8 +878,10 @@ elif page == "Meta Deep-Dive":
         if os.path.exists(_p):
             st.image(_p)
         st.markdown("""
-        <div style="text-align:center; font-size:13px; line-height:1.6;">
+        <div style="text-align:center; font-size:13px; line-height:1.8;">
             <strong>이사가격</strong> 대표 소재<br>
+            <span style="color:#555;">예산 ₩60만 (전체의 2.4%)</span><br>
+            <span style="color:#555;">CPL ₩3,850</span><br>
             <span style="color:#888;">노출의 95% 이상이 이 이미지</span>
         </div>
         """, unsafe_allow_html=True)
@@ -903,8 +890,10 @@ elif page == "Meta Deep-Dive":
         if os.path.exists(_p):
             st.image(_p)
         st.markdown("""
-        <div style="text-align:center; font-size:13px; line-height:1.6;">
+        <div style="text-align:center; font-size:13px; line-height:1.8;">
             <strong>에브리타임</strong> 대표 소재<br>
+            <span style="color:#555;">예산 ₩318만 (전체의 12.8%)</span><br>
+            <span style="color:#555;">CPL ₩5,154</span><br>
             <span style="color:#888;">노출의 약 70%가 이 이미지</span>
         </div>
         """, unsafe_allow_html=True)
@@ -913,11 +902,30 @@ elif page == "Meta Deep-Dive":
         if os.path.exists(_p):
             st.image(_p)
         st.markdown("""
-        <div style="text-align:center; font-size:13px; line-height:1.6;">
+        <div style="text-align:center; font-size:13px; line-height:1.8;">
             <strong>가격소재</strong> 대표 소재<br>
+            <span style="color:#555;">예산 ₩1,735만 (전체의 69.6%)</span><br>
+            <span style="color:#555;">CPL ₩5,171</span><br>
             <span style="color:#888;">노출의 95% 이상이 이 이미지</span>
         </div>
         """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height:16px;'></div>", unsafe_allow_html=True)
+
+    # 소재별 CPL 비교 차트 (주요 3개만)
+    df_3 = meta_adset[meta_adset['소재_short'].isin(['이사가격', '에타', '가격소재'])].sort_values('CPL')
+    colors_3 = [EFF_COLORS.get(e, '#999') for e in df_3['효율']]
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=df_3['소재_short'], y=df_3['CPL'], marker_color=colors_3,
+        text=[f'₩{v:,}' for v in df_3['CPL']], textposition='outside',
+        textfont=dict(size=13),
+    ))
+    fig.update_layout(height=350, plot_bgcolor='rgba(0,0,0,0)',
+                      yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='CPL (₩)'),
+                      title=dict(text='소재별 CPL 비교', font=dict(size=14)),
+                      margin=dict(l=20, r=20, t=40, b=20))
+    st.plotly_chart(fig, use_container_width=True)
 
     divider()
 
@@ -951,8 +959,6 @@ elif page == "Meta Deep-Dive":
             text=[f'₩{v:,}' for v in plat_agg['CPL']],
             textposition='outside', textfont=dict(size=12),
         ))
-        fig2.add_hline(y=META_CPL, line_dash="dot", line_color="#ccc", line_width=1.5,
-                       annotation_text=f"Meta 평균 ₩{META_CPL:,}", annotation_font_size=10)
         fig2.update_layout(height=400, plot_bgcolor='rgba(0,0,0,0)',
                            yaxis=dict(title='CPL (₩)', showgrid=True, gridcolor='#f0f0f0'),
                            xaxis=dict(title=''),
