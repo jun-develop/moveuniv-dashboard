@@ -744,7 +744,7 @@ elif page == "Google Deep-Dive":
 # ═══════════════════════════════════════════════
 elif page == "Google 수정 제안":
     st.markdown("# Google 검색 캠페인 수정 제안")
-    st.caption("키워드 재구성 + 광고 카피 분화를 통한 CPL 20% 개선")
+    st.caption("키워드 재구성 + 광고 카피 분화를 통한 CPL 15% 개선")
     divider()
 
     # ── Section 1: 예상 효과 ──
@@ -759,8 +759,8 @@ elif page == "Google 수정 제안":
 
     st.markdown(f"""
     <div class="kpi-container">
-        {kpi_card("검색 CPL", "₩14,323 → ₩11,458", "−20%", "green")}
-        {kpi_card("추가 전환 (13주)", "+133건", "520 → 653건", "green")}
+        {kpi_card("검색 CPL", "₩14,323 → ₩12,200", "−15%", "green")}
+        {kpi_card("추가 전환 (13주)", "+87건", "520 → 605건", "green")}
         {kpi_card("비효율 절감", "약 81만원/월", "연 약 970만원", "green")}
     </div>
     """, unsafe_allow_html=True)
@@ -806,14 +806,14 @@ elif page == "Google 수정 제안":
         "원룸 이사", "이사 가격 비교" 등을 검색하는 유저는 정확히 이사대학이 제공하는 서비스를 찾고 있습니다.
         현재 두 세그먼트 합산 64만원에 불과한 예산을 200만원으로 늘리면,
         용달에서 절감한 예산을 전환 가능성이 높은 유저에게 재투입하는 효과가 있습니다.
-        13주 기준 약 89건의 추가 전환이 예상됩니다.
+        13주 기준 약 100건의 추가 전환이 예상됩니다.
     </div>
     <div style="font-size:15px; line-height:1.9; color:#333; padding:8px 0; margin-top:12px;">
         <strong style="font-size:16px;">3. 광고 카피 분화 (3개 → 8개 광고그룹)</strong><br>
         현재 3개 광고그룹(용달/이사/소형이사)이 완전히 동일한 15개 타이틀 + 4개 설명문을 사용하고 있습니다.
         "용달 가격"을 검색한 유저와 "원룸 이사"를 검색한 유저가 같은 광고를 보는 것이 검색 CPL이 PMax의 2배인 핵심 원인입니다.
         세그먼트별로 다른 카피를 작성해서 검색 의도와 광고 메시지를 일치시키면,
-        검색 CPL을 현재 ₩14,323에서 약 20% 낮춘 ₩11,458까지 개선할 수 있습니다.
+        검색 CPL을 현재 ₩14,323에서 약 15% 낮춘 ₩12,200까지 개선할 수 있습니다.
     </div>
     """, unsafe_allow_html=True)
 
@@ -829,8 +829,8 @@ elif page == "Google 수정 제안":
         '현재 전환': [84, 28, 19, 30, 193, 32, 28, 104],
         '방향': ['→ 유지', '↑↑ 증액', '↑↑ 증액', '↑ 소폭증액', '→ 카피최적화', '↓ 감액', '↓ 감액', '↓↓ 대폭감액'],
         '제안 예산': ['40만', '120만', '80만', '60만', '220만', '35만', '30만', '50만'],
-        '목표 CPL': ['₩4,655', '₩10,215', '₩11,984', '₩10,998', '₩9,207', '₩11,516', '₩13,706', '₩13,649'],
-        '예상 전환': [86, 117, 67, 55, 239, 30, 22, 37],
+        '목표 CPL': ['₩4,655', '₩12,769', '₩14,980', '₩13,747', '₩9,207', '₩11,516', '₩13,706', '₩13,649'],
+        '예상 전환': [86, 94, 53, 44, 239, 30, 22, 37],
     })
     st.dataframe(proposal_data, use_container_width=True, hide_index=True)
 
@@ -890,19 +890,40 @@ elif page == "Meta Deep-Dive":
     section("플랫폼별 주간 CPL 추이")
 
     mpw = meta_platform_weekly[meta_platform_weekly['cpl'] > 0]
-    fig = px.line(mpw, x='week', y='cpl', color='platform', markers=True,
-                  color_discrete_map={'Instagram': COLORS['ig'], 'Facebook': COLORS['fb'], 'Threads': COLORS['threads']})
-    fig.update_layout(height=400, plot_bgcolor='rgba(0,0,0,0)',
-                      yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='CPL (₩)'),
-                      xaxis=dict(title='주차'),
-                      title=dict(text='플랫폼별 주간 CPL (13주)', font=dict(size=14)))
-    fig.update_traces(line_width=3, marker_size=8)
-    st.plotly_chart(fig, use_container_width=True)
 
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Threads 평균", "₩3,800", delta="전 플랫폼 최저", delta_color="inverse")
-    col2.metric("Instagram 평균", "₩5,300", delta="볼륨 93% 담당")
-    col3.metric("Facebook 평균", "₩5,500", delta="변동성 높음")
+    meta_chart_col1, meta_chart_col2 = st.columns([3, 2])
+
+    with meta_chart_col1:
+        fig = px.line(mpw, x='week', y='cpl', color='platform', markers=True,
+                      color_discrete_map={'Instagram': COLORS['ig'], 'Facebook': COLORS['fb'], 'Threads': COLORS['threads']})
+        fig.update_layout(height=400, plot_bgcolor='rgba(0,0,0,0)',
+                          yaxis=dict(showgrid=True, gridcolor='#f0f0f0', title='CPL (₩)'),
+                          xaxis=dict(title='주차'),
+                          title=dict(text='주간 CPL 추이', font=dict(size=14)),
+                          margin=dict(l=20, r=20, t=40, b=20))
+        fig.update_traces(line_width=3, marker_size=8)
+        st.plotly_chart(fig, use_container_width=True)
+
+    with meta_chart_col2:
+        plat_agg = meta_plat_month.groupby('플랫폼').agg({'비용': 'sum', '전환': 'sum'}).reset_index()
+        plat_agg['CPL'] = (plat_agg['비용'] / plat_agg['전환']).astype(int)
+        plat_agg = plat_agg.sort_values('CPL')
+        plat_color_map = {'Instagram': COLORS['ig'], 'Facebook': COLORS['fb'], 'Threads': COLORS['threads']}
+        fig2 = go.Figure()
+        fig2.add_trace(go.Bar(
+            x=plat_agg['플랫폼'], y=plat_agg['CPL'],
+            marker_color=[plat_color_map[p] for p in plat_agg['플랫폼']],
+            text=[f'₩{v:,}' for v in plat_agg['CPL']],
+            textposition='outside', textfont=dict(size=12),
+        ))
+        fig2.add_hline(y=META_CPL, line_dash="dot", line_color="#ccc", line_width=1.5,
+                       annotation_text=f"Meta 평균 ₩{META_CPL:,}", annotation_font_size=10)
+        fig2.update_layout(height=400, plot_bgcolor='rgba(0,0,0,0)',
+                           yaxis=dict(title='CPL (₩)', showgrid=True, gridcolor='#f0f0f0'),
+                           xaxis=dict(title=''),
+                           title=dict(text='플랫폼별 평균 CPL', font=dict(size=14)),
+                           margin=dict(l=20, r=20, t=40, b=20))
+        st.plotly_chart(fig2, use_container_width=True)
 
     insight("""
     <strong>Threads가 13주 내내 일관되게 CPL 최저</strong> (₩2,700~₩5,000 범위).<br>
