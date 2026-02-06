@@ -570,14 +570,37 @@ elif page == "Google Deep-Dive":
     # Filter to weeks W45-W05 only (exclude partial W44)
     gcw = google_campaign_weekly[google_campaign_weekly['week'].isin([f'W{str(i).zfill(2)}' for i in list(range(45, 53)) + list(range(1, 6))])]
 
-    fig = px.line(gcw, x='week', y='cpl', color='campaign', markers=True,
-                  color_discrete_map={'PMax': COLORS['best'], '검색(내국인)': COLORS['worst'], '검색(외국인)': COLORS['mid']})
-    fig.update_layout(height=420, plot_bgcolor='rgba(0,0,0,0)',
-                      xaxis=dict(title='주차', showgrid=True, gridcolor='#f0f0f0'),
-                      yaxis=dict(title='CPL (₩)', showgrid=True, gridcolor='#f0f0f0'),
-                      title=dict(text='구글 검색광고(수동) vs PMax(자동)', font=dict(size=14)))
-    fig.update_traces(line_width=3, marker_size=8)
-    st.plotly_chart(fig, use_container_width=True)
+    chart_col1, chart_col2 = st.columns([3, 2])
+
+    with chart_col1:
+        fig = px.line(gcw, x='week', y='cpl', color='campaign', markers=True,
+                      color_discrete_map={'PMax': COLORS['best'], '검색(내국인)': COLORS['worst'], '검색(외국인)': COLORS['mid']})
+        fig.update_layout(height=420, plot_bgcolor='rgba(0,0,0,0)',
+                          xaxis=dict(title='주차', showgrid=True, gridcolor='#f0f0f0'),
+                          yaxis=dict(title='CPL (₩)', showgrid=True, gridcolor='#f0f0f0'),
+                          title=dict(text='주간 CPL 추이', font=dict(size=14)),
+                          margin=dict(l=20, r=20, t=40, b=20))
+        fig.update_traces(line_width=3, marker_size=8)
+        st.plotly_chart(fig, use_container_width=True)
+
+    with chart_col2:
+        camp_agg = google_campaign.copy()
+        camp_colors = [COLORS['best'] if t == 'PMax' else COLORS['worst'] for t in camp_agg['유형']]
+        fig2 = go.Figure()
+        fig2.add_trace(go.Bar(
+            x=camp_agg['캠페인'], y=camp_agg['CPL'],
+            marker_color=camp_colors,
+            text=[f'₩{v:,}' for v in camp_agg['CPL']],
+            textposition='outside', textfont=dict(size=12),
+        ))
+        fig2.add_hline(y=PMAX_BENCHMARK, line_dash="dot", line_color=COLORS['best'], line_width=1.5,
+                       annotation_text=f"PMax ₩{PMAX_BENCHMARK:,}", annotation_font_size=10)
+        fig2.update_layout(height=420, plot_bgcolor='rgba(0,0,0,0)',
+                           yaxis=dict(title='CPL (₩)', showgrid=True, gridcolor='#f0f0f0'),
+                           xaxis=dict(title=''),
+                           title=dict(text='캠페인별 통합 CPL', font=dict(size=14)),
+                           margin=dict(l=20, r=20, t=40, b=20))
+        st.plotly_chart(fig2, use_container_width=True)
 
     col1, col2 = st.columns(2)
     with col1:
